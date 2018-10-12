@@ -2,6 +2,9 @@ var net = require("net");
 const express = require("express");
 const app = express();
 
+var db = require("mongodb").MongoClient;
+var dbUrl = "mongodb://localhost:27017/";
+
 const _PORT = 15487;
 const _HOST = "127.0.0.1";
 
