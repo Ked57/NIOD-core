@@ -9,6 +9,7 @@ niod.scope = "127.0.0.1"
 niod.port = 15487
 niod.DATA_TIMEOUT_SEC = 0.2
 niod.JSON = JSON
+niod.isDev = true
 
 niod.tcp = socket.tcp()
 niod.tcp:settimeout(0)
@@ -19,6 +20,10 @@ function niod.log(message)
     if message then
         env.info(message)
     end
+end
+
+function niod.setDevEnv(isDev)
+	env.setErrorMessageBoxEnabled(niod.isDev)
 end
 
 -- Native functions wrappers
@@ -67,6 +72,7 @@ niod.nativeFunctions = {
 -- NIOD functions
 
 function niod.bind()
+	niod.setDevEnv()
     local bound, error = niod.tcp:bind(niod.scope, niod.port)
     if not bound then
     	niod.log("Could not bind: " .. error)
