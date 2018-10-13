@@ -13,13 +13,58 @@ niod.JSON = JSON
 niod.tcp = socket.tcp()
 niod.tcp:settimeout(0)
 
--- functions
+-- Util functions
 
 function niod.log(message)
     if message then
         env.info(message)
     end
 end
+
+-- Native functions wrappers
+niod.nativeFunctions = {
+	getGroups = function(args)
+		local groups = {}
+		if args then
+			local dcsGroups = coalition.getGroups(args[1])
+			for i,v in ipairs(dcsGroups) do
+				local group = {}
+				group.id = v:getID()
+				group.isExist = v:isExist()
+				group.category = v:getCategory()
+				group.coalition = v:getCoalition()
+				group.name = v:getName()
+				local units = v:getUnits()
+				group.units = {}
+				for ui,uv in ipairs(units) do
+					local unit = {}
+					unit.isActive = uv:isActive()
+					unit.desc = uv:getDesc()
+					unit.playerName = uv:getPlayerName()
+					unit.id = uv:getID()
+					unit.index = uv:getNumber()
+					unit.detectedTarget = uv:getController():getDetectedTargets()
+					unit.callsign = uv:getCallsign()
+					unit.life = uv:getLife()
+					unit.maxLife = uv:getLife0()
+					unit.fuel = uv:getFuel()
+					unit.ammo = uv:getAmmo()
+					unit.sensors = uv:getSensors()
+					unit.hasRadar, unit.target = uv:getRadar()
+					table.insert(group.units, unit)
+				end
+				group.size = v:getSize()
+				group.initialSize = v:getInitialSize()
+				local controller = v:getController()
+				group.hasTask = controller:hasTask()
+				table.insert(groups, group)
+			end
+		end
+		return groups
+	end
+}
+
+-- NIOD functions
 
 function niod.bind()
     local bound, error = niod.tcp:bind(niod.scope, niod.port)
@@ -57,9 +102,12 @@ function niod.processRequest(request)
     if request and request.type and request.callbackId then
     	response.type = request.type
     	response.callbackId = request.callbackId
-    	response.data = {
-    	    message = "hey"
-		}
+		if request.data then
+			if request.type == "function" and request.data.name then
+				niod.log("Processing native function")
+				response.data = niod.nativeFunctions[request.data.name](request.data.args)
+			end
+		end
 	end
 	return response
 end
@@ -71,8 +119,6 @@ function niod.step()
 			if niod.client then
 			niod.client:settimeout(0)
 			niod.log("Connection established")
-			--send all unit updates
-			--niod.update()
 		end
 	end
 	if niod.client then
@@ -97,8 +143,6 @@ function niod.step()
 			if success then
 				local outMsg = niod.JSON:encode(dataPayload)
 				local bytes, status, lastbyte = niod.client:send(outMsg .. "\n")
-				niod.log("sent this back:")
-				niod.log(outMsg)
 				if not bytes then
 					niod.log("Connection lost")
 					niod.client = nil

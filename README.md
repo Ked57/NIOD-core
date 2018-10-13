@@ -6,10 +6,10 @@ NIOD uses JSON
 It'll basicaly look like this:
 
 {
-"type": "connection",
+"type": "type",
 "callbackId": "anIdForTheCallback",
 "data": {
-"token": "aRandomToken"
+"random": "aRandomThing"
 }
 }
 
@@ -23,7 +23,7 @@ example with getGroups(enum coalitionId , enum GroupCategory)
 "callbackId": "anIdForTheCallback",
 "data": {
 "name": "getGroups",
-"args": [1,0]
+"args": [2]
 }
 }
 
