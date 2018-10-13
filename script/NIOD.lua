@@ -1,9 +1,14 @@
+package.path  = package.path..";.\\LuaSocket\\?.lua;"
+package.cpath = package.cpath..";.\\LuaSocket\\?.dll;"
+
 local socket = require('socket')
-niod = {}
+local JSON = loadfile("Scripts\\JSON.lua")()
+local niod = {}
 
 niod.scope = "127.0.0.1"
 niod.port = 15487
 niod.DATA_TIMEOUT_SEC = 0.2
+niod.JSON = JSON
 
 niod.tcp = socket.tcp()
 niod.tcp:settimeout(0)
@@ -12,7 +17,7 @@ niod.tcp:settimeout(0)
 
 function niod.log(message)
     if message then
-        env.info("[NIOD] "..message)
+        env.info(message)
     end
 end
 
@@ -32,7 +37,7 @@ function niod.bind()
 end
 function niod.checkJSON(jsonstring, code)
 	if code == 'encode' then
-		if type(JSON:encode(jsonstring)) ~= "string" then
+		if type(niod.JSON:encode(jsonstring)) ~= "string" then
 			error("encode expects a string after function")
 		end
 	end
@@ -49,61 +54,63 @@ end
 
 function niod.processRequest(request)
     local response = {}
-    if request AND request.type AND request.callbackId
-    response.type = request.type
-    response.callbackId = request.callbackId
-    response.data = {
-        message = "hey"
-    }
+    if request and request.type and request.callbackId then
+    	response.type = request.type
+    	response.callbackId = request.callbackId
+    	response.data = {
+    	    message = "hey"
+		}
+	end
+	return response
 end
 
-local client
+
 function niod.step()
-	if not client then
-		client = niod.tcp:accept()
-		niod.tcp:settimeout(0)
-			if client then
+	if not niod.client then
+		niod.client = niod.tcp:accept()
+			if niod.client then
+			niod.client:settimeout(0)
 			niod.log("Connection established")
 			--send all unit updates
-			update()
+			--niod.update()
 		end
 	end
-	if client then
-        local line, err = client:receive('*l')
+	if niod.client then
+		local line, err = niod.client:receive('*l')
+		--niod.client:send('\n')
         local data = {}
 		if line ~= nil then
 			niod.log(line)
-			local success, error = pcall(checkJSON, line, 'decode')
+			local success, error = pcall(niod.checkJSON, line, 'decode')
 			if success then
-                local incMsg = JSON:decode(line)
+                local incMsg = niod.JSON:decode(line)
                 niod.log(incMsg)
 				data = niod.processRequest(incMsg);
 			else
 				niod.log("Error: " .. error)
 			end
 		end
-		-- if there was no error, send it back to the client
-		if not err then
+		-- if there was no error, send it back to the niod.client
+		if not err and data then
 			local dataPayload = data --getDataMessage()
-			local success, error = pcall(checkJSON, dataPayload, 'encode')
+			local success, error = pcall(niod.checkJSON, dataPayload, 'encode')
 			if success then
-				local outMsg = JSON:encode(dataPayload)
-				local bytes, status, lastbyte = client:send(outMsg .. "\n")
+				local outMsg = niod.JSON:encode(dataPayload)
+				local bytes, status, lastbyte = niod.client:send(outMsg .. "\n")
+				niod.log("sent this back:")
+				niod.log(outMsg)
 				if not bytes then
 					niod.log("Connection lost")
-					client = nil
+					niod.client = nil
 				end;
 			else
 				niod.log("Error: " .. error)
 			end
-		else
-			niod.log("Connection lost")
-			client = nil
 		end
 	end
 end
 
-niod.log("Starting NIOD")
+niod.bind()
 
 timer.scheduleFunction(function(arg, time)
 	local success, error = pcall(niod.step)
@@ -112,3 +119,6 @@ timer.scheduleFunction(function(arg, time)
 	end
 	return timer.getTime() + niod.DATA_TIMEOUT_SEC
 end, nil, timer.getTime() + niod.DATA_TIMEOUT_SEC)
+
+
+niod.log("Started NIOD")
