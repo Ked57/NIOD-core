@@ -1,3 +1,5 @@
+-- Thanks to Drex from Dynamic DCS for all the help on sockets, go check his server out
+
 package.path  = package.path..";.\\LuaSocket\\?.lua;"
 package.cpath = package.cpath..";.\\LuaSocket\\?.dll;"
 
@@ -8,8 +10,13 @@ local niod = {}
 niod.scope = "127.0.0.1"
 niod.port = 15487
 niod.DATA_TIMEOUT_SEC = 0.2
+
 niod.JSON = JSON
 niod.isDev = true
+
+niod.eventHandler = {
+	handleEvents = true
+}
 
 niod.tcp = socket.tcp()
 niod.tcp:settimeout(0)
@@ -72,7 +79,6 @@ niod.nativeFunctions = {
 -- NIOD functions
 
 function niod.bind()
-	niod.setDevEnv()
     local bound, error = niod.tcp:bind(niod.scope, niod.port)
     if not bound then
     	niod.log("Could not bind: " .. error)
@@ -99,8 +105,9 @@ function niod.checkJSON(jsonstring, code)
 	end
 end
 
-function niod.handleEvent()
---handle events here
+function niod.eventHandler.onEvent(event)
+	niod.log("event")
+	niod.log(event)
 end
 
 function niod.processRequest(request)
@@ -160,7 +167,9 @@ function niod.step()
 	end
 end
 
+niod.setDevEnv()
 niod.bind()
+world.addEventHandler(niod.eventHandler)
 
 timer.scheduleFunction(function(arg, time)
 	local success, error = pcall(niod.step)

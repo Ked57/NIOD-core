@@ -37,3 +37,6 @@ result will be
 
 The nodejs server stores callbacks linked to a callback id, this id is passed to the lua server which pass it
 back with the return data. The dispatcher will then execute the right stored callback
+
+
+Thanks to Drex from Dynamic DCS for all the help on sockets, go check his server out
