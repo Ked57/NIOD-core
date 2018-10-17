@@ -1,36 +1,24 @@
-var net = require("net");
+const net = require("net");
 const express = require("express");
+const net_functions = require("./src/dcs/net_functions");
+const configuration = require("./src/utils/config");
+const niod_console = require("./src/utils/niod_console");
+const db = require("mongodb").MongoClient;
+
 const app = express();
 
-var db = require("mongodb").MongoClient;
-var dbUrl = "mongodb://localhost:27017/";
+const socket = new net.Socket();
+const config = configuration.config;
 
-const _PORT = 15487;
-const _HOST = "127.0.0.1";
+configuration.loadConfig();
+niod_console.logObject(config, "Config object:");
 
-var client = new net.Socket();
-
-client.connect(
-  _PORT,
-  _HOST,
-  () => {
-    console.log("Connected");
-    client.write("Hello, server!");
-  }
-);
-
-client.on("data", data => {
-  console.log("Received: " + data);
-});
-
-client.on("close", () => {
-  console.log("Connection closed");
-});
+net_functions.connectToDcsServer(socket, config.DCS_HOST, config.DCS_PORT);
 
 app.get("/", function(req, res) {
   res.send("Hello World!");
 });
 
 app.listen(3000, function() {
-  console.log("Example app listening on port 3000!");
+  niod_console.log("NIOD web app listening on port 3000!");
 });
