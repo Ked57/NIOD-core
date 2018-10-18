@@ -12,7 +12,13 @@ exports.config = {
 
 exports.loadConfig = () => {
   const configJSON = fs.readFileSync("config.json");
-  const configData = JSON.parse(configJSON);
+  let configData = {};
+  try {
+    configData = JSON.parse(configJSON);
+  } catch (e) {
+    niod_console.error(e);
+    return;
+  }
   for (const property of Object.keys(this.config)) {
     if (configData.hasOwnProperty(property)) {
       this.config[property] = configData[property];
