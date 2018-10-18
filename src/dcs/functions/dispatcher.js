@@ -21,7 +21,22 @@ exports.initDispatcher = (eventMgr, dispatchList) => {
       return;
     }
   });
-  //eventMgr.on("niod_addDispatch");
+  eventMgr.on("niod_addDispatch", dispatchData => {
+    niod_console.logObject(
+      dispatchData,
+      "Received niod_addDispatch with dispatchData:"
+    );
+    if (
+      dispatchData.hasOwnProperty("data") &&
+      dispatchData.data != null &&
+      dispatchData.hasOwnProperty("callback") &&
+      dispatchData.callback != null &&
+      typeof dispatchData.callback === "function"
+    ) {
+      niod_console.log("Data check passed");
+      addDispatch(dispatchList, dispatchData.data, dispatchData.callback);
+    }
+  });
 };
 
 function dispatch(dispatchList, data, callbackId) {
@@ -42,7 +57,7 @@ function addDispatch(dispatchList, data, callback) {
       "_" +
       Math.random()
         .toString(36)
-        .substr(2, 9);
+        .substr(2, 9); // To generate an unique random uid
     dispatchList.push({ callbackId: callbackId, data: data });
     niod_console.log(`Sucessfuly pushed callback with id: ${callbackId}`);
   } else {
