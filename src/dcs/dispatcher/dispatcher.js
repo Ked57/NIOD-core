@@ -1,7 +1,7 @@
 const niod_console = require("../../utils/niod_console");
 
-exports.initDispatcher = (eventMgr, dispatchList) => {
-  eventMgr.on("niod_dispatch", dispatchData => {
+exports.initDispatcher = (messageMgr, dispatchList) => {
+  messageMgr.on("niod_dispatch", dispatchData => {
     niod_console.logObject(
       dispatchData,
       "Received niod_dispatch with dispatchData:"
@@ -21,7 +21,7 @@ exports.initDispatcher = (eventMgr, dispatchList) => {
       return;
     }
   });
-  eventMgr.on("niod_addDispatch", dispatchData => {
+  messageMgr.on("niod_addDispatch", dispatchData => {
     niod_console.logObject(
       dispatchData,
       "Received niod_addDispatch with dispatchData:"
