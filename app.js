@@ -3,7 +3,7 @@ const express = require("express");
 const net_functions = require("./src/dcs/logic/net");
 const configuration = require("./src/utils/config");
 const niod_console = require("./src/utils/niod_console");
-const dcsEventHandler = require("./src/dcs/message/eventHandler");
+const dcsEventHandler = require("./src/dcs/message/messageHandler");
 const dcsDispatcher = require("./src/dcs/dispatcher/dispatcher");
 const eventEmitter = require("events").EventEmitter;
 class messageMgrClass extends eventEmitter {}

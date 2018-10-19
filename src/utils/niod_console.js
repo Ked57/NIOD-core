@@ -4,7 +4,7 @@ exports.log = message => {
 };
 
 exports.logObject = (object, message) => {
-  this.log(message);
+  log(message);
   console.info(object);
 };
 
