@@ -1,6 +1,6 @@
 const niod_console = require("../../utils/niod_console");
 
-exports.connectToDcsServer = (socket, host, port, eventMgr) => {
+exports.connectToDcsServer = (socket, host, port, messageMgr) => {
   try {
     socket.connect(
       {
@@ -12,7 +12,7 @@ exports.connectToDcsServer = (socket, host, port, eventMgr) => {
         failedConnections = 0;
 
         socket.on("data", JSONData => {
-          handleMsg(eventMgr, JSONData);
+          handleMsg(messageMgr, JSONData);
         });
         socket.on("close", handleClose);
         socket.on("error", handleError);
