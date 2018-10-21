@@ -21,6 +21,14 @@ exports.connectToDcsServer = (socket, host, port, messageMgr) => {
   } catch (e) {
     handleError(e);
   }
+  messageMgr.on("dcsSend", args => {
+    niod_console.log(args);
+    messageMgr.emit("niod_addDispatch", args);
+  });
+
+  messageMgr.on("dcsSend_callbackDispatched", dataToSend => {
+    //socket.emit("data", dataToSend);
+  });
 };
 
 function handleError(e) {
@@ -32,7 +40,8 @@ function handleClose() {
 }
 
 function handleMsg(eventMgr, JSONData) {
-  niod_console.log("Received data" + JSONData.toString());
+  niod_console.log("Received data");
+  niod_console.logObject(JSONData);
   try {
     const parsedJsonObject = JSON.parse(JSONData);
     if (
@@ -50,6 +59,7 @@ function handleMsg(eventMgr, JSONData) {
       }
     }
   } catch (e) {
+    niod_console.error("Catched an error during message handling");
     niod_console.error(e);
     return;
   }

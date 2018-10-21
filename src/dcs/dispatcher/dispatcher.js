@@ -34,7 +34,18 @@ exports.initDispatcher = (messageMgr, dispatchList) => {
       typeof dispatchData.callback === "function"
     ) {
       niod_console.log("Data check passed");
-      addDispatch(dispatchList, dispatchData.data, dispatchData.callback);
+      const callbackId = addDispatch(
+        dispatchList,
+        dispatchData.data,
+        dispatchData.callback
+      );
+      const dataToSend = {
+        type: "function",
+        callbackId: callbackId,
+        data: dispatchData.data
+      };
+
+      messageMgr.emit("dcsSend_callbackDispatched", dataToSend);
     }
   });
 };
@@ -60,7 +71,9 @@ function addDispatch(dispatchList, data, callback) {
         .substr(2, 9); // To generate an unique random uid
     dispatchList.push({ callbackId: callbackId, data: data });
     niod_console.log(`Sucessfuly pushed callback with id: ${callbackId}`);
+    return callbackId;
   } else {
     niod_console.error(`Couldn't push callback`);
   }
+  return null;
 }

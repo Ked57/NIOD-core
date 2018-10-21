@@ -7,13 +7,15 @@ exports.config = {
   APP_LOG_PATH: "./log/niod.log",
 
   DCS_PORT: 15488,
-  DCS_HOST: "127.0.0.1"
+  DCS_HOST: "127.0.0.1",
+
+  API_GET_GROUPS: true
 };
 
 exports.loadConfig = () => {
-  const configJSON = fs.readFileSync("config.json");
   let configData = {};
   try {
+    const configJSON = fs.readFileSync("config.json");
     configData = JSON.parse(configJSON);
   } catch (e) {
     niod_console.error(e);
