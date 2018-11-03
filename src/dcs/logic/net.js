@@ -8,31 +8,46 @@ exports.connectToDcsServer = (socket, host, port, messageMgr) => {
         port: port
       },
       () => {
-        niod_console.log("Connected DCS NIOD server");
-        failedConnections = 0;
-
-        socket.on("data", JSONData => {
-          handleMsg(messageMgr, JSONData);
-        });
-        socket.on("close", handleClose);
-        socket.on("error", handleError);
+        niod_console.log("Connected to DCS NIOD server");
       }
     );
   } catch (e) {
-    handleError(e);
+    handleError(e, socket, host, port, messageMgr);
   }
+  socket.on("error", e => {
+    handleError(e, socket, host, port, messageMgr);
+  });
+  socket.on("data", JSONData => {
+    handleMsg(messageMgr, JSONData);
+  });
+  socket.on("close", handleClose);
   messageMgr.on("dcsSend", args => {
     niod_console.log(args);
     messageMgr.emit("niod_addDispatch", args);
   });
 
   messageMgr.on("dcsSend_callbackDispatched", dataToSend => {
-    //socket.emit("data", dataToSend);
+    socket.emit("data", dataToSend);
   });
 };
 
-function handleError(e) {
+function handleError(e, socket, host, port, messageMgr) {
   niod_console.error(e.message);
+  setTimeout(() => {
+    try {
+      socket.connect(
+        {
+          host: host,
+          port: port
+        },
+        () => {
+          niod_console.log("Connected to DCS NIOD server");
+        }
+      );
+    } catch (e) {
+      handleError(e, socket, host, port, messageMgr);
+    }
+  }, 5000);
 }
 
 function handleClose() {
