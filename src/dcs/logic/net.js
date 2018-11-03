@@ -1,33 +1,41 @@
 const niod_console = require("../../utils/niod_console");
 
 exports.connectToDcsServer = (socket, host, port, messageMgr) => {
-  try {
-    socket.connect(
-      {
-        host: host,
-        port: port
-      },
-      () => {
-        niod_console.log("Connected to DCS NIOD server");
-      }
-    );
-  } catch (e) {
-    handleError(e, socket, host, port, messageMgr);
-  }
-  socket.on("error", e => {
-    handleError(e, socket, host, port, messageMgr);
-  });
-  socket.on("data", JSONData => {
-    handleMsg(messageMgr, JSONData);
-  });
-  socket.on("close", handleClose);
-  messageMgr.on("dcsSend", args => {
-    niod_console.log(args);
-    messageMgr.emit("niod_addDispatch", args);
-  });
+  return new Promise((resolve, reject) => {
+    try {
+      socket.connect(
+        {
+          host: host,
+          port: port
+        },
+        () => {
+          niod_console.log("Connected to DCS NIOD server");
+          resolve();
+        }
+      );
+    } catch (e) {
+      handleError(e, socket, host, port, messageMgr);
+    }
+    socket.on("error", e => {
+      handleError(e, socket, host, port, messageMgr);
+    });
+    socket.on("data", JSONData => {
+      handleMsg(messageMgr, JSONData);
+    });
+    socket.on("close", handleClose);
+    messageMgr.on("dcsSend", args => {
+      niod_console.log(args);
+      messageMgr.emit("niod_addDispatch", args);
+    });
 
-  messageMgr.on("dcsSend_callbackDispatched", dataToSend => {
-    socket.emit("data", dataToSend);
+    messageMgr.on("dcsSend_callbackDispatched", dataToSend => {
+      try {
+        socket.write(JSON.stringify(dataToSend));
+        niod_console.log("Emitted data");
+      } catch (e) {
+        niod_console.error(`Couldn't sent data: ${e}`);
+      }
+    });
   });
 };
 
