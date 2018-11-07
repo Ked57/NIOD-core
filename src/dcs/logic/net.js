@@ -23,6 +23,7 @@ exports.connectToDcsServer = (socket, host, port, messageMgr) => {
       handleMsg(messageMgr, JSONData);
     });
     socket.on("close", handleClose);
+
     messageMgr.on("dcsSend", args => {
       niod_console.log(args);
       messageMgr.emit("niod_addDispatch", args);
@@ -30,6 +31,7 @@ exports.connectToDcsServer = (socket, host, port, messageMgr) => {
 
     messageMgr.on("dcsSend_callbackDispatched", dataToSend => {
       try {
+        niod_console.logObject(dataToSend, "");
         socket.write(JSON.stringify(dataToSend));
         niod_console.log("Emitted data");
       } catch (e) {
@@ -68,9 +70,9 @@ function handleMsg(eventMgr, JSONData) {
   try {
     const parsedJsonObject = JSON.parse(JSONData);
     if (
-      parsedJsonObject.hasOwnProperty("callbackId") &&
-      parsedJsonObject.hasOwnProperty("type") &&
-      parsedJsonObject.hasOwnProperty("data")
+      parsedJsonObject.callbackId &&
+      parsedJsonObject.type &&
+      parsedJsonObject.data
     ) {
       switch (parsedJsonObject.type) {
         case "function":
@@ -80,6 +82,9 @@ function handleMsg(eventMgr, JSONData) {
           niod_console.error("Received wrong object type, aborting ...");
           break;
       }
+    } else {
+      niod_console.error("Received non valid object: ");
+      niod_console.logObject(parsedJsonObject);
     }
   } catch (e) {
     niod_console.error("Catched an error during message handling");

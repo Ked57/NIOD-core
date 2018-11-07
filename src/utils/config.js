@@ -7,7 +7,7 @@ exports.config = {
   APP_LOG_PATH: "./log/niod.log",
 
   DCS_PORT: 15488,
-  DCS_HOST: "127.0.0.1",
+  DCS_HOST: "localhost",
 
   API_GET_GROUPS: true
 };
