@@ -6,19 +6,13 @@ exports.initDispatcher = (messageMgr, dispatchList) => {
       dispatchData,
       "Received niod_dispatch with dispatchData:"
     );
-    if (
-      dispatchData.hasOwnProperty("data") &&
-      dispatchData.data != null &&
-      dispatchData.hasOwnProperty("callbackId") &&
-      dispatchData.callbackId != null
-    ) {
+    if (dispatchData && dispatchData.data && dispatchData.callbackId) {
       niod_console.log("Data check passed");
       dispatch(dispatchList, dispatchData.data, dispatchData.callbackId);
     } else {
       niod_console.error(
         "Could not dispatch received data because it lacks properties or theeses properties are null"
       );
-      return;
     }
   });
   messageMgr.on("niod_addDispatch", dispatchData => {
