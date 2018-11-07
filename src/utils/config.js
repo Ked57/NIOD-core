@@ -10,7 +10,7 @@ exports.config = {
   APP_GET_GROUPS_INTERVAL: 2500,
   APP_STATE_SAVING_INTERVAL: 5000,
 
-  DCS_PORT: 15488,
+  DCS_PORT: 15487,
   DCS_HOST: "localhost",
 
   API_GET_GROUPS: true

@@ -50,8 +50,9 @@ function dispatch(dispatchList, data, callbackId) {
     try {
       dispatch.callback(data);
       removeDispatch(dispatchList, dispatch);
-    } catch {
+    } catch (error) {
       niod_console.error("calling callback or removing dispatch");
+      niod_console.error(error);
     }
   } else {
     niod_console.log("Couldn't find callback, aborting");
