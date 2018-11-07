@@ -14,8 +14,14 @@ const initRouting = (app, apiFunctions, messageMgr) => {
   app.get("/", function(req, res) {
     res.send("docs go here!");
   });
-  app.get("/get/groups", (req, res) => {
-    const groups = apiFunctions["getGroups"](messageMgr, 2);
-    res.send(JSON.stringify(groups));
+  app.get("/get/groups/:coalitionId", (req, res) => {
+    const coalitionId = req.params.coalitionId;
+    if (coalitionId) {
+      apiFunctions["getGroups"](messageMgr, coalitionId, data => {
+        res.send(JSON.stringify(data));
+      });
+    } else {
+      res.status(400);
+    }
   });
 };

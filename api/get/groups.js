@@ -6,10 +6,10 @@ const getGroupsCallback = () => {
 
 exports.getGroupsCallback = getGroupsCallback;
 
-exports.getGroupsFunction = (messageMgr, coalitionId) => {
+exports.getGroupsFunction = (messageMgr, coalitionId, callback) => {
   messageMgr.emit("dcsSend", {
     type: "function",
-    callback: getGroupsCallback,
+    callback: callback,
     data: {
       name: "getGroups",
       args: [coalitionId]

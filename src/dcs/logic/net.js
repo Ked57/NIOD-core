@@ -22,7 +22,9 @@ exports.connectToDcsServer = (socket, host, port, messageMgr) => {
     socket.on("data", JSONData => {
       handleMsg(messageMgr, JSONData);
     });
-    socket.on("close", handleClose);
+    socket.on("close", () => {
+      handleClose(socket, host, port, messageMgr);
+    });
 
     messageMgr.on("dcsSend", args => {
       niod_console.log(args);
@@ -41,8 +43,7 @@ exports.connectToDcsServer = (socket, host, port, messageMgr) => {
   });
 };
 
-function handleError(e, socket, host, port, messageMgr) {
-  niod_console.error(e.message);
+const connect = (socket, host, port, messageMgr) => {
   setTimeout(() => {
     try {
       socket.connect(
@@ -58,13 +59,30 @@ function handleError(e, socket, host, port, messageMgr) {
       handleError(e, socket, host, port, messageMgr);
     }
   }, 5000);
-}
+};
 
-function handleClose() {
+const handleError = (e, socket, host, port, messageMgr) => {
+  niod_console.error(e.message);
+  connect(
+    socket,
+    host,
+    port,
+    messageMgr
+  );
+};
+
+const handleClose = (socket, host, port, messageMgr) => {
   niod_console.log("Server closed connection");
-}
+  socket.end();
+  connect(
+    socket,
+    host,
+    port,
+    messageMgr
+  );
+};
 
-function handleMsg(eventMgr, JSONData) {
+const handleMsg = (eventMgr, JSONData) => {
   niod_console.log("Received data");
   niod_console.logObject(JSONData);
   try {
@@ -91,9 +109,9 @@ function handleMsg(eventMgr, JSONData) {
     niod_console.error(e);
     return;
   }
-}
+};
 
-function handleFunction(eventMgr, parsedJsonObject) {
+const handleFunction = (eventMgr, parsedJsonObject) => {
   niod_console.log(
     `Received data, callbackId is: ${parsedJsonObject.callbackId}`
   );
@@ -101,4 +119,4 @@ function handleFunction(eventMgr, parsedJsonObject) {
     callbackId: parsedJsonObject.callbackId,
     data: parsedJsonObject.data
   });
-}
+};

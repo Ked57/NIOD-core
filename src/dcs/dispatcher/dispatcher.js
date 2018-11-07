@@ -42,14 +42,11 @@ exports.initDispatcher = (messageMgr, dispatchList) => {
 
 function dispatch(dispatchList, data, callbackId) {
   niod_console.log("Dispatching");
-  niod_console.logObject(dispatchList);
   const dispatch = dispatchList.find(dispatchObject => {
     return dispatchObject.callbackId === callbackId;
   });
 
   if (dispatch) {
-    niod_console.log("Found callback, executing");
-    niod_console.log(dispatch.callback);
     try {
       dispatch.callback(data);
       removeDispatch(dispatchList, dispatch);
@@ -79,8 +76,11 @@ function addDispatch(dispatchList, data, callback) {
 }
 
 const removeDispatch = (dispatchList, dispatchObject) => {
-  niod_console.log(`removed dispatch id ${dispatchObject.callbackId}`);
-  dispatchList = dispatchList.filter(
-    dispatch => dispatch.callbackId === dispatchObject.callbackId
-  );
+  const index = dispatchList.indexOf(dispatchObject);
+  if (index) {
+    dispatchList.splice(index, 1);
+    niod_console.log(`removed dispatch id ${dispatchObject.callbackId}`);
+  } else {
+    niod_console.log(`Couldnt find index for id ${dispatchObject.callbackId}`);
+  }
 };
