@@ -4,6 +4,8 @@ const getGroupsCallback = () => {
   niod_console.log("this is getGroupsCallback");
 };
 
+exports.getGroupsCallback = getGroupsCallback;
+
 exports.getGroupsFunction = (messageMgr, coalitionId) => {
   messageMgr.emit("dcsSend", {
     type: "function",
