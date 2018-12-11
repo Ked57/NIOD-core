@@ -1,36 +1,29 @@
 {
   "name": "niod",
   "version": "1.0.0",
-  "description": "NIOD is an API for DCS World lua natives, using a NodeJS server to communicate with a LUA library",
-  "main": "app.js",
+  "description": "NIOD is a web manager for DCS World lua natives, using a NodeJS server to communicate with a LUA library",
+  "main": "lib/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon --ignore 'save.json' --inspect ./app.js"
+    "dev": "tsc-watch src/app.ts --outDir ./lib --onSuccess \"node ./lib/app.js\" --onFailure \"echo Compilation failed, retrying\" --compiler typescript/bin/tsc"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ked57/NIOD.git"
   },
-  "keywords": [
-    "DCS",
-    "World",
-    "NIOD",
-    "API",
-    "NodeJS"
-  ],
   "author": "Ked",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Ked57/NIOD/issues"
   },
   "homepage": "https://github.com/Ked57/NIOD#readme",
-  "devDependencies": {
-    "nodemon": "^1.18.4"
-  },
   "dependencies": {
+    "@types/express": "^4.16.0",
     "express": "^4.16.4",
-    "mongodb": "^3.1.8",
-    "socket.io": "^2.1.1"
+    "ts-watch": "^1.0.8",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "tsc-watch": "^1.0.31",
+    "tslint": "^5.11.0"
   }
 }
