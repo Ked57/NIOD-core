@@ -1,4 +1,5 @@
 import * as net from "net";
+import InputPayload from "./interfaces/input_payload";
 
 let connected = false;
 let connecting = false;
@@ -37,7 +38,7 @@ const connect = (options: net.NetConnectOpts) => {
   return socket;
 };
 
-const send = (socket: net.Socket, data: { [key: string]: any }) => {
+const send = (socket: net.Socket, data: InputPayload) => {
   if (!connected) {
     console.error("ERR: Socket isn't connected, aborting;");
     return;
