@@ -45,17 +45,18 @@ const send = async (data: { [key: string]: any }, callback: Callback) => {
   if (!network_manager.connected || !socket) return;
   const dispatch: Dispatch = {
     data: data,
-    callback: callback
+    callback: callback,
+    callbackId: ""
   };
   try {
-    /*network_manager.send(
+    network_manager.send(
       socket,
       formPaylaod(
         await dispatcher.addDispatch(
           await dispatcher.verifiyInputDispatch(dispatch)
         )
       )
-    );*/
+    );
   } catch (e) {
     console.error(e);
   }

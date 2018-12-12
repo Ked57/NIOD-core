@@ -1,7 +1,7 @@
 import DispatchPayload from "./interfaces/dispatch_payload";
 import Dispatch from "./interfaces/dispatch";
 
-let dispatchList: Dispatch[] = [];
+const dispatchList: Dispatch[] = [];
 
 const verifiyInputDispatch = (dispatch: Dispatch) => {
   return new Promise<Dispatch>((resolve, reject) => {
@@ -59,7 +59,7 @@ const executeDispatch = (
 };
 
 const addDispatch = (dispatch: Dispatch) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<Dispatch>((resolve, reject) => {
     if (!dispatch)
       reject("Couldn't add dispatch because it's probably invalid");
     const callbackId =
