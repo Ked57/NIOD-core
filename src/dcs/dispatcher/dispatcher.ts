@@ -1,5 +1,7 @@
-import DispatchPayload from "./interfaces/dispatch_payload";
 import Dispatch from "./interfaces/dispatch";
+import ToBeDispatched from "./interfaces/to_be_dispatched";
+import Event from "../game/interfaces/callback/event";
+import Function from "../game/interfaces/callback/function";
 
 const dispatchList: Dispatch[] = [];
 
@@ -19,41 +21,44 @@ const verifiyInputDispatch = (dispatch: Dispatch) => {
   });
 };
 
-const verifyDispatchPayload = (dispatch: DispatchPayload) => {
-  return new Promise<DispatchPayload>((resolve, reject) => {
+const verifyDispatchPayload = (dispatch: ToBeDispatched) => {
+  return new Promise<Function | Event>((resolve, reject) => {
     console.log("Received niod_dispatch with dispatch:");
     console.log(dispatch);
-    if (dispatch && dispatch.data && dispatch.callbackId) {
+    if (dispatch && dispatch.data && dispatch.callbackId && dispatch.type) {
       console.log("Data check passed");
-      return resolve(dispatch);
+      if (dispatch.type === "function") {
+        const func: Function = {
+          data: dispatch.data,
+          type: dispatch.type,
+          callbackId: dispatch.type
+        };
+        return resolve(func);
+      } else if (dispatch.type === "event") {
+        const event: Event = {
+          data: dispatch.data,
+          type: dispatch.type,
+          name: dispatch.callbackId
+        };
+        resolve(event);
+      }
     } else {
       reject("Invalid payload dispatch properties");
     }
   });
 };
 
-const executeDispatch = (
-  data: { [key: string]: string },
-  callbackId: string
-) => {
-  return new Promise((resolve, reject) => {
+const getDispatch = (func: Function) => {
+  return new Promise<Function>((resolve, reject) => {
     console.log("Dispatching");
     const dispatch = dispatchList.find(dispatchObject => {
-      return dispatchObject.callbackId === callbackId;
+      return dispatchObject.callbackId === func.callbackId;
     });
-
     if (dispatch) {
-      try {
-        dispatch.callback(data);
-        resolve(dispatch);
-      } catch (error) {
-        console.error("Error while calling callback");
-        console.error(error);
-        reject();
-      }
+      func.callback = dispatch.callback;
+      resolve(func);
     } else {
-      console.log("Couldn't find callback, aborting");
-      reject();
+      reject("Couldn't find callback, aborting");
     }
   });
 };
@@ -87,7 +92,7 @@ const removeDispatch = (dispatchObject: Dispatch) => {
 const dispatcher = {
   verifiyInputDispatch: verifiyInputDispatch,
   verifyDispatchPayload: verifyDispatchPayload,
-  executeDispatch: executeDispatch,
+  getDispatch: getDispatch,
   addDispatch: addDispatch,
   removeDispatch: removeDispatch
 };
