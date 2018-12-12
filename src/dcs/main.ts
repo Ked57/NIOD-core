@@ -21,17 +21,16 @@ const initDCSModule = () => {
     console.log(dataFromDcsToJson(data.toString()));
   });
 
-  setTimeout(
-    () =>
-      send(
-        {
-          name: "getGroups",
-          args: [2]
-        },
-        () => console.log("got em")
-      ),
-    2500
-  );
+  setTimeout(() => {
+    console.log("will send");
+    send(
+      {
+        name: "getGroups",
+        args: [2]
+      },
+      () => console.log("got em")
+    );
+  }, 2500);
 };
 
 const formPaylaod = (dispatch: Dispatch) => {
@@ -39,15 +38,21 @@ const formPaylaod = (dispatch: Dispatch) => {
     type: "function",
     callbackId: dispatch.callbackId,
     data: dispatch.data
-  };
+  } as InputPayload;
 };
 const send = async (data: { [key: string]: any }, callback: Callback) => {
-  if (!network_manager.connected || !socket) return;
+  if (!network_manager.isConnected() || !socket) {
+    console.error(
+      "Error trying to send something: Network isn't connected or socket is empty, aborting"
+    );
+    return;
+  }
   const dispatch: Dispatch = {
     data: data,
     callback: callback,
     callbackId: ""
   };
+
   try {
     network_manager.send(
       socket,

@@ -14,6 +14,7 @@ const connect = (options: net.NetConnectOpts) => {
 
   socket.setTimeout(1000 * 60 * 5); //5 minutes
   socket.setEncoding("utf8");
+  socket.setKeepAlive(true, 1000); //1 sec
   // When connection disconnected.
   socket.once("end", function() {
     console.log("Client socket disconnect. ");
@@ -39,7 +40,7 @@ const connect = (options: net.NetConnectOpts) => {
 };
 
 const send = (socket: net.Socket, data: InputPayload) => {
-  if (!connected) {
+  if (!isConnected) {
     console.error("ERR: Socket isn't connected, aborting;");
     return;
   }
@@ -49,9 +50,14 @@ const send = (socket: net.Socket, data: InputPayload) => {
   );
 };
 
+const isConnected = () => {
+  return connected;
+};
+
 const network_manager = {
   connect: connect,
   send: send,
+  isConnected: isConnected,
   connected: connected,
   connecting: connecting
 };
