@@ -49,6 +49,7 @@ const formPaylaod = (dispatch: Dispatch) => {
     data: dispatch.data
   } as InputPayload;
 };
+
 const send = async (data: { [key: string]: any }, callback: Callback) => {
   if (!network_manager.isConnected() || !socket) {
     console.error(
@@ -79,8 +80,10 @@ const send = async (data: { [key: string]: any }, callback: Callback) => {
 const receive = async (data: { [key: string]: any }) => {
   try {
     await handlePayload(await payload_validator.validatePayload(data));
+    return true;
   } catch (err) {
     console.error(err);
+    return false;
   }
 };
 
@@ -93,7 +96,7 @@ const handlePayload = (payload: Event | Function) => {
           resolve(func.callback(func.data));
         } else reject("Couldn't find any callback function to execute");
       } /*else if(payload.type === "event"){
-        // TODO: Handle the event and return the function that will call every subscriber 
+        // TODO: Handle the event and return the function that will call every subscriber
         resolve(eventDispatcher);
       }*/ else {
         reject("Couldnt dispatch the received payload");
@@ -106,7 +109,8 @@ const handlePayload = (payload: Event | Function) => {
 
 const DCSModule = {
   init: initDCSModule,
-  send: send
+  send: send,
+  receive: receive
 };
 
 export default DCSModule;

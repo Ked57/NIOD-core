@@ -6,7 +6,7 @@ const dataFromDcsJsonToObject = (data: string): { [key: string]: string } => {
 
 const validatePayload = (data: { [key: string]: any }) => {
   return new Promise<ToBeDispatched>((resolve, reject) => {
-    if (data && data.type && data.data && data.type) {
+    if (data && data.type && data.data && data.callbackId) {
       const outputPayload: ToBeDispatched = {
         data: data.data,
         callbackId: data.callbackId,

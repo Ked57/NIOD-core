@@ -12,4 +12,5 @@ const game_manager = {
   saveGroups: saveGroups,
   getGroups: getGroups
 };
+
 export default game_manager;

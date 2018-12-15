@@ -3,19 +3,16 @@ import ToBeDispatched from "./interfaces/to_be_dispatched";
 import Event from "../game/interfaces/callback/event";
 import Function from "../game/interfaces/callback/function";
 
-const dispatchList: Dispatch[] = [];
+const dispatchList: Map<String, Dispatch> = new Map();
 
 const verifiyInputDispatch = (dispatch: Dispatch) => {
   return new Promise<Dispatch>((resolve, reject) => {
-    console.log("Received niod_addDispatch with dispatch:");
-    console.log(dispatch);
     if (
       dispatch &&
       dispatch.data &&
       dispatch.callback &&
       typeof dispatch.callback === "function"
     ) {
-      console.log("Data check passed");
       resolve(dispatch);
     } else reject("Invalid input dispatch properties");
   });
@@ -23,10 +20,7 @@ const verifiyInputDispatch = (dispatch: Dispatch) => {
 
 const verifyDispatchPayload = (dispatch: ToBeDispatched) => {
   return new Promise<Function | Event>((resolve, reject) => {
-    console.log("Received niod_dispatch with dispatch:");
-    console.log(dispatch);
     if (dispatch && dispatch.data && dispatch.callbackId && dispatch.type) {
-      console.log("Data check passed");
       if (dispatch.type === "function") {
         const func: Function = {
           data: dispatch.data,
@@ -50,12 +44,10 @@ const verifyDispatchPayload = (dispatch: ToBeDispatched) => {
 
 const getDispatch = (func: Function) => {
   return new Promise<Function>((resolve, reject) => {
-    console.log("Dispatching");
-    const dispatch = dispatchList.find(dispatchObject => {
-      return dispatchObject.callbackId === func.callbackId;
-    });
+    const dispatch = dispatchList.get(func.callbackId);
     if (dispatch) {
       func.callback = dispatch.callback;
+      removeDispatch(dispatch);
       resolve(func);
     } else {
       reject("Couldn't find callback, aborting");
@@ -71,22 +63,22 @@ const addDispatch = (dispatch: Dispatch) => {
       "_" +
       Math.random()
         .toString(36)
-        .substr(2, 9); // To generate an unique random uid
+        .substr(2, 9); // To generate a (kinda) unique random uid
     dispatch.callbackId = callbackId;
-    dispatchList.push(dispatch);
-    console.log(`Sucessfuly pushed callback with id: ${callbackId}`);
+    dispatchList.set(dispatch.callbackId, dispatch);
     resolve(dispatch);
   });
 };
 
 const removeDispatch = (dispatchObject: Dispatch) => {
-  const index = dispatchList.indexOf(dispatchObject);
-  if (index) {
-    dispatchList.splice(index, 1);
-    console.log(`removed dispatch id ${dispatchObject.callbackId}`);
-  } else {
-    console.log(`Couldnt find index for id ${dispatchObject.callbackId}`);
+  const result = dispatchList.delete(dispatchObject.callbackId);
+  if (!result) {
+    console.log(`Couldnt find any entry for id ${dispatchObject.callbackId}`);
   }
+};
+
+const displayDispatchList = () => {
+  console.log(dispatchList);
 };
 
 const dispatcher = {
@@ -94,7 +86,8 @@ const dispatcher = {
   verifyDispatchPayload: verifyDispatchPayload,
   getDispatch: getDispatch,
   addDispatch: addDispatch,
-  removeDispatch: removeDispatch
+  removeDispatch: removeDispatch,
+  displayDispatchList: displayDispatchList
 };
 
 export default dispatcher;
