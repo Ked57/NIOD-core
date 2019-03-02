@@ -36,16 +36,16 @@ const initDCSModule = () => {
       },
       data => game_manager.saveGroups(data)
     );
-    send(
-      {
-        name: "addGroup",
-        args: game_manager.getGroups()[0]
-      },
-      () => console.log("addGroup done")
-    );
   }, 2500);
   setTimeout(() => {
     console.log(game_manager.getGroups());
+    send(
+      {
+        name: "addGroup",
+        args: game_manager.getTemplateGroups()[0]
+      },
+      () => console.log("addGroup done")
+    );
   }, 3000);
 };
 
