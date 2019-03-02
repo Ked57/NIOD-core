@@ -1,7 +1,9 @@
 import Callback from "./callback";
 
-export default interface Dispatch {
+type Dispatch = {
   data: { [key: string]: any };
   callback: Callback;
   callbackId: string;
-}
+};
+
+export default Dispatch;

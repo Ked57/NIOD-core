@@ -2,11 +2,11 @@ import * as net from "net";
 import payload_validator from "./payload_validator";
 import network_manager from "./network/network_manager";
 import dispatcher from "./dispatcher/dispatcher";
-import Dispatch from "./dispatcher/interfaces/dispatch";
-import Callback from "./dispatcher/interfaces/callback";
-import InputPayload from "./network/interfaces/input_payload";
-import Event from "./game/interfaces/callback/event";
-import Function from "./game/interfaces/callback/function";
+import Dispatch from "./dispatcher/types/dispatch";
+import Callback from "./dispatcher/types/callback";
+import InputPayload from "./network/types/input_payload";
+import Event from "./game/types/callback/event";
+import Function from "./game/types/callback/function";
 import game_manager from "./game/game_manager";
 
 const options = {

@@ -1,7 +1,7 @@
-import Dispatch from "./interfaces/dispatch";
-import ToBeDispatched from "./interfaces/to_be_dispatched";
-import Event from "../game/interfaces/callback/event";
-import Function from "../game/interfaces/callback/function";
+import Dispatch from "./types/dispatch";
+import ToBeDispatched from "./types/to_be_dispatched";
+import Event from "../game/types/callback/event";
+import Function from "../game/types/callback/function";
 
 const dispatchList: Map<String, Dispatch> = new Map();
 

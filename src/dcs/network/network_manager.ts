@@ -1,5 +1,5 @@
 import * as net from "net";
-import InputPayload from "./interfaces/input_payload";
+import InputPayload from "./types/input_payload";
 
 let connected = false;
 let connecting = false;

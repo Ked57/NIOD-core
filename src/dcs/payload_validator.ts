@@ -1,4 +1,4 @@
-import ToBeDispatched from "./dispatcher/interfaces/to_be_dispatched";
+import ToBeDispatched from "./dispatcher/types/to_be_dispatched";
 
 const dataFromDcsJsonToObject = (data: string): { [key: string]: string } => {
   return JSON.parse(data);

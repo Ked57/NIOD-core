@@ -1,11 +1,9 @@
 import test from "ava";
-import Dispatch from "../dcs/dispatcher/interfaces/dispatch";
+import Dispatch from "../dcs/dispatcher/types/dispatch";
 import dispatcher from "../dcs/dispatcher/dispatcher";
 import payload_validator from "../dcs/payload_validator";
-import ToBeDispatched from "../dcs/dispatcher/interfaces/to_be_dispatched";
-import Function from "../dcs/game/interfaces/callback/function";
+import ToBeDispatched from "../dcs/dispatcher/types/to_be_dispatched";
 import DCSModule from "../dcs/main";
-import game_manager from "../dcs/game/game_manager";
 
 const dispatch: Dispatch = {
   callbackId: "testcallbackId",
