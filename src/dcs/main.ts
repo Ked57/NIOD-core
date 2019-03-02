@@ -42,7 +42,9 @@ const initDCSModule = () => {
     send(
       {
         name: "addGroup",
-        args: game_manager.getTemplateGroups()[0]
+        args: game_manager.fromTemplateGroupToAddGroupData(
+          game_manager.getTemplateGroups()[0]
+        )
       },
       () => console.log("addGroup done")
     );
