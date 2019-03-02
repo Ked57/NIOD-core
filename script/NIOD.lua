@@ -73,6 +73,9 @@ niod.nativeFunctions = {
 			end
 		end
 		return groups
+	end,
+	addGroup = function(args)
+		niod.log("Adding a group ...")
 	end
 }
 
