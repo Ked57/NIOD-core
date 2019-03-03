@@ -63,6 +63,9 @@ niod.nativeFunctions = {
 					unit.ammo = uv:getAmmo()
 					unit.sensors = uv:getSensors()
 					unit.hasRadar, unit.target = uv:getRadar()
+					unit.position = uv:getPosition()
+					unit.velocity = uv:getVelocity()
+					unit.inAir = uv:inAir()
 					table.insert(group.units, unit)
 				end
 				group.size = v:getSize()
@@ -76,6 +79,8 @@ niod.nativeFunctions = {
 	end,
 	addGroup = function(args)
 		niod.log("Adding a group ...")
+		coalition.addGroup(args.countryId,args.groupCategory,args.data)
+		return true
 	end
 }
 
@@ -122,6 +127,7 @@ function niod.processRequest(request)
 			if request.type == "function" and request.data.name then
 				niod.log("Processing native function")
 				response.data = niod.nativeFunctions[request.data.name](request.data.args)
+				niod.log(response.data)
 			end
 		end
 	end

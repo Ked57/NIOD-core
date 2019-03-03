@@ -21,9 +21,7 @@ const initDCSModule = () => {
 
   socket.on("data", function(data) {
     console.log("Server return data");
-    const receivedData = payload_validator.dataFromDcsJsonToObject(
-      data.toString()
-    );
+    const receivedData = payload_validator.dataFromDcsJsonToObject(data);
     console.log(receivedData);
     receive(receivedData);
   });
@@ -38,12 +36,14 @@ const initDCSModule = () => {
     );
   }, 2500);
   setTimeout(() => {
-    console.log(game_manager.getGroups());
     send(
       {
         name: "addGroup",
         args: game_manager.fromTemplateGroupToAddGroupData(
-          game_manager.getTemplateGroups()[0]
+          1,
+          game_manager.getTemplateGroups()[0],
+          56972.0,
+          45875.0
         )
       },
       () => console.log("addGroup done")
