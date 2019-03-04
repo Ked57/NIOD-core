@@ -11,7 +11,7 @@ import Callback from "./dispatcher/types/callback";
 import InputPayload from "./network/types/input_payload";
 import Event from "./game/types/callback/event";
 import Function from "./game/types/callback/function";
-import game_manager from "./game/game_manager";
+import { saveGroups, getGroups } from "./game/game_manager";
 
 const options = {
   port: 15487,
@@ -35,15 +35,14 @@ const initDCSModule = () => {
   setTimeout(() => {
     send(
       {
-        name: "getGroups",
-        args: [2]
+        name: "spawn",
+        args: {
+          groupName: "Spawn Vehicle 1"
+        }
       },
-      data => game_manager.saveGroups(data)
+      data => console.log(data)
     );
   }, 2500);
-  setTimeout(() => {
-    console.log(game_manager.getGroups());
-  }, 3000);
 };
 
 const formPaylaod = (dispatch: Dispatch) => {
