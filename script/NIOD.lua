@@ -7,6 +7,8 @@ local socket = require('socket')
 local JSON = loadfile("Scripts\\JSON.lua")()
 local niod = {}
 
+local templateGroups = {}
+
 niod.scope = "127.0.0.1"
 niod.port = 15487
 niod.DATA_TIMEOUT_SEC = 0.2
@@ -35,10 +37,15 @@ end
 
 -- Native functions wrappers
 niod.nativeFunctions = {
+	newSpawnTemplate = function(args)
+		templateGroups[args.groupName] = SPAWN:New( args.groupName )
+		return 1
+	end,
 	spawn = function(args)
-		local spawnUnit = SPAWN:New( args.groupName )
-		local spawnGroup = spawnUnit:Spawn()
-		return spawnGroup:GetName()
+		if not templateGroups[args.groupName] then
+			niod.nativeFunctions["newSpawnTemplate"](args)
+		end
+		return templateGroups[args.groupName]:Spawn():GetName()
 	end
 }
 
