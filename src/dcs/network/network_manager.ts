@@ -39,7 +39,7 @@ const connect = (options: net.NetConnectOpts) => {
   return socket;
 };
 
-const send = (socket: net.Socket, data: InputPayload) => {
+const networkSend = (socket: net.Socket, data: InputPayload) => {
   if (!isConnected) {
     console.error("ERR: Socket isn't connected, aborting;");
     return;
@@ -54,12 +54,4 @@ const isConnected = () => {
   return connected;
 };
 
-const network_manager = {
-  connect: connect,
-  send: send,
-  isConnected: isConnected,
-  connected: connected,
-  connecting: connecting
-};
-
-export default network_manager;
+export { connect, networkSend, isConnected, connected, connecting };

@@ -1,9 +1,12 @@
 import test from "ava";
 import Dispatch from "../dcs/dispatcher/types/dispatch";
-import dispatcher from "../dcs/dispatcher/dispatcher";
+import {
+  verifiyInputDispatch,
+  addDispatch
+} from "../dcs/dispatcher/dispatcher";
 import payload_validator from "../dcs/payload_validator";
 import ToBeDispatched from "../dcs/dispatcher/types/to_be_dispatched";
-import DCSModule from "../dcs/main";
+import { receive } from "../dcs/main";
 
 const dispatch: Dispatch = {
   callbackId: "testcallbackId",
@@ -41,11 +44,11 @@ const invalidReceiveObject = {
 };
 
 test("Given an input dispatch, resolve the promise with that same dispatch", async t => {
-  t.is(dispatch, await dispatcher.verifiyInputDispatch(dispatch));
+  t.is(dispatch, await verifiyInputDispatch(dispatch));
 });
 
 test("Given a valid input dispatch, add it to the dispatcher's list and resolve the dispatch", async t => {
-  t.is(dispatch, await dispatcher.addDispatch(dispatch));
+  t.is(dispatch, await addDispatch(dispatch));
 });
 
 test("Given a data object, resolve a 'to be dispatched' object", async t => {
@@ -59,13 +62,13 @@ test("Given a data object, resolve a 'to be dispatched' object", async t => {
 
 test("Given a valid input receive function object, resolve a boolean if you could execute the callback", async t => {
   // Add a dispatch first
-  const resultDispatch = await dispatcher.addDispatch(dispatch);
+  const resultDispatch = await addDispatch(dispatch);
   const validReceiveFuncUpdated = {
     type: validReceiveFunc.type,
     data: validReceiveFunc.data,
     callbackId: resultDispatch.callbackId
   };
-  t.is(true, await DCSModule.receive(validReceiveFuncUpdated));
+  t.is(true, await receive(validReceiveFuncUpdated));
 });
 
 test("Given a valid input receive event object, resolve a boolean if you could execute the callback", async t => {
@@ -75,5 +78,5 @@ test("Given a valid input receive event object, resolve a boolean if you could e
 
 test("Given an invalid input receive function object, resolve a false", async t => {
   // no need to add a dispatcher this time
-  t.is(false, await DCSModule.receive(invalidReceiveObject));
+  t.is(false, await receive(invalidReceiveObject));
 });

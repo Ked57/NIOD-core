@@ -81,13 +81,11 @@ const displayDispatchList = () => {
   console.log(dispatchList);
 };
 
-const dispatcher = {
-  verifiyInputDispatch: verifiyInputDispatch,
-  verifyDispatchPayload: verifyDispatchPayload,
-  getDispatch: getDispatch,
-  addDispatch: addDispatch,
-  removeDispatch: removeDispatch,
-  displayDispatchList: displayDispatchList
+export {
+  verifiyInputDispatch,
+  verifyDispatchPayload,
+  getDispatch,
+  addDispatch,
+  removeDispatch,
+  displayDispatchList
 };
-
-export default dispatcher;
