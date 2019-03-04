@@ -8,6 +8,8 @@ local JSON = loadfile("Scripts\\JSON.lua")()
 local niod = {}
 
 local templateGroups = {}
+local templateZones = {}
+
 
 niod.scope = "127.0.0.1"
 niod.port = 15487
@@ -36,14 +38,18 @@ function niod.setDevEnv(isDev)
 end
 
 -- Native functions wrappers
-niod.nativeFunctions = {
+niod.mooseFunctions = {
+	registerZone = function(args)
+		templateZones[args.zoneName] = ZONE:New( args.zoneName )
+		return 1
+	end,
 	newSpawnTemplate = function(args)
 		templateGroups[args.groupName] = SPAWN:New( args.groupName )
 		return 1
 	end,
 	spawn = function(args)
 		if not templateGroups[args.groupName] then
-			niod.nativeFunctions["newSpawnTemplate"](args)
+			niod.mooseFunctions["newSpawnTemplate"](args)
 		end
 		return templateGroups[args.groupName]:Spawn():GetName()
 	end
@@ -91,7 +97,7 @@ function niod.processRequest(request)
 		if request.data then
 			if request.type == "function" and request.data.name then
 				niod.log("Processing native function")
-				response.data = niod.nativeFunctions[request.data.name](request.data.args)
+				response.data = niod.mooseFunctions[request.data.name](request.data.args)
 			end
 		end
 	end

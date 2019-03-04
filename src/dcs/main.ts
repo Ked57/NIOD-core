@@ -33,18 +33,15 @@ const initDCSModule = () => {
   });
 
   setTimeout(() => {
-    setInterval(() => {
-      send(
-        {
-          name: "spawn",
-          args: {
-            groupName: "Spawn Vehicle 1",
-            prefix: "prefix"
-          }
-        },
-        data => console.log(data)
-      );
-    }, 5000);
+    send(
+      {
+        name: "registerZone",
+        args: {
+          zoneName: "zone"
+        }
+      },
+      data => console.log(data)
+    );
   }, 2500);
 };
 
