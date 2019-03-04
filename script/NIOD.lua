@@ -48,10 +48,29 @@ niod.mooseFunctions = {
 		return 1
 	end,
 	spawn = function(args)
+		if not args.groupName then
+			return 0
+		end
 		if not templateGroups[args.groupName] then
 			niod.mooseFunctions["newSpawnTemplate"](args)
 		end
 		return templateGroups[args.groupName]:Spawn():GetName()
+	end,
+	spawnInZone = function(args)
+		if not args.zoneName or not args.groupName then
+			return 0
+		end
+		local randomize = true
+		if not templateGroups[args.groupName] then
+			niod.mooseFunctions["newSpawnTemplate"](args)
+		end
+		if not templateZones[args.zoneName] then
+			niod.mooseFunctions["registerZone"](args)
+		end
+		if not args.randomize then
+			randomize = args.randomize
+		end
+		return templateGroups[args.groupName]:SpawnInZone(templateZones[args.zoneName], randomize):GetName()
 	end
 }
 

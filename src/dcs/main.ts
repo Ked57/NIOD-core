@@ -35,8 +35,9 @@ const initDCSModule = () => {
   setTimeout(() => {
     send(
       {
-        name: "registerZone",
+        name: "spawnInZone",
         args: {
+          groupName: "template_ground",
           zoneName: "zone"
         }
       },
