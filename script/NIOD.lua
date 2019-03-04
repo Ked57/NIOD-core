@@ -7,6 +7,8 @@ local socket = require('socket')
 local JSON = loadfile("Scripts\\JSON.lua")()
 local niod = {}
 
+local templateGroups = {}
+
 niod.scope = "127.0.0.1"
 niod.port = 15487
 niod.DATA_TIMEOUT_SEC = 0.2
@@ -35,44 +37,15 @@ end
 
 -- Native functions wrappers
 niod.nativeFunctions = {
-	getGroups = function(args)
-		local groups = {}
-		if args then
-			local dcsGroups = coalition.getGroups(args[1])
-			for i,v in ipairs(dcsGroups) do
-				local group = {}
-				group.id = v:getID()
-				group.isExist = v:isExist()
-				group.category = v:getCategory()
-				group.coalition = v:getCoalition()
-				group.name = v:getName()
-				local units = v:getUnits()
-				group.units = {}
-				for ui,uv in ipairs(units) do
-					local unit = {}
-					unit.isActive = uv:isActive()
-					unit.desc = uv:getDesc()
-					unit.playerName = uv:getPlayerName()
-					unit.id = uv:getID()
-					unit.index = uv:getNumber()
-					unit.detectedTarget = uv:getController():getDetectedTargets()
-					unit.callsign = uv:getCallsign()
-					unit.life = uv:getLife()
-					unit.maxLife = uv:getLife0()
-					unit.fuel = uv:getFuel()
-					unit.ammo = uv:getAmmo()
-					unit.sensors = uv:getSensors()
-					unit.hasRadar, unit.target = uv:getRadar()
-					table.insert(group.units, unit)
-				end
-				group.size = v:getSize()
-				group.initialSize = v:getInitialSize()
-				local controller = v:getController()
-				group.hasTask = controller:hasTask()
-				table.insert(groups, group)
-			end
+	newSpawnTemplate = function(args)
+		templateGroups[args.groupName] = SPAWN:New( args.groupName )
+		return 1
+	end,
+	spawn = function(args)
+		if not templateGroups[args.groupName] then
+			niod.nativeFunctions["newSpawnTemplate"](args)
 		end
-		return groups
+		return templateGroups[args.groupName]:Spawn():GetName()
 	end
 }
 
