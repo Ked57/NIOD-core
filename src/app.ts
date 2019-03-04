@@ -1,9 +1,9 @@
 import express from "express";
-import DCSModule from "./dcs/main";
+import { initDCSModule } from "./dcs/main";
 
 const app = express();
 
-DCSModule.init();
+initDCSModule();
 
 app.get("/", (req: express.Request, res: express.Response) =>
   res.send("Hello World!")

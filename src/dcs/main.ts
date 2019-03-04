@@ -1,7 +1,11 @@
 import * as net from "net";
 import payload_validator from "./payload_validator";
-import network_manager from "./network/network_manager";
-import dispatcher from "./dispatcher/dispatcher";
+import { connect, isConnected, networkSend } from "./network/network_manager";
+import {
+  addDispatch,
+  verifiyInputDispatch,
+  getDispatch
+} from "./dispatcher/dispatcher";
 import Dispatch from "./dispatcher/types/dispatch";
 import Callback from "./dispatcher/types/callback";
 import InputPayload from "./network/types/input_payload";
@@ -17,7 +21,7 @@ const options = {
 let socket: net.Socket;
 
 const initDCSModule = () => {
-  socket = network_manager.connect(options);
+  socket = connect(options);
 
   socket.on("data", function(data) {
     console.log("Server return data");
@@ -51,7 +55,7 @@ const formPaylaod = (dispatch: Dispatch) => {
 };
 
 const send = async (data: { [key: string]: any }, callback: Callback) => {
-  if (!network_manager.isConnected() || !socket) {
+  if (!isConnected() || !socket) {
     console.error(
       "Error trying to send something: Network isn't connected or socket is empty, aborting"
     );
@@ -64,13 +68,9 @@ const send = async (data: { [key: string]: any }, callback: Callback) => {
   };
 
   try {
-    network_manager.send(
+    networkSend(
       socket,
-      formPaylaod(
-        await dispatcher.addDispatch(
-          await dispatcher.verifiyInputDispatch(dispatch)
-        )
-      )
+      formPaylaod(await addDispatch(await verifiyInputDispatch(dispatch)))
     );
   } catch (err) {
     console.error(err);
@@ -91,7 +91,7 @@ const handlePayload = (payload: Event | Function) => {
   return new Promise<any>(async (resolve, reject) => {
     try {
       if (payload.type === "function") {
-        const func = await dispatcher.getDispatch(payload as Function);
+        const func = await getDispatch(payload as Function);
         if (func.callback) {
           resolve(func.callback(func.data));
         } else reject("Couldn't find any callback function to execute");
@@ -107,10 +107,4 @@ const handlePayload = (payload: Event | Function) => {
   });
 };
 
-const DCSModule = {
-  init: initDCSModule,
-  send: send,
-  receive: receive
-};
-
-export default DCSModule;
+export { initDCSModule, send, receive };
