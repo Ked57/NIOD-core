@@ -72,7 +72,6 @@ const send = async (data: { [key: string]: any }, callback: Callback) => {
 
   try {
     networkSend(
-      socket,
       formPaylaod(await addDispatch(await verifiyInputDispatch(dispatch)))
     );
   } catch (err) {
