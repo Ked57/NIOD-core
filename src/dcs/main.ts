@@ -33,16 +33,19 @@ const initDCSModule = () => {
   });
 
   setTimeout(() => {
-    send(
-      {
-        name: "spawnInZone",
-        args: {
-          groupName: "template_ground",
-          zoneName: "zone"
-        }
-      },
-      data => console.log(data)
-    );
+    setInterval(() => {
+      send(
+        {
+          name: "spawnInZone",
+          args: {
+            groupName: "template_ground",
+            zoneName: "zone",
+            randomize: true
+          }
+        },
+        data => console.log(data)
+      );
+    }, 2000);
   }, 2500);
 };
 

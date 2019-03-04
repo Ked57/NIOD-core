@@ -37,16 +37,19 @@ function niod.setDevEnv(isDev)
 	env.setErrorMessageBoxEnabled(niod.isDev)
 end
 
+
+function registerZone(args)
+templateZones[args.zoneName] = ZONE:New( args.zoneName )
+return 1
+end
+
+function newSpawnTemplate(args)
+templateGroups[args.groupName] = SPAWN:New( args.groupName )
+return 1
+end
+
 -- Native functions wrappers
 niod.mooseFunctions = {
-	registerZone = function(args)
-		templateZones[args.zoneName] = ZONE:New( args.zoneName )
-		return 1
-	end,
-	newSpawnTemplate = function(args)
-		templateGroups[args.groupName] = SPAWN:New( args.groupName )
-		return 1
-	end,
 	spawn = function(args)
 		if not args.groupName then
 			return 0
@@ -62,12 +65,12 @@ niod.mooseFunctions = {
 		end
 		local randomize = true
 		if not templateGroups[args.groupName] then
-			niod.mooseFunctions["newSpawnTemplate"](args)
+			newSpawnTemplate(args)
 		end
 		if not templateZones[args.zoneName] then
-			niod.mooseFunctions["registerZone"](args)
+			registerZone(args)
 		end
-		if not args.randomize then
+		if args.randomize then
 			randomize = args.randomize
 		end
 		return templateGroups[args.groupName]:SpawnInZone(templateZones[args.zoneName], randomize):GetName()
