@@ -1,11 +1,21 @@
 import * as net from "net";
 import InputPayload from "./types/input_payload";
+import { Observable, Observer } from "rxjs";
+import { Socket } from "net";
 
-let connected = false;
+let connected: Observer<Boolean>;
+const connectedObservable: Observable<Boolean> = Observable.create(
+  (observer: Observer<Boolean>) => {
+    observer.next(false);
+    connected = observer;
+  }
+);
 let connecting = false;
 let socket: net.Socket;
 
-const connect = (options: net.NetConnectOpts) => {
+const connect = (
+  options: net.NetConnectOpts
+): [Socket, Observable<Boolean>] => {
   connecting = true;
   createConnection(options);
 
@@ -15,7 +25,7 @@ const connect = (options: net.NetConnectOpts) => {
   // When disconnected.
   socket.once("end", function() {
     console.error("Client socket disconnect. ");
-    connected = false;
+    connected.next(false);
     if (!connecting) {
       setTimeout(() => connect(options), 1000);
     }
@@ -23,7 +33,7 @@ const connect = (options: net.NetConnectOpts) => {
 
   socket.once("timeout", function() {
     console.log("Client connection timeout. ");
-    connected = false;
+    connected.next(false);
     if (!connecting) {
       setTimeout(() => connect(options), 1000);
     }
@@ -31,18 +41,18 @@ const connect = (options: net.NetConnectOpts) => {
 
   socket.once("error", function(err) {
     console.error(JSON.stringify(err));
-    connected = false;
+    connected.next(false);
     connecting = false;
     setTimeout(() => connect(options), 1000);
   });
-  return socket;
+  return [socket, connectedObservable];
 };
 
 const createConnection = (options: net.NetConnectOpts) => {
   try {
     socket = net.createConnection(options, () => {
       console.log("Niod client connected");
-      connected = true;
+      connected.next(true);
       connecting = false;
     });
   } catch (err) {

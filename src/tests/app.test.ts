@@ -1,6 +1,6 @@
 import test from "ava";
 import net from "net";
-import { app } from "../app";
+import { initNiod, spawnGroupInZone } from "../app";
 
 const portInUse = (port: number) => {
   return new Promise((resolve, reject) => {
@@ -20,13 +20,21 @@ const portInUse = (port: number) => {
 };
 
 test("Start a NIOD server", async t => {
-  app.listen(3000, () => console.log("Niod web server started on port 3000!"));
-  let serverStarted;
   try {
-    await portInUse(3000);
-    serverStarted = true;
+    const app = await initNiod(true);
+    app.listen(3000, () =>
+      console.log("Niod web server started on port 3000!")
+    );
+    let serverStarted;
+    try {
+      await portInUse(3000);
+      serverStarted = true;
+    } catch (err) {
+      serverStarted = false;
+    }
+    t.false(serverStarted);
   } catch (err) {
-    serverStarted = false;
+    console.error(err);
+    t.fail();
   }
-  t.false(serverStarted);
 });
