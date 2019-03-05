@@ -11,7 +11,6 @@ import Callback from "./dispatcher/types/callback";
 import InputPayload from "./network/types/input_payload";
 import Event from "./game/types/callback/event";
 import Function from "./game/types/callback/function";
-import { saveGroups, getGroups } from "./game/game_manager";
 
 const options = {
   port: 15487,
@@ -31,22 +30,6 @@ const initDCSModule = () => {
     console.log(receivedData);
     receive(receivedData);
   });
-
-  setTimeout(() => {
-    setInterval(() => {
-      send(
-        {
-          name: "spawnInZone",
-          args: {
-            groupName: "template_ground",
-            zoneName: "zone",
-            randomize: true
-          }
-        },
-        data => console.log(data)
-      );
-    }, 2000);
-  }, 2500);
 };
 
 const formPaylaod = (dispatch: Dispatch) => {
