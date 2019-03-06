@@ -3,13 +3,10 @@ import * as core from "express-serve-static-core";
 import { initDCSModule } from "./dcs/main";
 import { spawnGroup, spawnGroupInZone } from "./dcs/game/game_functions";
 
-const initNiod = (dontTryToConnect: Boolean) => {
+const initNiod = () => {
   return new Promise<core.Express>((resolve, reject) => {
     const app = express();
 
-    if (dontTryToConnect) {
-      resolve(app);
-    }
     const connected = initDCSModule();
 
     connected.subscribe({
