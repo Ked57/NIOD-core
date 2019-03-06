@@ -6,7 +6,7 @@ defaults: &defaults
     - image: circleci/node:8.9.1
 
 jobs:
-  init-repo:
+  init-dependancies:
     docker:
       - image: circleci/node:8
     steps:
@@ -68,11 +68,19 @@ workflows:
   version: 2
   test-deploy:
     jobs:
+      - init-dependancies:
+          filters:
+            tags:
+              only: /^v.*/
       - lint:
+          requires:
+            - init-dependancies
           filters:
             tags:
               only: /^v.*/
       - check-formatting:
+          requires:
+            - init-dependancies
           filters:
             tags:
               only: /^v.*/
