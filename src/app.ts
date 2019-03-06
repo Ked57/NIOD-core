@@ -11,6 +11,7 @@ const initNiod = (dontTryToConnect: Boolean) => {
     if (dontTryToConnect) {
       resolve(app);
     }
+    console.log("i got here anyway");
     connected.subscribe({
       next: value => (value ? resolve(app) : ""),
       error: err => reject("Something wrong occurred: " + err),
