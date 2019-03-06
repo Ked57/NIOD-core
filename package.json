@@ -1,6 +1,6 @@
 {
   "name": "niod",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NIOD is a web manager for DCS World lua natives, using a NodeJS server to communicate with a LUA library",
   "main": "lib/app.js",
   "scripts": {
@@ -24,13 +24,13 @@
     "@types/express": "^4.16.0",
     "express": "^4.16.4",
     "prettier": "^1.15.3",
-    "rxjs": "^6.4.0",
+    "rxjs": "^6.4.0"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typescript": "^3.2.2"
-  },
-  "devDependencies": {
-    "ava": "^0.25.0"
   },
   "ava": {
     "files": [
