@@ -10,11 +10,13 @@ const portInUse = (port: number) => {
     });
     server.listen(port, "127.0.0.1");
     server.on("error", err => {
-      resolve();
+      console.log("port is in use");
+      resolve(true);
     });
     server.on("listening", () => {
       server.close();
-      reject();
+      console.error("port isn't in use");
+      reject("port isn't in use");
     });
   });
 };
@@ -22,17 +24,17 @@ const portInUse = (port: number) => {
 test("Start a NIOD server", async t => {
   try {
     const app = await initNiod(true);
-    app.listen(3000, () =>
-      console.log("Niod web server started on port 3000!")
-    );
-    let serverStarted;
-    try {
-      await portInUse(3000);
-      serverStarted = true;
-    } catch (err) {
-      serverStarted = false;
-    }
-    t.false(serverStarted);
+    app.listen(3000, async () => {
+      console.log("Niod web server started on port 3000!");
+
+      let serverStarted;
+      try {
+        serverStarted = await portInUse(3000);
+      } catch (err) {
+        serverStarted = false;
+      }
+      t.true(serverStarted);
+    });
   } catch (err) {
     console.error(err);
     t.fail();

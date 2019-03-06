@@ -9,7 +9,6 @@ const initNiod = (dontTryToConnect: Boolean) => {
 
     if (dontTryToConnect) {
       resolve(app);
-      return;
     }
     const connected = initDCSModule();
 
