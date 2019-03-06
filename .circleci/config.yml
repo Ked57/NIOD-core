@@ -62,7 +62,18 @@ workflows:
   version: 2
   test-deploy:
     jobs:
+      - lint:
+          filters:
+            tags:
+              only: /^v.*/
+      - check-formatting:
+          filters:
+            tags:
+              only: /^v.*/
       - test:
+          requires:
+            - lint
+            - check-formatting
           filters:
             tags:
               only: /^v.*/
@@ -70,7 +81,5 @@ workflows:
           requires:
             - test
           filters:
-            tags:
-              only: /^v.*/
             branches:
-              ignore: /.*/
+              only: master
