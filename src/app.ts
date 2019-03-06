@@ -7,11 +7,12 @@ const initNiod = (dontTryToConnect: Boolean) => {
   return new Promise<core.Express>((resolve, reject) => {
     const app = express();
 
-    const connected = initDCSModule();
     if (dontTryToConnect) {
       resolve(app);
+      return;
     }
-    console.log("i got here anyway");
+    const connected = initDCSModule();
+
     connected.subscribe({
       next: value => (value ? resolve(app) : ""),
       error: err => reject("Something wrong occurred: " + err),
