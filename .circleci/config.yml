@@ -6,6 +6,22 @@ defaults: &defaults
     - image: circleci/node:8.9.1
 
 jobs:
+  lint:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run: npm run lint
+  check-formatting:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: npm run format:check
   test:
     <<: *defaults
     steps:

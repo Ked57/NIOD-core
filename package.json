@@ -6,7 +6,9 @@
   "scripts": {
     "start": "ts-node src/app.ts",
     "test": "tsc && ava",
-    "format:fix": ""
+    "lint": "tslint --project tsconfig.json",
+    "format:check": "prettier src/**/*.ts --list-different",
+    "format:fix": "prettier src/**/*.ts --write"
   },
   "repository": {
     "type": "git",
