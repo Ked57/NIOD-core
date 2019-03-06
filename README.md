@@ -68,7 +68,7 @@ initNiod(): Promise<core.Express>
 This function will init Niod and resolve the express server
 
 ```typescript
-spawnGroup(groupName: string, callback: Callback)
+spawnGroup = (groupName: string, callback: Callback)
 ```
 
 This function will spawn a group and execute the callback once it's done, the callback takes one parameter which is the name of the group that was spawned
