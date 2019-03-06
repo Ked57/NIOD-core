@@ -7,6 +7,7 @@ defaults: &defaults
 
 jobs:
   init-dependancies:
+    <<: *defaults
     docker:
       - image: circleci/node:8
     steps:
@@ -28,6 +29,7 @@ jobs:
           root: ~/repo
           paths: .
   lint:
+    <<: *defaults
     docker:
       - image: circleci/node:8
     steps:
@@ -36,6 +38,7 @@ jobs:
           at: ./
       - run: npm run lint
   check-formatting:
+    <<: *defaults
     docker:
       - image: circleci/node:8
     steps:
