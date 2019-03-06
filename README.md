@@ -1,54 +1,82 @@
-[![CircleCI](https://circleci.com/gh/Ked57/NIOD.svg?style=svg)](https://circleci.com/gh/Ked57/NIOD)
+CI tests: [![CircleCI](https://circleci.com/gh/Ked57/NIOD.svg?style=svg)](https://circleci.com/gh/Ked57/NIOD)
 
 # NIOD
 
 ## Introduction
 
-NIOD is a web manager for DCS World lua natives, using a NodeJS server to communicate with a LUA library
+NIOD is a npm package that let's you connect to DCS World using a socket. Then you can use some of the functions at your disposal to spawn groups. We're still in the early phase of this package so there aren't many functions implemented yet but it will grow !
 
-NIOD uses JSON
-It'll basicaly look like this:
-
-```
-{
-  "type": "type",
-  "callbackId": "anIdForTheCallback",
-  "data": {
-    "random": "aRandomThing"
-  }
-}
-```
-
-We hope to implement every function from: https://wiki.hoggitworld.com/view/Category:Functions
-and every event from https://wiki.hoggitworld.com/view/Category:Events
-
-example with getGroups(enum coalitionId , enum GroupCategory)
-
-```
-{
-  "type": "function",
-  "callbackId": "anIdForTheCallback",
-  "data": {
-    "name": "getGroups",
-    "args": [2]
-  }
-}
-```
-
-result will be
-
-```
-{
-  "type": "data",
-  "callbackId": "anIdForTheCallback",
-   "data": { #thedata }
-}
-```
+## How does this work ?
 
 The nodejs server stores callbacks linked to a callback id, this id is passed to the lua server which pass it
-back with the return data. The dispatcher will then execute the right stored callback
+back with the returned data. The dispatcher will then execute the right stored callback
+
+Here's a basic example
+
+```javascript
+const { initNiod, spawnGroup } = require("niod");
+
+initNiod().then(() => {
+  spawnGroup("template_group", () =>
+    console.log("your group has been spawned")
+  );
+});
+```
+
+## Instalation
+
+### Unsanitize the require function
+
+Niod requires DCS to import some functionalities from LUA so it can create a socket, you'll need to "unsanitize" it. To do so go into your DCS installation folder DCS World\Scripts\MissionScripting.lua and edit this line
+
+```lua
+require = nil
+```
+
+to
+
+```lua
+--require = nil
+```
+
+### Mission Editor
+
+Then you need to create a mission that loads the MOOSE lua file (found here: https://github.com/FlightControl-Master/MOOSE/releases) and then loads the NIOD lua file found in the "script" folder.
+
+And there you go ! You're all set, you can import niod in your project and start the server using
+
+```javascript
+const { initNiod } = require("niod");
+initNiod().then(() => {
+  // your mission code goes here
+});
+```
+
+and start coding !
+
+## Typescript support
+
+Niod is written in typescript, so the npm package is shipped with all the type declarations. Which means auto-completion depending on your code editor
 
 ## API
+
+```typescript
+initNiod(): Promise<core.Express>
+```
+
+This function will init Niod and resolve the express server
+
+```typescript
+spawnGroup(groupName: string, callback: Callback)
+```
+
+This function will spawn a group and execute the callback once it's done, the callback takes one parameter which is the name of the group that was spawned
+
+```typescript
+spawnGroupInZone = (groupName: string, zoneName: string, callback: Callback, randomize?: boolean)
+```
+
+This function will spawn a group in a particular zone that you placed into the Mission Editor. It takes a group name, a zone name, a callback function and an optional boolean that will randomize spawn position into this zone
 
 ## Special thanks
 
