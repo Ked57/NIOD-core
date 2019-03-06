@@ -1,45 +1,66 @@
 import * as net from "net";
 import InputPayload from "./types/input_payload";
+import { Observable, Observer } from "rxjs";
+import { Socket } from "net";
 
-let connected = false;
+let connected: Observer<Boolean>;
+const connectedObservable: Observable<Boolean> = Observable.create(
+  (observer: Observer<Boolean>) => {
+    observer.next(false);
+    connected = observer;
+  }
+);
 let connecting = false;
+let socket: net.Socket;
 
-const connect = (options: net.NetConnectOpts) => {
+const connect = (
+  options: net.NetConnectOpts
+): [Socket, Observable<Boolean>] => {
   connecting = true;
-  const socket = net.createConnection(options, () => {
-    console.log("Niod client connected");
-    connected = true;
-    connecting = false;
-  });
+  createConnection(options);
 
-  socket.setTimeout(1000 * 60 * 5); //5 minutes
+  socket.setTimeout(1000 * 60 * 5); // 5 minutes
   socket.setEncoding("utf8");
-  socket.setKeepAlive(true, 1000); //1 sec
-  // When connection disconnected.
+  socket.setKeepAlive(true, 1000); // 1 sec
+  // When disconnected.
   socket.once("end", function() {
-    console.log("Client socket disconnect. ");
-    connected = false;
-  });
-
-  socket.once("close", function() {
-    console.log("Client socket closed. ");
-    connected = false;
+    console.error("Client socket disconnect. ");
+    connected.next(false);
+    if (!connecting) {
+      setTimeout(() => connect(options), 1000);
+    }
   });
 
   socket.once("timeout", function() {
     console.log("Client connection timeout. ");
-    connected = false;
+    connected.next(false);
+    if (!connecting) {
+      setTimeout(() => connect(options), 1000);
+    }
   });
 
   socket.once("error", function(err) {
     console.error(JSON.stringify(err));
-    connected = false;
+    connected.next(false);
+    connecting = false;
+    setTimeout(() => connect(options), 1000);
   });
-
-  return socket;
+  return [socket, connectedObservable];
 };
 
-const networkSend = (socket: net.Socket, data: InputPayload) => {
+const createConnection = (options: net.NetConnectOpts) => {
+  try {
+    socket = net.createConnection(options, () => {
+      console.log("Niod client connected");
+      connected.next(true);
+      connecting = false;
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const networkSend = (data: InputPayload) => {
   if (!isConnected) {
     console.error("ERR: Socket isn't connected, aborting;");
     return;

@@ -11,17 +11,19 @@ import Callback from "./dispatcher/types/callback";
 import InputPayload from "./network/types/input_payload";
 import Event from "./game/types/callback/event";
 import Function from "./game/types/callback/function";
-import { saveGroups, getGroups } from "./game/game_manager";
+import { Socket } from "net";
+import { Observable } from "rxjs";
 
 const options = {
   port: 15487,
   host: "localhost"
 } as net.TcpSocketConnectOpts;
 
-let socket: net.Socket;
+let socket: Socket;
 
 const initDCSModule = () => {
-  socket = connect(options);
+  const [s, connected]: [Socket, Observable<Boolean>] = connect(options);
+  socket = s;
 
   socket.on("data", function(data) {
     console.log("Server return data");
@@ -31,21 +33,7 @@ const initDCSModule = () => {
     console.log(receivedData);
     receive(receivedData);
   });
-
-  setTimeout(() => {
-    setInterval(() => {
-      send(
-        {
-          name: "spawn",
-          args: {
-            groupName: "Spawn Vehicle 1",
-            prefix: "prefix"
-          }
-        },
-        data => console.log(data)
-      );
-    }, 5000);
-  }, 2500);
+  return connected;
 };
 
 const formPaylaod = (dispatch: Dispatch) => {
@@ -71,7 +59,6 @@ const send = async (data: { [key: string]: any }, callback: Callback) => {
 
   try {
     networkSend(
-      socket,
       formPaylaod(await addDispatch(await verifiyInputDispatch(dispatch)))
     );
   } catch (err) {
