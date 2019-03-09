@@ -118,7 +118,6 @@ function checkGroupPartialyOrCompletelyInZone(trigger)
 				callbackId = trigger.callbackId
 			}
 		)
-		niod.log(trigger.data.frequency)
 		if trigger.data.frequency == "once" then
 			removeTrigger(trigger.callbackId)
 		end
