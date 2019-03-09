@@ -105,14 +105,12 @@ function checkTrigger(trigger)
 end
 
 function checkGroupPartlyOrCompletelyInZone(trigger)
-	niod.log("checking...")
 	local group = GROUP:FindByName(trigger.data.groupName)
 	local zone = ZONE:FindByName(trigger.data.zoneName)
 	if not group or not zone then
 		return
 	end
 	if group:IsPartlyOrCompletelyInZone(zone) then
-		niod.log("group is in zone")
 		niod.sendTrigger(
 			{
 				type = "trigger",
