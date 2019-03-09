@@ -4,7 +4,7 @@ import {
   verifiyInputDispatch,
   addDispatch
 } from "../dcs/dispatcher/dispatcher";
-import payload_validator from "../dcs/payload_validator";
+import { validatePayload } from "../dcs/payload_validator";
 import ToBeDispatched from "../dcs/dispatcher/types/to_be_dispatched";
 import { receive } from "../dcs/main";
 
@@ -52,7 +52,7 @@ test("Given a valid input dispatch, add it to the dispatcher's list and resolve 
 });
 
 test("Given a data object, resolve a 'to be dispatched' object", async t => {
-  const toBeDispatched = await payload_validator.validatePayload({
+  const toBeDispatched = await validatePayload({
     data: functionToBeDispatched.data,
     callbackId: functionToBeDispatched.callbackId,
     type: functionToBeDispatched.type
