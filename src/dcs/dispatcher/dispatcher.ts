@@ -43,12 +43,11 @@ const verifyDispatchPayload = (dispatch: ToBeDispatched) => {
 };
 
 const getDispatch = (func: Function) => {
-  return new Promise<Function>((resolve, reject) => {
+  return new Promise<Dispatch>((resolve, reject) => {
     const dispatch = dispatchList.get(func.callbackId);
     if (dispatch) {
       func.callback = dispatch.callback;
-      removeDispatch(dispatch);
-      resolve(func);
+      resolve(dispatch);
     } else {
       reject("Couldn't find callback, aborting");
     }

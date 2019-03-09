@@ -1,10 +1,11 @@
 import * as net from "net";
-import payload_validator from "./payload_validator";
+import { validatePayload, dataFromDcsJsonToObject } from "./payload_validator";
 import { connect, isConnected, networkSend } from "./network/network_manager";
 import {
   addDispatch,
   verifiyInputDispatch,
-  getDispatch
+  getDispatch,
+  removeDispatch
 } from "./dispatcher/dispatcher";
 import Dispatch from "./dispatcher/types/dispatch";
 import Callback from "./dispatcher/types/callback";
@@ -13,6 +14,7 @@ import Event from "./game/types/callback/event";
 import Function from "./game/types/callback/function";
 import { Socket } from "net";
 import { Observable } from "rxjs";
+import Trigger from "./game/types/callback/trigger";
 
 const options = {
   port: 15487,
@@ -27,48 +29,55 @@ const initDCSModule = () => {
 
   socket.on("data", function(data) {
     console.log("Server return data");
-    const receivedData = payload_validator.dataFromDcsJsonToObject(
-      data.toString()
-    );
+    const receivedData = dataFromDcsJsonToObject(data.toString());
     console.log(receivedData);
     receive(receivedData);
   });
   return connected;
 };
 
-const formPaylaod = (dispatch: Dispatch) => {
+const formPaylaod = (dispatch: Dispatch, type: string) => {
   return {
-    type: "function",
+    type,
     callbackId: dispatch.callbackId,
     data: dispatch.data
   } as InputPayload;
 };
 
-const send = async (data: { [key: string]: any }, callback: Callback) => {
-  if (!isConnected() || !socket) {
-    console.error(
-      "Error trying to send something: Network isn't connected or socket is empty, aborting"
-    );
-    return;
-  }
-  const dispatch: Dispatch = {
-    data: data,
-    callback: callback,
-    callbackId: ""
-  };
+const send = (
+  data: { [key: string]: any },
+  callback: Callback,
+  type: string
+) => {
+  return new Promise(async (resolve, reject) => {
+    if (!isConnected() || !socket) {
+      console.error(
+        "Error trying to send something: Network isn't connected or socket is empty, aborting"
+      );
+      return;
+    }
+    const dispatch: Dispatch = {
+      data: data,
+      callback: callback,
+      callbackId: ""
+    };
 
-  try {
-    networkSend(
-      formPaylaod(await addDispatch(await verifiyInputDispatch(dispatch)))
-    );
-  } catch (err) {
-    console.error(err);
-  }
+    try {
+      networkSend(
+        formPaylaod(
+          await addDispatch(await verifiyInputDispatch(dispatch)),
+          type
+        )
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  });
 };
 
 const receive = async (data: { [key: string]: any }) => {
   try {
-    await handlePayload(await payload_validator.validatePayload(data));
+    await handlePayload(await validatePayload(data));
     return true;
   } catch (err) {
     console.error(err);
@@ -76,14 +85,25 @@ const receive = async (data: { [key: string]: any }) => {
   }
 };
 
+const payloadIsFunction = (payload: any): payload is Function =>
+  payload.type === "function";
+const payloadIsTrigger = (payload: any): payload is Trigger =>
+  payload.type === "trigger";
+const payloadIsTriggerInit = (payload: any): payload is unknown =>
+  payload.type === "triggerInit";
+
 const handlePayload = (payload: Event | Function) => {
   return new Promise<any>(async (resolve, reject) => {
     try {
-      if (payload.type === "function") {
-        const func = await getDispatch(payload as Function);
-        if (func.callback) {
-          resolve(func.callback(func.data));
-        } else reject("Couldn't find any callback function to execute");
+      if (payloadIsFunction(payload)) {
+        const dispatch = await getDispatch(payload);
+        removeDispatch(dispatch);
+        resolve(dispatch.callback(payload.data));
+      } else if (payloadIsTrigger(payload)) {
+        const dispatch = await getDispatch(payload);
+        resolve(dispatch.callback(payload.data));
+      } else if (payloadIsTriggerInit(payload)) {
+        resolve("Trigger added");
       } /*else if(payload.type === "event"){
         // TODO: Handle the event and return the function that will call every subscriber
         resolve(eventDispatcher);

@@ -16,9 +16,4 @@ const validatePayload = (data: { [key: string]: any }) => {
     } else reject("Couldn't validate payload");
   });
 };
-
-const payload_validator = {
-  dataFromDcsJsonToObject: dataFromDcsJsonToObject,
-  validatePayload: validatePayload
-};
-export default payload_validator;
+export { validatePayload, dataFromDcsJsonToObject };

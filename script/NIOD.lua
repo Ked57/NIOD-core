@@ -99,23 +99,25 @@ function checkTriggers()
 end
 
 function checkTrigger(trigger)
-	if trigger.data.type == "GroupPartialyOrCompletelyInZone" then
-		checkGroupPartialyOrCompletelyInZone(trigger)
+	if trigger.data.type == "GroupPartlyOrCompletelyInZone" then
+		checkGroupPartlyOrCompletelyInZone(trigger)
 	end
 end
 
-function checkGroupPartialyOrCompletelyInZone(trigger)
-	niod.log(trigger)
+function checkGroupPartlyOrCompletelyInZone(trigger)
+	niod.log("checking...")
 	local group = GROUP:FindByName(trigger.data.groupName)
 	local zone = ZONE:FindByName(trigger.data.zoneName)
 	if not group or not zone then
 		return
 	end
 	if group:IsPartlyOrCompletelyInZone(zone) then
+		niod.log("group is in zone")
 		niod.sendTrigger(
 			{
 				type = "trigger",
-				callbackId = trigger.callbackId
+				callbackId = trigger.callbackId,
+				data = {}
 			}
 		)
 		if trigger.data.frequency == "once" then
@@ -176,6 +178,8 @@ function niod.processRequest(request)
 				response.data = niod.mooseFunctions[request.data.name](request.data.args)
 			elseif request.type == "trigger" and request.data then
 				addTrigger(request)
+				response.type = "triggerInit"
+				response.data = {}
 			end
 		end
 	end
@@ -255,16 +259,3 @@ timer.scheduleFunction(
 )
 
 niod.log("Started NIOD")
-
-addTrigger(
-	{
-		data = {
-			frequency = "once",
-			type = "GroupPartialyOrCompletelyInZone",
-			groupName = "template_group#001",
-			zoneName = "zone"
-		},
-		callbackId = "iqsdjiqsd_ggd",
-		type = "trigger"
-	}
-)
