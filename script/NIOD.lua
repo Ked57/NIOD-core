@@ -1,15 +1,25 @@
 -- Thanks to Drex from Dynamic DCS for all the help on sockets, go check his server out
 
-package.path  = package.path..";.\\LuaSocket\\?.lua;"
-package.cpath = package.cpath..";.\\LuaSocket\\?.dll;"
+package.path = package.path .. ";.\\LuaSocket\\?.lua;"
+package.cpath = package.cpath .. ";.\\LuaSocket\\?.dll;"
 
-local socket = require('socket')
+local socket = require("socket")
 local JSON = loadfile("Scripts\\JSON.lua")()
 local niod = {}
 
 local templateGroups = {}
 local templateZones = {}
-
+local triggers = {}
+local triggerScheduler =
+	SCHEDULER:New(
+	nil,
+	function()
+		checkTriggers()
+	end,
+	{},
+	1,
+	1
+)
 
 niod.scope = "127.0.0.1"
 niod.port = 15487
@@ -28,27 +38,26 @@ niod.tcp:settimeout(0)
 -- Util functions
 
 function niod.log(message)
-    if message then
-        env.info(message)
-    end
+	if message then
+		env.info(message)
+	end
 end
 
 function niod.setDevEnv(isDev)
 	env.setErrorMessageBoxEnabled(niod.isDev)
 end
 
-
 function registerZone(args)
-templateZones[args.zoneName] = ZONE:New( args.zoneName )
-return 1
+	templateZones[args.zoneName] = ZONE:New(args.zoneName)
+	return 1
 end
 
 function newSpawnTemplate(args)
-templateGroups[args.groupName] = SPAWN:New( args.groupName )
-return 1
+	templateGroups[args.groupName] = SPAWN:New(args.groupName)
+	return 1
 end
 
--- Native functions wrappers
+-- MOOSE functions wrappers
 niod.mooseFunctions = {
 	spawn = function(args)
 		if not args.groupName then
@@ -77,29 +86,76 @@ niod.mooseFunctions = {
 	end
 }
 
+-- Triggers
+
+function addTrigger(args)
+	table.insert(triggers, args)
+end
+
+function checkTriggers()
+	for i = 1, #triggers do
+		checkTrigger(triggers[i])
+	end
+end
+
+function checkTrigger(trigger)
+	if trigger.data.type == "GroupPartialyOrCompletelyInZone" then
+		checkGroupPartialyOrCompletelyInZone(trigger)
+	end
+end
+
+function checkGroupPartialyOrCompletelyInZone(trigger)
+	niod.log(trigger)
+	local group = GROUP:FindByName(trigger.data.groupName)
+	local zone = ZONE:FindByName(trigger.data.zoneName)
+	if not group or not zone then
+		return
+	end
+	if group:IsPartlyOrCompletelyInZone(zone) then
+		niod.sendTrigger(
+			{
+				type = "trigger",
+				callbackId = trigger.callbackId
+			}
+		)
+		niod.log(trigger.data.frequency)
+		if trigger.data.frequency == "once" then
+			removeTrigger(trigger.callbackId)
+		end
+	end
+end
+
+function removeTrigger(id)
+	for i = 1, #triggers do
+		if triggers[i].callbackId == id then
+			table.remove(triggers, i)
+		end
+	end
+end
+
 -- NIOD functions
 
 function niod.bind()
-    local bound, error = niod.tcp:bind(niod.scope, niod.port)
-    if not bound then
-    	niod.log("Could not bind: " .. error)
-	    return
-    end
-    niod.log("Port " .. niod.port .. " bound")
-    local serverStarted, error = niod.tcp:listen(1)
-    if not serverStarted then
-	    niod.log("Could not start server: " .. error)
-	    return
-    end
-    niod.log("Server started")
+	local bound, error = niod.tcp:bind(niod.scope, niod.port)
+	if not bound then
+		niod.log("Could not bind: " .. error)
+		return
+	end
+	niod.log("Port " .. niod.port .. " bound")
+	local serverStarted, error = niod.tcp:listen(1)
+	if not serverStarted then
+		niod.log("Could not start server: " .. error)
+		return
+	end
+	niod.log("Server started")
 end
 function niod.checkJSON(jsonstring, code)
-	if code == 'encode' then
+	if code == "encode" then
 		if type(niod.JSON:encode(jsonstring)) ~= "string" then
 			error("encode expects a string after function")
 		end
 	end
-	if code == 'decode' then
+	if code == "decode" then
 		if type(jsonstring) ~= "string" then
 			error("decode expects string")
 		end
@@ -112,40 +168,40 @@ function niod.eventHandler.onEvent(event)
 end
 
 function niod.processRequest(request)
-    local response = {}
-    if request and request.type and request.callbackId then
-    	response.type = request.type
-    	response.callbackId = request.callbackId
+	local response = {}
+	if request and request.type and request.callbackId then
+		response.type = request.type
+		response.callbackId = request.callbackId
 		if request.data then
 			if request.type == "function" and request.data.name then
-				niod.log("Processing native function")
 				response.data = niod.mooseFunctions[request.data.name](request.data.args)
+			elseif request.type == "trigger" and request.data then
+				addTrigger(request)
 			end
 		end
 	end
 	return response
 end
 
-
 function niod.step()
 	if not niod.client then
 		niod.client = niod.tcp:accept()
-			if niod.client then
+		if niod.client then
 			niod.client:settimeout(0)
 			niod.log("Connection established")
 		end
 	end
 	if niod.client then
-		local line, err = niod.client:receive('*l')
+		local line, err = niod.client:receive("*l")
 		--niod.client:send('\n')
-        local data = {}
+		local data = {}
 		if line ~= nil then
 			niod.log(line)
-			local success, error = pcall(niod.checkJSON, line, 'decode')
+			local success, error = pcall(niod.checkJSON, line, "decode")
 			if success then
-                local incMsg = niod.JSON:decode(line)
-                niod.log(incMsg)
-				data = niod.processRequest(incMsg);
+				local incMsg = niod.JSON:decode(line)
+				niod.log(incMsg)
+				data = niod.processRequest(incMsg)
 			else
 				niod.log("Error: " .. error)
 			end
@@ -153,14 +209,14 @@ function niod.step()
 		-- if there was no error, send it back to the niod.client
 		if not err and data then
 			local dataPayload = data --getDataMessage()
-			local success, error = pcall(niod.checkJSON, dataPayload, 'encode')
+			local success, error = pcall(niod.checkJSON, dataPayload, "encode")
 			if success then
 				local outMsg = niod.JSON:encode(dataPayload)
 				local bytes, status, lastbyte = niod.client:send(outMsg .. "\n")
 				if not bytes then
 					niod.log("Connection lost")
 					niod.client = nil
-				end;
+				end
 			else
 				niod.log("Error: " .. error)
 			end
@@ -168,17 +224,48 @@ function niod.step()
 	end
 end
 
+function niod.sendTrigger(data)
+	local dataPayload = data
+	local success, error = pcall(niod.checkJSON, dataPayload, "encode")
+	if success then
+		local outMsg = niod.JSON:encode(dataPayload)
+		local bytes, status, lastbyte = niod.client:send(outMsg .. "\n")
+		if not bytes then
+			niod.log("Connection lost")
+			niod.client = nil
+		end
+	else
+		niod.log("Error: " .. error)
+	end
+end
+
 niod.setDevEnv()
 niod.bind()
 world.addEventHandler(niod.eventHandler)
 
-timer.scheduleFunction(function(arg, time)
-	local success, error = pcall(niod.step)
-	if not success then
-		niod.log("Error: " .. error)
-	end
-	return timer.getTime() + niod.DATA_TIMEOUT_SEC
-end, nil, timer.getTime() + niod.DATA_TIMEOUT_SEC)
-
+timer.scheduleFunction(
+	function(arg, time)
+		local success, error = pcall(niod.step)
+		if not success then
+			niod.log("Error: " .. error)
+		end
+		return timer.getTime() + niod.DATA_TIMEOUT_SEC
+	end,
+	nil,
+	timer.getTime() + niod.DATA_TIMEOUT_SEC
+)
 
 niod.log("Started NIOD")
+
+addTrigger(
+	{
+		data = {
+			frequency = "once",
+			type = "GroupPartialyOrCompletelyInZone",
+			groupName = "template_group#001",
+			zoneName = "zone"
+		},
+		callbackId = "iqsdjiqsd_ggd",
+		type = "trigger"
+	}
+)
