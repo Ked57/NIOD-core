@@ -1,6 +1,6 @@
 import { send } from "../main";
 import Callback from "../dispatcher/types/callback";
-import A2ADispatcher from "./types/data_transfer_objects/A2A_dispatcher";
+import A2ADispatcher from "./types/data_transfer_objects/a2a_dispatcher";
 
 const addA2ADispatcher = (args: A2ADispatcher, callback: Callback) => {
   send(
