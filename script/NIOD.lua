@@ -15,9 +15,10 @@ local triggerScheduler =
 	nil,
 	function()
 		checkTriggers()
+		niod.checkTimeout()
 	end,
 	{},
-	1,
+	5,
 	1
 )
 
@@ -199,7 +200,6 @@ function niod.step()
 		--niod.client:send('\n')
 		local data = {}
 		if line ~= nil then
-			niod.log(line)
 			local success, error = pcall(niod.checkJSON, line, "decode")
 			if success then
 				local incMsg = niod.JSON:decode(line)
@@ -212,29 +212,36 @@ function niod.step()
 		-- if there was no error, send it back to the niod.client
 		if not err and data then
 			local dataPayload = data --getDataMessage()
-			local success, error = pcall(niod.checkJSON, dataPayload, "encode")
-			if success then
-				local outMsg = niod.JSON:encode(dataPayload)
-				local bytes, status, lastbyte = niod.client:send(outMsg .. "\n")
-				if not bytes then
-					niod.log("Connection lost")
-					niod.client = nil
-				end
-			else
-				niod.log("Error: " .. error)
-			end
+			niod.send(dataPayload)
 		end
 	end
 end
 
 function niod.sendTrigger(data)
 	local dataPayload = data
+	niod.send(dataPayload)
+end
+
+function niod.checkTimeout()
+	local dataPayload = {
+		type = "noTimeout",
+		callbackId = "noTimeout",
+		data = {}
+	}
+	niod.send(dataPayload)
+end
+
+function niod.send(dataPayload)
+	if not niod.client then
+		niod.log("Error: Connection lost")
+		return
+	end
 	local success, error = pcall(niod.checkJSON, dataPayload, "encode")
 	if success then
 		local outMsg = niod.JSON:encode(dataPayload)
 		local bytes, status, lastbyte = niod.client:send(outMsg .. "\n")
 		if not bytes then
-			niod.log("Connection lost")
+			niod.log("Error: Connection lost")
 			niod.client = nil
 		end
 	else

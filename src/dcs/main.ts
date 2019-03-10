@@ -24,8 +24,6 @@ const options = {
 
 let socket: Socket;
 
-setInterval(() => send({}, () => {}, "noTimeout"), 10000);
-
 const initDCSModule = () => {
   const [s, connected]: [Socket, Observable<Boolean>] = connect(
     options,
