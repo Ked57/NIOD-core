@@ -207,6 +207,7 @@ function addA2ADispatcher(data)
 			)
 		end
 	end
+	A2ADispatchers[data.name].dispatcher:Start()
 end
 
 -- NIOD functions
