@@ -170,9 +170,9 @@ function addA2ADispatcher(data)
 
 	A2ADispatchers[data.name].dispatcher = AI_A2A_DISPATCHER:New(A2ADispatchers[data.name].detectionArea)
 
-	A2ADispatchers[data.name].border = registerZone(data.border.name) --ZONE_POLYGON:New(data.border.name, GROUP:FindByName(data.border.name))
+	A2ADispatchers[data.name].border = registerZone(data.border.name)
 	if not A2ADispatchers[data.name].border then
-		niod.print("couldn't find the zone to define the border, aborting...")
+		niod.log("couldn't find the zone to define the border, aborting...")
 		A2ADispatchers[data.name] = {}
 		return
 	end
