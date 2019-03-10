@@ -3,6 +3,7 @@ import * as core from "express-serve-static-core";
 import { initDCSModule } from "./dcs/main";
 import { spawnGroup, spawnGroupInZone } from "./dcs/game/game_functions";
 import { addTrigger } from "./dcs/game/trigger_functions";
+import { addA2ADispatcher } from "./dcs/game/a2a_dispatcher_functions";
 
 const initNiod = () => {
   return new Promise<core.Express>((resolve, reject) => {
@@ -24,4 +25,4 @@ const initNiod = () => {
 
 app.listen(3000, () => console.log("Niod web server started on port 3000!"));*/
 
-export { initNiod, spawnGroup, spawnGroupInZone, addTrigger };
+export { initNiod, spawnGroup, spawnGroupInZone, addTrigger, addA2ADispatcher };
