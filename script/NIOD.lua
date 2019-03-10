@@ -10,6 +10,8 @@ local niod = {}
 local templateGroups = {}
 local templateZones = {}
 local triggers = {}
+local A2ADispatchers = {}
+
 local triggerScheduler =
 	SCHEDULER:New(
 	nil,
@@ -84,6 +86,9 @@ niod.mooseFunctions = {
 			randomize = args.randomize
 		end
 		return templateGroups[args.groupName]:SpawnInZone(templateZones[args.zoneName], randomize):GetName()
+	end,
+	addA2ADispatcher = function(args)
+		addDispatcher(args.data)
 	end
 }
 
@@ -129,6 +134,75 @@ function removeTrigger(id)
 	for i = 1, #triggers do
 		if triggers[i].callbackId == id then
 			table.remove(triggers, i)
+		end
+	end
+end
+
+-- A2A Dispatcher
+
+function addDispatcher(data)
+	if not data then
+		niod.log("Error trying to add an A2A Dispatcher, no data provided")
+		return
+	end
+	A2ADispatchers[data.name] = {}
+
+	A2ADispatchers[data.name].detectionSet = SET_GROUP:New()
+	A2ADispatchers[data.name].detectionSet:FilterPrefixes(data.detection.prefixes)
+	A2ADispatchers[data.name].detectionSet:FilterStart()
+
+	A2ADispatchers[data.name].detectionArea =
+		DETECTION_AREAS:New(A2ADispatchers[data.name].detectionSet, data.detection.range)
+
+	A2ADispatchers[data.name].dispatcher = AI_A2A_DISPATCHER:New(A2ADispatchers[data.name].detectionArea)
+
+	A2ADispatchers[data.name].border = ZONE_POLYGON:New(data.border.name, GROUP:FindByName(data.border.name))
+	A2ADispatchers[data.name].dispatcher:SetBorderZone({A2ADispatchers[data.name].border})
+
+	A2ADispatchers[data.name].dispatcher:SetEngageRadius(data.engageRadius)
+
+	for i = 1, #data.squadrons do
+		A2ADispatchers[data.name]:SetSquadron(
+			data.squadrons[i].name,
+			AIRBASE[data.squadrons[i].map][data.squadrons[i].airbase],
+			{data.squadrons[i].name},
+			data.squadrons[i].number
+		)
+		A2ADispatchers[data.name]:SetSquadronGrouping(data.squadrons[i].name, data.squadrons[i].groupLength)
+		A2ADispatchers[data.name]:SetSquadronTakeoff(
+			data.squadrons[i].name,
+			AI_A2A_DISPATCHER.Takeoff[data.squadrons[i].takeoffMethod]
+		)
+		A2ADispatchers[data.name]:SetSquadronLanding(
+			data.squadrons[i].name,
+			AI_A2A_DISPATCHER.Landing[data.squadrons[i].landingMethod]
+		)
+		if data.squadrons[i].cap then
+			A2ADispatchers[data.name].capZones[data.squadrons[i].cap.name] = ZONE:New(data.squadrons[i].cap.name)
+			A2ADispatchers[data.name]:SetSquadronCap(
+				data.squadrons[i].name,
+				data.squadrons[i].cap.name,
+				data.squadrons[i].cap.minCAPAlt,
+				data.squadrons[i].cap.maxCAPAlt,
+				data.squadrons[i].cap.minCAPSpeed,
+				data.squadrons[i].cap.maxCAPSpeed,
+				data.squadrons[i].cap.minCAPInterceptSpeed,
+				data.squadrons[i].cap.maxCAPInterceptSpeed,
+				data.squadrons[i].cap.mesureType --"BARO" or "RADIO"
+			)
+			A2ADispatchers[data.name]:SetSquadronCapInterval(
+				data.squadrons[i].name,
+				data.squadrons[i].cap.numberPerGroup,
+				data.squadrons[i].cap.lowerCheckTime,
+				data.squadrons[i].cap.upperCheckTime,
+				data.squadrons[i].cap.decisionWeight
+			)
+		elseif data.squadrons[i].gci then
+			A2ADispatchers[data.name]:SetSquadronGci(
+				data.squadrons[i].name,
+				data.squadrons[i].gci.minInterceptSpeed,
+				data.squadrons[i].gci.maxInterceptSpeed
+			)
 		end
 	end
 end
