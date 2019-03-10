@@ -43,15 +43,15 @@ const invalidReceiveObject = {
   callback: "whatever"
 };
 
-test("Given an input dispatch, resolve the promise with that same dispatch", async t => {
+test("Given an input dispatch, returns that same dispatch", async t => {
   t.is(dispatch, await verifiyInputDispatch(dispatch));
 });
 
-test("Given a valid input dispatch, add it to the dispatcher's list and resolve the dispatch", async t => {
+test("Given a valid input dispatch, add it to the dispatcher's list and returns the dispatch", async t => {
   t.is(dispatch, await addDispatch(dispatch));
 });
 
-test("Given a data object, resolve a 'to be dispatched' object", async t => {
+test("Given a data object, returns a 'to be dispatched' object", async t => {
   const toBeDispatched = await validatePayload({
     data: functionToBeDispatched.data,
     callbackId: functionToBeDispatched.callbackId,
@@ -60,7 +60,7 @@ test("Given a data object, resolve a 'to be dispatched' object", async t => {
   t.deepEqual(functionToBeDispatched, toBeDispatched);
 });
 
-test("Given a valid input receive function object, resolve a boolean if you could execute the callback", async t => {
+test("Given a valid input receive function object, returns a boolean if you could execute the callback", async t => {
   // Add a dispatch first
   const resultDispatch = await addDispatch(dispatch);
   const validReceiveFuncUpdated = {
@@ -71,12 +71,12 @@ test("Given a valid input receive function object, resolve a boolean if you coul
   t.is(true, await receive(validReceiveFuncUpdated));
 });
 
-test("Given a valid input receive event object, resolve a boolean if you could execute the callback", async t => {
+test("Given a valid input receive event object, returns a boolean if you could execute the callback", async t => {
   // events aren't implemented yet
   t.is(true, true);
 });
 
-test("Given an invalid input receive function object, resolve a false", async t => {
+test("Given an invalid input receive function object, returns a false", async t => {
   // no need to add a dispatcher this time
   t.is(false, await receive(invalidReceiveObject));
 });

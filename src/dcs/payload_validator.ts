@@ -4,16 +4,14 @@ const dataFromDcsJsonToObject = (data: string): { [key: string]: string } => {
   return JSON.parse(data);
 };
 
-const validatePayload = (data: { [key: string]: any }) => {
-  return new Promise<ToBeDispatched>((resolve, reject) => {
-    if (data && data.type && data.data && data.callbackId) {
-      const outputPayload: ToBeDispatched = {
-        data: data.data,
-        callbackId: data.callbackId,
-        type: data.type
-      };
-      resolve(outputPayload);
-    } else reject("Couldn't validate payload");
-  });
+const validatePayload = (data: { [key: string]: any }): ToBeDispatched => {
+  if (data && data.type && data.data && data.callbackId) {
+    const outputPayload: ToBeDispatched = {
+      data: data.data,
+      callbackId: data.callbackId,
+      type: data.type
+    };
+    return outputPayload;
+  } else throw Error("Couldn't validate payload");
 };
 export { validatePayload, dataFromDcsJsonToObject };

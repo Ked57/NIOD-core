@@ -14,7 +14,8 @@ let connecting = false;
 let socket: net.Socket;
 
 const connect = (
-  options: net.NetConnectOpts
+  options: net.NetConnectOpts,
+  onData: (data: any) => void
 ): [Socket, Observable<Boolean>] => {
   connecting = true;
   createConnection(options);
@@ -27,7 +28,14 @@ const connect = (
     console.error("Client socket disconnect. ");
     connected.next(false);
     if (!connecting) {
-      setTimeout(() => connect(options), 1000);
+      setTimeout(
+        () =>
+          connect(
+            options,
+            onData
+          ),
+        1000
+      );
     }
   });
 
@@ -35,7 +43,14 @@ const connect = (
     console.log("Client connection timeout. ");
     connected.next(false);
     if (!connecting) {
-      setTimeout(() => connect(options), 1000);
+      setTimeout(
+        () =>
+          connect(
+            options,
+            onData
+          ),
+        1000
+      );
     }
   });
 
@@ -43,8 +58,18 @@ const connect = (
     console.error(JSON.stringify(err));
     connected.next(false);
     connecting = false;
-    setTimeout(() => connect(options), 1000);
+    setTimeout(
+      () =>
+        connect(
+          options,
+          onData
+        ),
+      1000
+    );
   });
+
+  socket.on("data", onData);
+
   return [socket, connectedObservable];
 };
 

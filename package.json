@@ -32,12 +32,12 @@
     "rxjs": "^6.4.0"
   },
   "devDependencies": {
+    "@types/express": "^4.16.0",
     "ava": "^0.25.0",
+    "prettier": "^1.15.3",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
-    "typescript": "^3.2.2",
-    "@types/express": "^4.16.0",
-    "prettier": "^1.15.3"
+    "typescript": "^3.2.2"
   },
   "ava": {
     "files": [
