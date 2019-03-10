@@ -51,7 +51,6 @@ function niod.setDevEnv(isDev)
 end
 
 function registerZone(args)
-	niod.log(args.zoneName)
 	templateZones[args.zoneName] = ZONE:New(args.zoneName)
 	return 1
 end
