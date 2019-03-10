@@ -28,7 +28,8 @@ const f = async () => {
     {
       name: "russianA2ADispatcher",
       detection: {
-        prefixes: ["RUSSIAN_EWR"]
+        prefixes: ["RUSSIAN_EWR"],
+        range: 30000
       },
       border: {
         name: "RUSSIAN_BORDER"
@@ -71,7 +72,57 @@ const f = async () => {
         }
       ]
     },
-    () => console.log("dispatcher added")
+    () => console.log("russian dispatcher added")
+  );
+  addA2ADispatcher(
+    {
+      name: "usaA2ADispatcher",
+      detection: {
+        prefixes: ["USA_EWR"],
+        range: 30000
+      },
+      border: {
+        name: "USA_BORDER"
+      },
+      engageRadius: 30000,
+      squadrons: [
+        {
+          name: "USA_SQUADRON_F18",
+          map: "Caucasus",
+          airbase: "Krasnodar_Pashkovsky",
+          groupLength: 2,
+          takeofMethod: "Runway",
+          landingMethod: "Runway",
+          cap: {
+            zoneName: "USA_CAP_EAST",
+            minCAPAlt: 4000,
+            maxCAPAlt: 8000,
+            minCAPSpeed: 500,
+            maxCAPSPeed: 600,
+            minCAPInterceptSpeed: 800,
+            maxCAPInterceptSpeed: 900,
+            mesureType: "RADIO",
+            numberPerGroup: 2,
+            lowerCheckTime: 30,
+            upperCheckTime: 60,
+            decisionWeight: 1
+          }
+        },
+        {
+          name: "USA_SQUADRON_F15",
+          map: "Caucasus",
+          airbase: "Maykop_Khanskaya",
+          groupLength: 2,
+          takeofMethod: "Runway",
+          landingMethod: "Runway",
+          gci: {
+            minInterceptSpeed: 900,
+            maxInterceptSpeed: 1700
+          }
+        }
+      ]
+    },
+    () => console.log("american dispatcher added")
   );
 };
 f();

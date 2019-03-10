@@ -89,6 +89,7 @@ niod.mooseFunctions = {
 	end,
 	addA2ADispatcher = function(args)
 		addA2ADispatcher(args)
+		return 1
 	end
 }
 
@@ -145,6 +146,7 @@ function addA2ADispatcher(data)
 		niod.log("Error trying to add an A2A Dispatcher, no data provided")
 		return
 	end
+
 	A2ADispatchers[data.name] = {}
 
 	A2ADispatchers[data.name].detectionSet = SET_GROUP:New()
@@ -157,6 +159,11 @@ function addA2ADispatcher(data)
 	A2ADispatchers[data.name].dispatcher = AI_A2A_DISPATCHER:New(A2ADispatchers[data.name].detectionArea)
 
 	A2ADispatchers[data.name].border = ZONE_POLYGON:New(data.border.name, GROUP:FindByName(data.border.name))
+	if not A2ADispatchers[data.name].border then
+		niod.print("couldn't find the zone to define the border, aborting...")
+		A2ADispatchers[data.name] = {}
+		return
+	end
 	A2ADispatchers[data.name].dispatcher:SetBorderZone({A2ADispatchers[data.name].border})
 
 	A2ADispatchers[data.name].dispatcher:SetEngageRadius(data.engageRadius)
@@ -181,6 +188,7 @@ function addA2ADispatcher(data)
 			if not templateZones[data.squadrons[i].cap.zoneName] then
 				registerZone(data.squadrons[i].cap)
 			end
+
 			A2ADispatchers[data.name].dispatcher:SetSquadronCap(
 				data.squadrons[i].name,
 				templateZones[data.squadrons[i].cap.zoneName],

@@ -2,6 +2,7 @@ type A2ADispatcher = {
   name: string;
   detection: {
     prefixes: string[];
+    range: number;
   };
   border: {
     name: string;
