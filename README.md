@@ -77,7 +77,15 @@ This function will spawn a group and execute the callback once it's done, the ca
 spawnGroupInZone = (groupName: string, zoneName: string, callback: Callback, randomize?: boolean)
 ```
 
-This function will spawn a group in a particular zone that you placed into the Mission Editor. It takes a group name, a zone name, a callback function and an optional boolean that will randomize spawn position into this zone
+```typescript
+addTrigger = ( type: string,
+  groupName: string,
+  zoneName: string,
+  frequency: "once" | "repeat",
+  callback: Callback)
+```
+
+This function will add a "trigger", it means that Niod will execute the callback function when something happens (depending on the trigger). The "type" argument defines the trigger that will be added, the only one implemented at the moment is: "GroupPartlyOrCompletelyInZone"
 
 ## Special thanks
 

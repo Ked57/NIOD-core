@@ -9,7 +9,8 @@ const spawnGroup = (groupName: string, callback: Callback) => {
         groupName
       }
     },
-    callback
+    callback,
+    "function"
   );
 };
 
@@ -28,7 +29,8 @@ const spawnGroupInZone = (
         randomize: randomize || true
       }
     },
-    callback
+    callback,
+    "function"
   );
 };
 

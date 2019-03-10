@@ -14,12 +14,13 @@ let connecting = false;
 let socket: net.Socket;
 
 const connect = (
-  options: net.NetConnectOpts
+  options: net.NetConnectOpts,
+  onData: (data: any) => void
 ): [Socket, Observable<Boolean>] => {
   connecting = true;
   createConnection(options);
 
-  socket.setTimeout(1000 * 60 * 5); // 5 minutes
+  socket.setTimeout(1000 * 60 * 1); // 1 minute
   socket.setEncoding("utf8");
   socket.setKeepAlive(true, 1000); // 1 sec
   // When disconnected.
@@ -27,7 +28,14 @@ const connect = (
     console.error("Client socket disconnect. ");
     connected.next(false);
     if (!connecting) {
-      setTimeout(() => connect(options), 1000);
+      setTimeout(
+        () =>
+          connect(
+            options,
+            onData
+          ),
+        1000
+      );
     }
   });
 
@@ -35,7 +43,14 @@ const connect = (
     console.log("Client connection timeout. ");
     connected.next(false);
     if (!connecting) {
-      setTimeout(() => connect(options), 1000);
+      setTimeout(
+        () =>
+          connect(
+            options,
+            onData
+          ),
+        1000
+      );
     }
   });
 
@@ -43,8 +58,18 @@ const connect = (
     console.error(JSON.stringify(err));
     connected.next(false);
     connecting = false;
-    setTimeout(() => connect(options), 1000);
+    setTimeout(
+      () =>
+        connect(
+          options,
+          onData
+        ),
+      1000
+    );
   });
+
+  socket.on("data", onData);
+
   return [socket, connectedObservable];
 };
 
@@ -66,9 +91,7 @@ const networkSend = (data: InputPayload) => {
     return;
   }
   const jsonData = JSON.stringify(data);
-  socket.write(jsonData + "\n", () =>
-    console.log(`Successfuly sent ${jsonData}`)
-  );
+  socket.write(jsonData + "\n", () => {});
 };
 
 const isConnected = () => {

@@ -5,69 +5,62 @@ import Function from "../game/types/callback/function";
 
 const dispatchList: Map<String, Dispatch> = new Map();
 
-const verifiyInputDispatch = (dispatch: Dispatch) => {
-  return new Promise<Dispatch>((resolve, reject) => {
-    if (
-      dispatch &&
-      dispatch.data &&
-      dispatch.callback &&
-      typeof dispatch.callback === "function"
-    ) {
-      resolve(dispatch);
-    } else reject("Invalid input dispatch properties");
-  });
+const verifiyInputDispatch = (dispatch: Dispatch): Dispatch => {
+  if (
+    dispatch &&
+    dispatch.data &&
+    dispatch.callback &&
+    typeof dispatch.callback === "function"
+  ) {
+    return dispatch;
+  } else throw Error("Invalid input dispatch properties");
 };
 
-const verifyDispatchPayload = (dispatch: ToBeDispatched) => {
-  return new Promise<Function | Event>((resolve, reject) => {
-    if (dispatch && dispatch.data && dispatch.callbackId && dispatch.type) {
-      if (dispatch.type === "function") {
-        const func: Function = {
-          data: dispatch.data,
-          type: dispatch.type,
-          callbackId: dispatch.type
-        };
-        return resolve(func);
-      } else if (dispatch.type === "event") {
-        const event: Event = {
-          data: dispatch.data,
-          type: dispatch.type,
-          name: dispatch.callbackId
-        };
-        resolve(event);
-      }
-    } else {
-      reject("Invalid payload dispatch properties");
+const verifyDispatchPayload = (
+  dispatch: ToBeDispatched
+): Function | Event | undefined => {
+  if (dispatch && dispatch.data && dispatch.callbackId && dispatch.type) {
+    if (dispatch.type === "function") {
+      const func: Function = {
+        data: dispatch.data,
+        type: dispatch.type,
+        callbackId: dispatch.type
+      };
+      return func;
+    } else if (dispatch.type === "event") {
+      const event: Event = {
+        data: dispatch.data,
+        type: dispatch.type,
+        name: dispatch.callbackId
+      };
+      return event;
     }
-  });
+  } else {
+    throw Error("Invalid payload dispatch properties");
+  }
 };
 
-const getDispatch = (func: Function) => {
-  return new Promise<Function>((resolve, reject) => {
-    const dispatch = dispatchList.get(func.callbackId);
-    if (dispatch) {
-      func.callback = dispatch.callback;
-      removeDispatch(dispatch);
-      resolve(func);
-    } else {
-      reject("Couldn't find callback, aborting");
-    }
-  });
+const getDispatch = (func: Function): Dispatch => {
+  const dispatch = dispatchList.get(func.callbackId);
+  if (dispatch) {
+    func.callback = dispatch.callback;
+    return dispatch;
+  } else {
+    throw Error("Couldn't find callback, aborting");
+  }
 };
 
-const addDispatch = (dispatch: Dispatch) => {
-  return new Promise<Dispatch>((resolve, reject) => {
-    if (!dispatch)
-      reject("Couldn't add dispatch because it's probably invalid");
-    const callbackId =
-      "_" +
-      Math.random()
-        .toString(36)
-        .substr(2, 9); // To generate a (kinda) unique random uid
-    dispatch.callbackId = callbackId;
-    dispatchList.set(dispatch.callbackId, dispatch);
-    resolve(dispatch);
-  });
+const addDispatch = (dispatch: Dispatch): Dispatch => {
+  if (!dispatch)
+    throw Error("Couldn't add dispatch because it's probably invalid");
+  const callbackId =
+    "_" +
+    Math.random()
+      .toString(36)
+      .substr(2, 9); // To generate a (kinda) unique random uid
+  dispatch.callbackId = callbackId;
+  dispatchList.set(dispatch.callbackId, dispatch);
+  return dispatch;
 };
 
 const removeDispatch = (dispatchObject: Dispatch) => {
