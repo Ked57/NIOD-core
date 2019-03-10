@@ -61,15 +61,15 @@ function registerZone(zoneName)
 				"ERROR: couldn't register zone " ..
 					zoneName .. " . It's neither a TriggerZone nor a group suitable for Polygon Zones"
 			)
-			return 0
+			return nil
 		end
 	end
-	return 1
+	return templateZones[zoneName]
 end
 
 function newSpawnTemplate(args)
 	templateGroups[args.groupName] = SPAWN:New(args.groupName)
-	return 1
+	return templateGroups[args.groupName]
 end
 
 -- MOOSE functions wrappers
@@ -79,7 +79,7 @@ niod.mooseFunctions = {
 			return 0
 		end
 		if not templateGroups[args.groupName] then
-			niod.mooseFunctions["newSpawnTemplate"](args)
+			newSpawnTemplate(args)
 		end
 		return templateGroups[args.groupName]:Spawn():GetName()
 	end,
@@ -197,9 +197,7 @@ function addA2ADispatcher(data)
 			AI_A2A_DISPATCHER.Landing[data.squadrons[i].landingMethod]
 		)
 		if data.squadrons[i].cap then
-			if not templateZones[data.squadrons[i].cap.zoneName] then
-				registerZone(data.squadrons[i].cap.zoneName)
-			end
+			registerZone(data.squadrons[i].cap.zoneName)
 
 			A2ADispatchers[data.name].dispatcher:SetSquadronCap(
 				data.squadrons[i].name,
