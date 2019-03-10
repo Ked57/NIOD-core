@@ -17,6 +17,7 @@ local triggerScheduler =
 	nil,
 	function()
 		checkTriggers()
+		niod.send(getGroupsInfo())
 		niod.checkTimeout()
 	end,
 	{},
@@ -226,6 +227,10 @@ function addA2ADispatcher(data)
 		end
 	end
 	A2ADispatchers[data.name].dispatcher:Start()
+end
+
+function getGroupsInfo()
+	-- Still need to figure out ow to get groups
 end
 
 -- NIOD functions
