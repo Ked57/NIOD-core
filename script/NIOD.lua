@@ -50,8 +50,20 @@ function niod.setDevEnv(isDev)
 	env.setErrorMessageBoxEnabled(niod.isDev)
 end
 
-function registerZone(args)
-	templateZones[args.zoneName] = ZONE:New(args.zoneName)
+function registerZone(zoneName)
+	if not templateZones[zoneName] then
+		if trigger.misc.getZone(zoneName) then
+			templateZones[zoneName] = ZONE:New(zoneName)
+		elseif GROUP:FindByName(zoneName) then
+			templateZones[zoneName] = ZONE_POLYGON:New(zoneName, GROUP:FindByName(zoneName))
+		else
+			niod.log(
+				"ERROR: couldn't register zone " ..
+					zoneName .. " . It's neither a TriggerZone nor a group suitable for Polygon Zones"
+			)
+			return 0
+		end
+	end
 	return 1
 end
 
@@ -80,7 +92,7 @@ niod.mooseFunctions = {
 			newSpawnTemplate(args)
 		end
 		if not templateZones[args.zoneName] then
-			registerZone(args)
+			registerZone(args.zoneName)
 		end
 		if args.randomize then
 			randomize = args.randomize
@@ -158,7 +170,7 @@ function addA2ADispatcher(data)
 
 	A2ADispatchers[data.name].dispatcher = AI_A2A_DISPATCHER:New(A2ADispatchers[data.name].detectionArea)
 
-	A2ADispatchers[data.name].border = ZONE_POLYGON:New(data.border.name, GROUP:FindByName(data.border.name))
+	A2ADispatchers[data.name].border = registerZone(data.border.name) --ZONE_POLYGON:New(data.border.name, GROUP:FindByName(data.border.name))
 	if not A2ADispatchers[data.name].border then
 		niod.print("couldn't find the zone to define the border, aborting...")
 		A2ADispatchers[data.name] = {}
@@ -186,7 +198,7 @@ function addA2ADispatcher(data)
 		)
 		if data.squadrons[i].cap then
 			if not templateZones[data.squadrons[i].cap.zoneName] then
-				registerZone(data.squadrons[i].cap)
+				registerZone(data.squadrons[i].cap.zoneName)
 			end
 
 			A2ADispatchers[data.name].dispatcher:SetSquadronCap(
