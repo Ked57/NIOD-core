@@ -20,7 +20,7 @@ const connect = (
   connecting = true;
   createConnection(options);
 
-  socket.setTimeout(1000 * 60 * 5); // 5 minutes
+  socket.setTimeout(1000 * 60 * 1); // 1 minute
   socket.setEncoding("utf8");
   socket.setKeepAlive(true, 1000); // 1 sec
   // When disconnected.
@@ -91,9 +91,7 @@ const networkSend = (data: InputPayload) => {
     return;
   }
   const jsonData = JSON.stringify(data);
-  socket.write(jsonData + "\n", () =>
-    console.log(`Successfuly sent ${jsonData}`)
-  );
+  socket.write(jsonData + "\n", () => {});
 };
 
 const isConnected = () => {

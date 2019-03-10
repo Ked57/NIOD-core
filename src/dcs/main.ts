@@ -26,12 +26,7 @@ let socket: Socket;
 const initDCSModule = () => {
   const [s, connected]: [Socket, Observable<Boolean>] = connect(
     options,
-    (data: any) => {
-      console.log("Server return data");
-      const receivedData = dataFromDcsJsonToObject(data.toString());
-      console.log(receivedData);
-      receive(receivedData);
-    }
+    (data: any) => receive(dataFromDcsJsonToObject(data.toString()))
   );
   socket = s;
 
