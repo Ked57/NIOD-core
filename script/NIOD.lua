@@ -178,6 +178,8 @@ function niod.processRequest(request)
 				addTrigger(request)
 				response.type = "triggerInit"
 				response.data = {}
+			elseif request.type == "noTimeout" then
+				response.data = {}
 			end
 		end
 	end

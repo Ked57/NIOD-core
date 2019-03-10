@@ -15,6 +15,7 @@ import Function from "./game/types/callback/function";
 import { Socket } from "net";
 import { Observable } from "rxjs";
 import Trigger from "./game/types/callback/trigger";
+import NoTimeout from "./game/types/callback/no_timeout";
 
 const options = {
   port: 15487,
@@ -22,6 +23,8 @@ const options = {
 } as net.TcpSocketConnectOpts;
 
 let socket: Socket;
+
+setInterval(() => send({}, () => {}, "noTimeout"), 10000);
 
 const initDCSModule = () => {
   const [s, connected]: [Socket, Observable<Boolean>] = connect(
@@ -83,6 +86,8 @@ const payloadIsTrigger = (payload: any): payload is Trigger =>
   payload.type === "trigger";
 const payloadIsTriggerInit = (payload: any): payload is unknown =>
   payload.type === "triggerInit";
+const payloadIsNoTimeout = (payload: any): payload is NoTimeout =>
+  payload.type === "noTimeout";
 
 const handlePayload = async (payload: Event | Function) => {
   try {
@@ -95,6 +100,8 @@ const handlePayload = async (payload: Event | Function) => {
       return dispatch.callback(payload.data);
     } else if (payloadIsTriggerInit(payload)) {
       return "Trigger added";
+    } else if (payloadIsNoTimeout(payload)) {
+      return;
     } /*else if(payload.type === "event"){
         // TODO: Handle the event and return the function that will call every subscriber
         resolve(eventDispatcher);
