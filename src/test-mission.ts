@@ -1,20 +1,77 @@
-import { initNiod, spawnGroupInZone, addTrigger } from "./app";
+import {
+  initNiod,
+  spawnGroupInZone,
+  addTrigger,
+  addA2ADispatcher
+} from "./app";
 
 const f = async () => {
   const server = await initNiod();
-  addTrigger(
+
+  /*addTrigger(
     "GroupPartlyOrCompletelyInZone",
     "template_group#001",
     "zone",
     "once",
     () => console.log("trigger triggered")
   );
+
   setTimeout(
     () =>
       spawnGroupInZone("template_group", "zone", () =>
         console.log("group spawned")
       ),
     1000
+  );*/
+
+  addA2ADispatcher(
+    {
+      name: "russianA2ADispatcher",
+      detection: {
+        prefixes: ["RUSSIAN_EWR"]
+      },
+      border: {
+        name: "RUSSIAN_BORDER"
+      },
+      engageRadius: 30000,
+      squadrons: [
+        {
+          name: "RUSSIAN_SQUADRON_MIG",
+          map: "Caucasus",
+          airbase: "Anapa_Vityazevo",
+          groupLength: 2,
+          takeofMethod: "Runway",
+          landingMethod: "Runway",
+          cap: {
+            zoneName: "RUSSIAN_CAP_EAST",
+            minCAPAlt: 4000,
+            maxCAPAlt: 8000,
+            minCAPSpeed: 500,
+            maxCAPSPeed: 600,
+            minCAPInterceptSpeed: 800,
+            maxCAPInterceptSpeed: 900,
+            mesureType: "RADIO",
+            numberPerGroup: 2,
+            lowerCheckTime: 30,
+            upperCheckTime: 60,
+            decisionWeight: 1
+          }
+        },
+        {
+          name: "RUSSIAN_SQUADRON_SU-27",
+          map: "Caucasus",
+          airbase: "Gelendzhik",
+          groupLength: 2,
+          takeofMethod: "Runway",
+          landingMethod: "Runway",
+          gci: {
+            minInterceptSpeed: 900,
+            maxInterceptSpeed: 1700
+          }
+        }
+      ]
+    },
+    () => console.log("dispatcher added")
   );
 };
 f();
