@@ -129,6 +129,12 @@ addA2ADispatcher = ({
 }, callback: Callback);
 ```
 
+This function will return information about the groups present in the game
+
+```typescript
+getGroupInfo = ()
+```
+
 ## Special thanks
 
 Thanks to Drex from Dynamic DCS for all the help on sockets, go check his server out

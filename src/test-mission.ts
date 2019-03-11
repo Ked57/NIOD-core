@@ -1,9 +1,4 @@
-import {
-  initNiod,
-  spawnGroupInZone,
-  addTrigger,
-  addA2ADispatcher
-} from "./app";
+import { initNiod, getGroupInfo, addA2ADispatcher } from "./app";
 
 const f = async () => {
   const server = await initNiod();
@@ -124,5 +119,6 @@ const f = async () => {
     },
     () => console.log("american dispatcher added")
   );
+  setTimeout(() => console.log(getGroupInfo()), 7500);
 };
 f();
