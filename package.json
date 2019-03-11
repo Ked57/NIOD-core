@@ -1,6 +1,6 @@
 {
   "name": "niod",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "NIOD JS API for DCS World AND MOOSE, using a NodeJS server to communicate with a LUA library",
   "main": "lib/app.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "NIOD",
     "DCS",
     "MOOSE",
-    "safe"
+    "API"
   ],
   "author": "Ked",
   "license": "ISC",

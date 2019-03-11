@@ -16,6 +16,8 @@ import { Socket } from "net";
 import { Observable } from "rxjs";
 import Trigger from "./game/types/callback/trigger";
 import NoTimeout from "./game/types/callback/no_timeout";
+import GroupInfo from "./game/types/callback/group_info";
+import { storeGroupInfo } from "./store/store_group_info";
 
 const options = {
   port: 15487,
@@ -86,8 +88,12 @@ const payloadIsTriggerInit = (payload: any): payload is unknown =>
   payload.type === "triggerInit";
 const payloadIsNoTimeout = (payload: any): payload is NoTimeout =>
   payload.type === "noTimeout";
+const payloadIsGroupInfo = (payload: any): payload is GroupInfo =>
+  payload.type === "groupInfo";
 
-const handlePayload = async (payload: Event | Function) => {
+const handlePayload = async (
+  payload: Event | Function | Trigger | NoTimeout | GroupInfo | unknown
+) => {
   try {
     if (payloadIsFunction(payload)) {
       const dispatch = await getDispatch(payload);
@@ -100,6 +106,8 @@ const handlePayload = async (payload: Event | Function) => {
       return "Trigger added";
     } else if (payloadIsNoTimeout(payload)) {
       return;
+    } else if (payloadIsGroupInfo(payload)) {
+      return storeGroupInfo(payload);
     } /*else if(payload.type === "event"){
         // TODO: Handle the event and return the function that will call every subscriber
         resolve(eventDispatcher);
