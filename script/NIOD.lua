@@ -17,7 +17,7 @@ local triggerScheduler =
 	nil,
 	function()
 		checkTriggers()
-		niod.send(getGroupsInfo())
+		niod.send(formGroupInfoPayload(getGroupsInfo()))
 		niod.checkTimeout()
 	end,
 	{},
@@ -230,7 +230,41 @@ function addA2ADispatcher(data)
 end
 
 function getGroupsInfo()
-	-- Still need to figure out ow to get groups
+	local groups = {}
+	local groupsSet = SET_GROUP:New():FilterStart()
+	groupsSet:ForEach(
+		function(group)
+			local groupInfo = {}
+			groupInfo.coalitionName = group:GetCoalitionName()
+			groupInfo.categoryName = group:GetCategoryName()
+			groupInfo.country = group:GetCountry()
+			groupInfo.units = {}
+			for UnitId, UnitData in pairs(group:GetUnits()) do
+				local unit = {}
+				unit.fuel = UnitData:GetFuel()
+				unit.callsign = UnitData:GetCallsign()
+				unit.inAir = UnitData:InAir()
+				unit.isActive = UnitData:IsActive()
+				unit.isAlive = UnitData:IsAlive()
+				unit.name = UnitData:Name()
+				unit.pitch = UnitData:GetPitch()
+				unit.roll = UnitData:GetRoll()
+				unit.yaw = UnitData:GetYaw()
+				unit.position = UnitData:GetPosition()
+				table.insert(groupInfo.units, unit)
+			end
+			table.insert(groups, groupInfo)
+		end
+	)
+	return groups
+end
+
+function formGroupInfoPayload(groups)
+	return {
+		type = "groupInfo",
+		callbackId = "groupInfo",
+		data = groups
+	}
 end
 
 -- NIOD functions
