@@ -11,6 +11,7 @@ local templateGroups = {}
 local templateZones = {}
 local triggers = {}
 local A2ADispatchers = {}
+local groupsSet = SET_GROUP:New():FilterStart()
 
 local triggerScheduler =
 	SCHEDULER:New(
@@ -231,7 +232,6 @@ end
 
 function getGroupsInfo()
 	local groups = {}
-	local groupsSet = SET_GROUP:New():FilterStart()
 	groupsSet:ForEach(
 		function(group)
 			local groupInfo = {}
