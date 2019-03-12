@@ -59,10 +59,10 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/repo
+          at: ./
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run:
           name: Publish package
           command: npm publish
@@ -74,26 +74,26 @@ workflows:
       - init-dependencies:
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
       - lint:
           requires:
             - init-dependencies
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
       - check-formatting:
           requires:
             - init-dependencies
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
       - test:
           requires:
             - lint
             - check-formatting
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
       - deploy:
           requires:
             - test
