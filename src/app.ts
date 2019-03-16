@@ -5,19 +5,12 @@ import { spawnGroup, spawnGroupInZone } from "./dcs/game/game_functions";
 import { addTrigger } from "./dcs/game/trigger_functions";
 import { addA2ADispatcher } from "./dcs/game/a2a_dispatcher_functions";
 import { getGroupInfo } from "./dcs/store/store_group_info";
+import { Observable } from "rxjs";
 
-const initNiod = () => {
-  return new Promise<core.Express>((resolve, reject) => {
-    const app = express();
+const initNiod = (): [core.Express, Observable<Boolean>] => {
+  const app = express();
 
-    const connected = initDCSModule();
-
-    connected.subscribe({
-      next: value => (value ? resolve(app) : ""),
-      error: err => reject("Something wrong occurred: " + err),
-      complete: () => reject("The observable completed, please restart the app")
-    });
-  });
+  return [app, initDCSModule()];
 };
 
 /*app.get("/", (req: express.Request, res: express.Response) =>
