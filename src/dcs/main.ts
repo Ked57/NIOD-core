@@ -24,7 +24,7 @@ const options = {
 } as net.TcpSocketConnectOpts;
 
 const initDCSModule = () => {
-  initQueue();
+  initQueue(networkSend);
   return connect(
     options,
     (data: any) => receive(dataFromDcsJsonToObject(data.toString()))

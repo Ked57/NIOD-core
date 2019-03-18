@@ -93,8 +93,7 @@ const createConnection = (
 
 const networkSend = (data: InputPayload) => {
   if (!isConnected) {
-    console.error("ERR: Socket isn't connected, aborting;");
-    return;
+    throw Error("ERR: Socket isn't connected, aborting;");
   }
   const jsonData = JSON.stringify(data);
   socket.write(jsonData + "\n", () => {});

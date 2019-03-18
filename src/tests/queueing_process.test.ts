@@ -22,6 +22,6 @@ test("Given some payloads, process the queue", t => {
   for (let i = 0; i < 10; ++i) {
     enQueue(modelPayload);
   }
-  processQueue();
+  processQueue((payload: InputPayload) => console.log(payload));
   t.true(getQueue().length <= 0);
 });

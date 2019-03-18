@@ -11,16 +11,27 @@ const deQueue = (): InputPayload | undefined => {
   return queue.pop();
 };
 
-const initQueue = () => {
-  setInterval(() => processQueue().map(networkSend), 1000);
+const initQueue = (func: (payload: InputPayload) => void) => {
+  setInterval(() => processQueue(func).map(networkSend), 1000);
 };
 
-const processQueue = (): InputPayload[] => {
-  const payload = deQueue();
-  if (!payload) {
+const processQueue = (
+  func: (payload: InputPayload) => void
+): InputPayload[] => {
+  if (queue.length <= 0) {
     return [];
   }
-  return [...[payload], ...processQueue()];
+  try {
+    func(queue[0]);
+    const payload = deQueue();
+    if (!payload) {
+      return [];
+    }
+    return [...[payload], ...processQueue(func)];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
 };
 
 const getQueue = () => queue;
