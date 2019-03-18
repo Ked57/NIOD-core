@@ -124,7 +124,7 @@ const f = () => {
   setTimeout(() => console.log(getGroupInfo()), 7500);*/
 };
 
-const [server, serverInit] = initNiod();
+const serverInit = initNiod();
 serverInit.then(() => {
   console.log("init done");
   f();

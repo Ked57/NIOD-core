@@ -1,4 +1,4 @@
-Latest build tests and liting
+Latest build tests and linting
 [![CircleCI](https://circleci.com/gh/Ked57/NIOD.svg?style=svg)](https://circleci.com/gh/Ked57/NIOD)
 
 # NIOD
@@ -62,10 +62,10 @@ Niod is written in typescript, so the npm package is shipped with all the type d
 ## API
 
 ```typescript
-initNiod = (): Promise<core.Express>
+initNiod = (): Promise<any>
 ```
 
-This function will init Niod and resolve the express server
+This function will init Niod and resolve once done
 
 ```typescript
 spawnGroup = (groupName: string, callback: Callback)
