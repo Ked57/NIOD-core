@@ -12,8 +12,6 @@ import Callback from "./dispatcher/types/callback";
 import InputPayload from "./network/types/input_payload";
 import Event from "./game/types/callback/event";
 import Function from "./game/types/callback/function";
-import { Socket } from "net";
-import { Observable } from "rxjs";
 import Trigger from "./game/types/callback/trigger";
 import NoTimeout from "./game/types/callback/no_timeout";
 import GroupInfo from "./game/types/callback/group_info";
@@ -24,16 +22,11 @@ const options = {
   host: "localhost"
 } as net.TcpSocketConnectOpts;
 
-let socket: Socket;
-
 const initDCSModule = () => {
-  const [s, connected]: [Socket, Observable<Boolean>] = connect(
+  return connect(
     options,
     (data: any) => receive(dataFromDcsJsonToObject(data.toString()))
   );
-  socket = s;
-
-  return connected;
 };
 
 const formPaylaod = (dispatch: Dispatch, type: string) => {
@@ -49,7 +42,7 @@ const send = async (
   callback: Callback,
   type: string
 ) => {
-  if (!isConnected() || !socket) {
+  if (!isConnected()) {
     console.error(
       "Error trying to send something: Network isn't connected or socket is empty, aborting"
     );

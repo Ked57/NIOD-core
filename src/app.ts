@@ -5,9 +5,8 @@ import { spawnGroup, spawnGroupInZone } from "./dcs/game/game_functions";
 import { addTrigger } from "./dcs/game/trigger_functions";
 import { addA2ADispatcher } from "./dcs/game/a2a_dispatcher_functions";
 import { getGroupInfo } from "./dcs/store/store_group_info";
-import { Observable } from "rxjs";
 
-const initNiod = (): [core.Express, Observable<Boolean>] => {
+const initNiod = (): [core.Express, Promise<any>] => {
   const app = express();
 
   return [app, initDCSModule()];
