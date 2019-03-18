@@ -8,7 +8,7 @@ const enQueue = (payload: InputPayload) => {
 };
 
 const deQueue = (): InputPayload | undefined => {
-  return queue.pop();
+  return queue.shift();
 };
 
 const initQueue = (func: (payload: InputPayload) => void) => {
