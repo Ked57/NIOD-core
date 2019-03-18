@@ -1,6 +1,6 @@
 import * as net from "net";
 import { validatePayload, dataFromDcsJsonToObject } from "./payload_validator";
-import { connect, isConnected, networkSend } from "./network/network_manager";
+import { connect, networkSend } from "./network/network_manager";
 import {
   addDispatch,
   verifiyInputDispatch,
@@ -16,6 +16,7 @@ import Trigger from "./game/types/callback/trigger";
 import NoTimeout from "./game/types/callback/no_timeout";
 import GroupInfo from "./game/types/callback/group_info";
 import { storeGroupInfo } from "./store/store_group_info";
+import { enQueue, initQueue } from "./queue/queue";
 
 const options = {
   port: 15487,
@@ -23,6 +24,7 @@ const options = {
 } as net.TcpSocketConnectOpts;
 
 const initDCSModule = () => {
+  initQueue();
   return connect(
     options,
     (data: any) => receive(dataFromDcsJsonToObject(data.toString()))
@@ -42,12 +44,6 @@ const send = async (
   callback: Callback,
   type: string
 ) => {
-  if (!isConnected()) {
-    console.error(
-      "Error trying to send something: Network isn't connected or socket is empty, aborting"
-    );
-    return;
-  }
   const dispatch: Dispatch = {
     data: data,
     callback: callback,
@@ -55,7 +51,7 @@ const send = async (
   };
 
   try {
-    networkSend(
+    enQueue(
       formPaylaod(await addDispatch(await verifiyInputDispatch(dispatch)), type)
     );
   } catch (err) {

@@ -1,8 +1,6 @@
 import { initNiod, getGroupInfo, addA2ADispatcher } from "./app";
 
-const f = async () => {
-  const server = await initNiod();
-
+const f = () => {
   /*addTrigger(
     "GroupPartlyOrCompletelyInZone",
     "template_group#001",
@@ -121,4 +119,6 @@ const f = async () => {
   );
   setTimeout(() => console.log(getGroupInfo()), 7500);
 };
-f();
+
+const [server, serverInit] = initNiod();
+serverInit.then(() => f());
