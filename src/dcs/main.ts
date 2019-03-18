@@ -1,6 +1,6 @@
 import * as net from "net";
 import { validatePayload, dataFromDcsJsonToObject } from "./payload_validator";
-import { connect, isConnected, networkSend } from "./network/network_manager";
+import { connect, networkSend } from "./network/network_manager";
 import {
   addDispatch,
   verifiyInputDispatch,
@@ -12,28 +12,29 @@ import Callback from "./dispatcher/types/callback";
 import InputPayload from "./network/types/input_payload";
 import Event from "./game/types/callback/event";
 import Function from "./game/types/callback/function";
-import { Socket } from "net";
-import { Observable } from "rxjs";
 import Trigger from "./game/types/callback/trigger";
 import NoTimeout from "./game/types/callback/no_timeout";
 import GroupInfo from "./game/types/callback/group_info";
 import { storeGroupInfo } from "./store/store_group_info";
+import { enQueue, initQueue } from "./queue/queue";
 
 const options = {
   port: 15487,
   host: "localhost"
 } as net.TcpSocketConnectOpts;
 
-let socket: Socket;
-
 const initDCSModule = () => {
-  const [s, connected]: [Socket, Observable<Boolean>] = connect(
+  initQueue(networkSend);
+  return connect(
     options,
-    (data: any) => receive(dataFromDcsJsonToObject(data.toString()))
+    (data: any) => {
+      try {
+        receive(dataFromDcsJsonToObject(data.toString()));
+      } catch (err) {
+        console.error(err);
+      }
+    }
   );
-  socket = s;
-
-  return connected;
 };
 
 const formPaylaod = (dispatch: Dispatch, type: string) => {
@@ -49,12 +50,6 @@ const send = async (
   callback: Callback,
   type: string
 ) => {
-  if (!isConnected() || !socket) {
-    console.error(
-      "Error trying to send something: Network isn't connected or socket is empty, aborting"
-    );
-    return;
-  }
   const dispatch: Dispatch = {
     data: data,
     callback: callback,
@@ -62,7 +57,7 @@ const send = async (
   };
 
   try {
-    networkSend(
+    enQueue(
       formPaylaod(await addDispatch(await verifiyInputDispatch(dispatch)), type)
     );
   } catch (err) {

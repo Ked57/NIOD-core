@@ -2,6 +2,7 @@ import Dispatch from "./types/dispatch";
 import ToBeDispatched from "./types/to_be_dispatched";
 import Event from "../game/types/callback/event";
 import Function from "../game/types/callback/function";
+import uuid from "uuid/v1";
 
 const dispatchList: Map<String, Dispatch> = new Map();
 
@@ -53,11 +54,7 @@ const getDispatch = (func: Function): Dispatch => {
 const addDispatch = (dispatch: Dispatch): Dispatch => {
   if (!dispatch)
     throw Error("Couldn't add dispatch because it's probably invalid");
-  const callbackId =
-    "_" +
-    Math.random()
-      .toString(36)
-      .substr(2, 9); // To generate a (kinda) unique random uid
+  const callbackId = uuid();
   dispatch.callbackId = callbackId;
   dispatchList.set(dispatch.callbackId, dispatch);
   return dispatch;

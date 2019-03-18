@@ -1,25 +1,27 @@
-import { initNiod, getGroupInfo, addA2ADispatcher } from "./app";
+import {
+  initNiod,
+  getGroupInfo,
+  addA2ADispatcher,
+  spawnGroupInZone,
+  addTrigger
+} from "./app";
 
-const f = async () => {
-  const server = await initNiod();
-
-  /*addTrigger(
+const f = () => {
+  addTrigger(
     "GroupPartlyOrCompletelyInZone",
     "template_group#001",
     "zone",
     "once",
     () => console.log("trigger triggered")
   );
-
-  setTimeout(
+  setInterval(
     () =>
       spawnGroupInZone("template_group", "zone", () =>
         console.log("group spawned")
       ),
-    1000
-  );*/
-
-  addA2ADispatcher(
+    2000
+  );
+  /*addA2ADispatcher(
     {
       name: "russianA2ADispatcher",
       detection: {
@@ -119,6 +121,11 @@ const f = async () => {
     },
     () => console.log("american dispatcher added")
   );
-  setTimeout(() => console.log(getGroupInfo()), 7500);
+  setTimeout(() => console.log(getGroupInfo()), 7500);*/
 };
-f();
+
+const serverInit = initNiod();
+serverInit.then(() => {
+  console.log("init done");
+  f();
+});
