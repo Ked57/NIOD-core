@@ -8,7 +8,8 @@ const enQueue = (payload: InputPayload) => {
 };
 
 const deQueue = (): InputPayload | undefined => {
-  return queue.shift();
+  const payload = queue.shift();
+  return payload;
 };
 
 const initQueue = (func: (payload: InputPayload) => void) => {
@@ -22,11 +23,11 @@ const processQueue = (
     return [];
   }
   try {
-    func(queue[0]);
     const payload = deQueue();
     if (!payload) {
       return [];
     }
+    func(queue[0]);
     return [...[payload], ...processQueue(func)];
   } catch (err) {
     console.error(err);

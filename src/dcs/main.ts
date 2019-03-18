@@ -27,7 +27,13 @@ const initDCSModule = () => {
   initQueue(networkSend);
   return connect(
     options,
-    (data: any) => receive(dataFromDcsJsonToObject(data.toString()))
+    (data: any) => {
+      try {
+        receive(dataFromDcsJsonToObject(data.toString()));
+      } catch (err) {
+        console.error(err);
+      }
+    }
   );
 };
 
