@@ -5,7 +5,7 @@
   "main": "lib/app.js",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "build": "tsc --d true",
+    "build": "tsc",
     "test": "tsc && ava",
     "lint": "tslint --project tsconfig.json",
     "format:check": "prettier src/**/*.ts --list-different",
@@ -29,11 +29,11 @@
   },
   "homepage": "https://github.com/Ked57/NIOD#readme",
   "dependencies": {
-    "@types/uuid": "^3.4.4",
     "rxjs": "^6.4.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@types/uuid": "^3.4.4",
     "ava": "^0.25.0",
     "prettier": "^1.15.3",
     "ts-node": "^7.0.1",
