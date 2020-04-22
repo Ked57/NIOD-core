@@ -95,6 +95,10 @@ const networkSend = (data: InputPayload) => {
   if (!isConnected) {
     throw Error("ERR: Socket isn't connected, aborting;");
   }
+  if(!data){
+    console.error("ERROR: payload is empty, nothing was sent", data)
+    return;
+  }
   const jsonData = JSON.stringify(data);
   socket.write(jsonData + "\n", () => {});
 };

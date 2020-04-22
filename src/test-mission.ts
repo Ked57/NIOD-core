@@ -1,24 +1,18 @@
 import {
   initNiod,
+  execute,
   getGroupInfo,
-  spawnGroupInZone,
   addTrigger
 } from "./app";
 
 const f = () => {
   addTrigger(
     "GroupPartlyOrCompletelyInZone",
-    "template_group#001",
+    "template_group",
     "zone",
-    "once",
+    "repeat",
     () => console.log("trigger triggered")
   );
-  setTimeout(
-    () =>
-      spawnGroupInZone("template_group", "zone", () =>
-        console.log("group spawned")
-      ),
-    2000);
   setTimeout(() => console.log(getGroupInfo()), 7500);
 };
 

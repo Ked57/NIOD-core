@@ -1,5 +1,5 @@
 import { initDCSModule } from "./dcs/main";
-import { spawnGroup, spawnGroupInZone } from "./dcs/game/game_functions";
+import { execute } from "./dcs/game/game_functions";
 import { addTrigger } from "./dcs/game/trigger_functions";
 import { getGroupInfo } from "./dcs/store/store_group_info";
 
@@ -9,8 +9,7 @@ const initNiod = (): Promise<any> => {
 
 export {
   initNiod,
-  spawnGroup,
-  spawnGroupInZone,
+  execute,
   addTrigger,
   getGroupInfo
 };

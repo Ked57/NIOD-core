@@ -5,12 +5,9 @@ package.cpath = package.cpath .. ";.\\LuaSocket\\?.dll;"
 
 local socket = require("socket")
 local JSON = loadfile("Scripts\\JSON.lua")()
-local niod = {}
+niod = {}
 
-local templateGroups = {}
-local templateZones = {}
 local triggers = {}
-local A2ADispatchers = {}
 local groupsSet = SET_GROUP:New():FilterStart()
 
 local triggerScheduler =
@@ -18,12 +15,12 @@ local triggerScheduler =
 	nil,
 	function()
 		checkTriggers()
-		niod.send(formGroupInfoPayload(getGroupsInfo()))
+		--niod.send(formGroupInfoPayload(getGroupsInfo()))
 		niod.checkTimeout()
 	end,
 	{},
 	5,
-	1
+	30
 )
 
 niod.scope = "127.0.0.1"
@@ -52,60 +49,30 @@ function niod.setDevEnv(isDev)
 	env.setErrorMessageBoxEnabled(niod.isDev)
 end
 
-function registerZone(zoneName)
-	if not templateZones[zoneName] then
-		if trigger.misc.getZone(zoneName) then
-			templateZones[zoneName] = ZONE:New(zoneName)
-		elseif GROUP:FindByName(zoneName) then
-			templateZones[zoneName] = ZONE_POLYGON:New(zoneName, GROUP:FindByName(zoneName))
-		else
-			niod.log(
-				"ERROR: couldn't register zone " ..
-					zoneName .. " . It's neither a TriggerZone nor a group suitable for Polygon Zones"
-			)
-			return nil
-		end
-	end
-	return templateZones[zoneName]
-end
+-- NIOD functions wrappers
+niod.functions = {}
+niod.trigger = {}
 
-function newSpawnTemplate(args)
-	templateGroups[args.groupName] = SPAWN:New(args.groupName)
-	return templateGroups[args.groupName]
-end
-
--- MOOSE functions wrappers
-niod.mooseFunctions = {
-	spawn = function(args)
-		if not args.groupName then
-			return 0
-		end
-		if not templateGroups[args.groupName] then
-			newSpawnTemplate(args)
-		end
-		return templateGroups[args.groupName]:Spawn():GetName()
-	end,
-	spawnInZone = function(args)
-		if not args.zoneName or not args.groupName then
-			return 0
-		end
-		local randomize = true
-		if not templateGroups[args.groupName] then
-			newSpawnTemplate(args)
-		end
-		if not templateZones[args.zoneName] then
-			registerZone(args.zoneName)
-		end
-		if args.randomize then
-			randomize = args.randomize
-		end
-		return templateGroups[args.groupName]:SpawnInZone(templateZones[args.zoneName], randomize):GetName()
-	end,
-	addA2ADispatcher = function(args)
-		addA2ADispatcher(args)
-		return 1
-	end
-}
+-- This is an example trigger
+--niod.trigger["GroupPartlyOrCompletelyInZone"] = function(trigger)
+--	local group = GROUP:FindByName(trigger.data.groupName)
+--	local zone = ZONE:FindByName(trigger.data.zoneName)
+--	if not group or not zone then
+--		return
+--	end
+--	if group:IsPartlyOrCompletelyInZone(zone) then
+--		niod.sendTrigger(
+--			{
+--				type = "trigger",
+--				callbackId = trigger.callbackId,
+--				data = {}
+--			}
+--		)
+--		if trigger.data.frequency == "once" then
+--			removeTrigger(trigger.callbackId)
+--		end
+--	end
+--end
 
 -- Triggers
 
@@ -119,29 +86,11 @@ function checkTriggers()
 	end
 end
 
-function checkTrigger(trigger)
-	if trigger.data.type == "GroupPartlyOrCompletelyInZone" then
-		checkGroupPartlyOrCompletelyInZone(trigger)
-	end
-end
-
-function checkGroupPartlyOrCompletelyInZone(trigger)
-	local group = GROUP:FindByName(trigger.data.groupName)
-	local zone = ZONE:FindByName(trigger.data.zoneName)
-	if not group or not zone then
-		return
-	end
-	if group:IsPartlyOrCompletelyInZone(zone) then
-		niod.sendTrigger(
-			{
-				type = "trigger",
-				callbackId = trigger.callbackId,
-				data = {}
-			}
-		)
-		if trigger.data.frequency == "once" then
-			removeTrigger(trigger.callbackId)
-		end
+function checkTrigger(t)
+	if t then
+		niod.trigger[t.data.type](t)
+	else
+		niod.log("Tried to check trigger but it wasn't defined")
 	end
 end
 
@@ -232,7 +181,7 @@ function niod.processRequest(request)
 		response.callbackId = request.callbackId
 		if request.data then
 			if request.type == "function" and request.data.name then
-				response.data = niod.mooseFunctions[request.data.name](request.data.args)
+				response.data = niod.functions[request.data.name](request.data.args)
 			elseif request.type == "trigger" and request.data then
 				addTrigger(request)
 				response.type = "triggerInit"

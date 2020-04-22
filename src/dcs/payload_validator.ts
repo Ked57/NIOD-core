@@ -1,7 +1,11 @@
 import ToBeDispatched from "./dispatcher/types/to_be_dispatched";
 
-const dataFromDcsJsonToObject = (data: string): { [key: string]: string } => {
-  return JSON.parse(data);
+const dataFromDcsJsonToObject = (data: string): { [key: string]: string } | undefined => {
+  try{
+    return JSON.parse(data);
+  }catch(err){
+    console.error(err)
+  }
 };
 
 const validatePayload = (data: { [key: string]: any }): ToBeDispatched => {
