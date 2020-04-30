@@ -7,9 +7,4 @@ const initNiod = (): Promise<any> => {
   return initDCSModule();
 };
 
-export {
-  initNiod,
-  execute,
-  addTrigger,
-  getGroupInfo
-};
+export { initNiod, execute, addTrigger, getGroupInfo };

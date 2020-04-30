@@ -1,10 +1,12 @@
 import ToBeDispatched from "./dispatcher/types/to_be_dispatched";
 
-const dataFromDcsJsonToObject = (data: string): { [key: string]: string } | undefined => {
-  try{
+const dataFromDcsJsonToObject = (
+  data: string
+): { [key: string]: string } | undefined => {
+  try {
     return JSON.parse(data);
-  }catch(err){
-    console.error(err)
+  } catch (err) {
+    console.error(err);
   }
 };
 
