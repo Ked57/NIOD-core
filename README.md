@@ -15,12 +15,11 @@ back with the returned data. The dispatcher will then execute the right stored c
 Here's a basic example
 
 ```javascript
-const { initNiod, spawnGroup } = require("niod");
-
+const { initNiod, execute } = require("niod");
 initNiod().then(() => {
-  spawnGroup("template_group", () =>
-    console.log("your group has been spawned")
-  );
+  console.log(
+        execute("sayHello", {}, message => console.log("got message", message))
+      )
 });
 ```
 
