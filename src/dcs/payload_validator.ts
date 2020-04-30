@@ -2,7 +2,7 @@ import ToBeDispatched from "./dispatcher/types/to_be_dispatched";
 
 const dataFromDcsJsonToObject = (
   data: string
-): { [key: string]: string } | undefined => {
+): { [key: string]: any } | undefined => {
   try {
     return JSON.parse(data);
   } catch (err) {

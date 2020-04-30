@@ -65,7 +65,11 @@ const send = async (
   }
 };
 
-const receive = async (data: { [key: string]: any }) => {
+const receive = async (data: { [key: string]: any } | undefined) => {
+  if (!data) {
+    console.error("Received empty data", data);
+    return;
+  }
   try {
     await handlePayload(await validatePayload(data));
     return true;
