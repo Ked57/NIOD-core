@@ -3,7 +3,7 @@ import { initNetwork } from "./network";
 import { NetworkOnError, NetworkOnMessage } from "./types/network_types";
 import { mutate, mutationNames } from "./store/mutation";
 import { sendMessage, createMessage, handleMessage } from "./message";
-import { isMesssage } from "./types/message";
+import { isMesssage } from "./types/message_types";
 
 const config = {
   ownPort: 15487,
@@ -34,19 +34,31 @@ const networkOnMessage: NetworkOnMessage = (msg, rinfo) => {
   handleMessage(payload);
 };
 
-initNetwork(
-  config.ownPort,
-  config.distantPort,
-  networkOnError,
-  networkOnMessage
-).then(([server, networkSend]) => {
+export const initNiod = async () => {
+  const [server, networkSend] = await initNetwork(
+    config.ownPort,
+    config.distantPort,
+    networkOnError,
+    networkOnMessage
+  );
   mutate(mutationNames.SET_SERVER, { server });
   mutate(mutationNames.SET_NETWORK_SEND, { networkSend });
   console.log("NIOD server successfuly loaded");
-  sendMessage(
-    createMessage("function", {
-      functionName: "log",
-      args: { message: "Hello" }
-    })
-  );
-});
+};
+
+initNiod().then(() =>
+  setInterval(
+    () =>
+      sendMessage(
+        createMessage(
+          "function",
+          {
+            functionName: "log",
+            args: { message: "Hello" }
+          },
+          payload => console.log("LOGGED: ", payload.args.message)
+        )
+      ),
+    500
+  )
+);

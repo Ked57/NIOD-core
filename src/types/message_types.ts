@@ -17,12 +17,14 @@ export type Message = {
   sent: number;
 };
 
-export const isMessageTypeFunction = (input: any): input is MessageTypeFunction =>
-  input === "function";
+export const isMessageTypeFunction = (
+  input: any
+): input is MessageTypeFunction => input === "function";
 export const isMessageTypeEvent = (input: any): input is MessageTypeEvent =>
   input === "event";
-export const isMessageTypeReceived = (input: any): input is MessageTypeReceived =>
-  input === "received";
+export const isMessageTypeReceived = (
+  input: any
+): input is MessageTypeReceived => input === "received";
 
 export const isMessageType = (input: any): input is MessageType =>
   isMessageTypeFunction(input) ||

@@ -1,8 +1,9 @@
 import { Socket } from "dgram";
 import { store } from "./store";
 import { NetworkSend } from "../types/network_types";
-import { Mutate } from "../types/store";
-import { Message } from "../types/message";
+import { Mutate } from "../types/store_types";
+import { Message } from "../types/message_types";
+import { Callback } from "../types/dispatch_types";
 
 export const mutate: Mutate = (mutationName, args) =>
   mutations[mutationName](args);
@@ -11,7 +12,8 @@ export const mutationNames = {
   SET_SERVER: "setServer",
   SET_NETWORK_SEND: "setNetworkSend",
   SET_SENT_MESSAGES: "setSentMessages",
-  SET_RECEIVED_MESSAGES: "setReceivedMessage"
+  SET_RECEIVED_MESSAGES: "setReceivedMessage",
+  SET_CALLBACKS: "setCallbacks"
 };
 
 const mutations = {
@@ -35,5 +37,12 @@ const mutations = {
     receivedMessages: Message[];
   }) => {
     store.receivedMessages = receivedMessages;
+  },
+  [mutationNames.SET_CALLBACKS]: ({
+    callbacks
+  }: {
+    callbacks: Map<string, Callback>;
+  }) => {
+    store.callbacks = callbacks;
   }
 };

@@ -1,8 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-import { Message, MessageType, isMessageTypeReceived } from "./types/message";
+import {
+  Message,
+  MessageType,
+  isMessageTypeReceived
+} from "./types/message_types";
 import { getStore } from "./store/store";
 import { enqueue, removeFromQueue, handleQueue } from "./queue";
 import { mutate, mutationNames } from "./store/mutation";
+import { Callback } from "./types/dispatch_types";
+import { storeCallback, executeCallback } from "./dispatch";
 
 export const sendMessage = (message: Message) => {
   const networkSend = getStore().networkSend;
@@ -19,14 +25,17 @@ export const sendMessage = (message: Message) => {
 
 export const createMessage = (
   type: MessageType,
-  payload: { [key: string]: any }
-): Message => ({
-  id: uuidv4().toString(),
-  type,
-  callbackId: undefined, // for now, will use the dispatcher later
-  payload,
-  sent: Date.now()
-});
+  payload: { [key: string]: any },
+  callback?: Callback
+): Message => {
+  return {
+    id: uuidv4().toString(),
+    type,
+    callbackId: storeCallback(callback),
+    payload,
+    sent: Date.now()
+  };
+};
 
 export const handleMessage = (message: Message) => {
   // console.log("Received", message);
@@ -37,7 +46,10 @@ export const handleMessage = (message: Message) => {
       (sentMessages: Message[]) =>
         mutate(mutationNames.SET_SENT_MESSAGES, { sentMessages })
     );
-    // Execute callback if needed
+    if (!queuedMessage) {
+      return;
+    }
+    executeCallback(queuedMessage.callbackId, queuedMessage.payload);
   }
 };
 
