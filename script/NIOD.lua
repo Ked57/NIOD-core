@@ -46,16 +46,14 @@ function niod.setDevEnv(isDev) env.setErrorMessageBoxEnabled(isDev) end
 
 function niod.functions.log(args)
     niod.log(args.message)
+    return {message = args.message}
 end
-
-
 
 --
 function niod.handleFunction(request)
-    local result = niod.functions[request.payload.functionName](request.payload.args)
-    if type(result) ~= "table" then
-        result = {}
-    end
+    local result = niod.functions[request.payload.functionName](
+                       request.payload.args)
+    if type(result) ~= "table" then result = {} end
     local response = {
         id = request.id,
         type = "received",
@@ -70,26 +68,24 @@ function niod.handle(request)
         niod.log("ERROR: Received a unvalid request")
         return
     end
-    if request.type == "function" then
-        niod.handleFunction(request)
-    end
+    if request.type == "function" then niod.handleFunction(request) end
 end
 
-function niod.send(payload) 
+function niod.send(payload)
     niod.udpClient:send(JSON:encode(payload))
-    niod.log({
+    --[[ niod.log({
         sent = payload
-    })
- end
+    })]] --
+end
 
 function niod.receive(args, time)
     local request = niod.udpServer:receive()
     if request ~= nil then
         -- niod.log(request)
         local decodedRequest = JSON:decode(request)
-        niod.log({
+        --[[ niod.log({
             received = decodedRequest
-        })
+        }) ]] --
         niod.handle(decodedRequest)
     end
     return time + niod.dataTimeoutSec
