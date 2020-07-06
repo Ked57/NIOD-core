@@ -1,4 +1,3 @@
-import { of } from "await-of";
 import { initNetwork } from "./network";
 import { NetworkOnError, NetworkOnMessage } from "./types/network_types";
 import { mutate, mutationNames } from "./store/mutation";
@@ -10,17 +9,16 @@ const config = {
   distantPort: 15488
 };
 
-const networkOnError: NetworkOnError = err => {
-  initNetwork(
+const networkOnError: NetworkOnError = async err => {
+  const [server, networkSend] = await initNetwork(
     config.ownPort,
     config.distantPort,
     networkOnError,
     networkOnMessage
-  ).then(([server, networkSend]) => {
-    mutate(mutationNames.SET_SERVER, { server });
-    mutate(mutationNames.SET_NETWORK_SEND, { networkSend });
-    console.log("NIOD server successfuly loaded");
-  });
+  );
+  mutate(mutationNames.SET_SERVER, { server });
+  mutate(mutationNames.SET_NETWORK_SEND, { networkSend });
+  console.log("NIOD server successfuly loaded after crashing");
 };
 
 const networkOnMessage: NetworkOnMessage = (msg, rinfo) => {
