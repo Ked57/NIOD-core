@@ -1,7 +1,5 @@
-// Hashmap, message.callbackId is the key, callback is the value. Once executed the tuple is erased
-
 import { v4 as uuidv4 } from "uuid";
-import { getStore, store } from "./store/store";
+import { getStore } from "./store/store";
 import { mutate, mutationNames } from "./store/mutation";
 import { Callback } from "./types/dispatch_types";
 
