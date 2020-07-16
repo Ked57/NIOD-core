@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import {
   Message,
-  isMessageTypeReceived,
   MessageType
 } from "./types/message_types";
 import { getStore } from "./store/store";
@@ -9,7 +8,7 @@ import { enqueue, removeFromQueue, handleQueue } from "./queue";
 import { mutate, mutationNames } from "./store/mutation";
 import { Callback } from "./types/dispatch_types";
 import { storeCallback, executeCallback } from "./dispatch";
-import { isEventBaseCaptured, handleEvent } from "./dcs/event";
+import { handleEvent } from "./dcs/event";
 
 export const sendMessage = (message: Message) => {
   const networkSend = getStore().networkSend;
@@ -21,13 +20,13 @@ export const sendMessage = (message: Message) => {
   enqueue(message, getStore().sentMessages, (sentMessages: Message[]) =>
     mutate(mutationNames.SET_SENT_MESSAGES, { sentMessages })
   );
-  // console.log("Sent", message);
+ //console.log("Sent", message);
 };
 
-export const createMessage = (
+export const createMessage = <R>(
   type: MessageType,
   payload: { [key: string]: any },
-  callback?: Callback
+  callback?: Callback<R>
 ): Message => {
   return {
     id: uuidv4().toString(),

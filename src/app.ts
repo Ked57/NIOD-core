@@ -7,8 +7,10 @@ import {
   addEventHandler,
   EventPlayerEnterUnit,
   removeEventHandler,
-  EVENTS
+  EVENTS,
+  EventKill
 } from "./dcs/event";
+import { getGroups, getUnits } from "./dcs/functions";
 
 const config = {
   ownPort: 15487,
@@ -50,11 +52,32 @@ export const initNiod = async () => {
   console.log("NIOD server successfuly loaded");
 };
 
-initNiod().then(() => {
-  addEventHandler(
-    EVENTS.EventPlayerEnterUnit,
-    (payload: EventPlayerEnterUnit) => {
-      console.log("Welcome, new player !", payload);
-    }
+initNiod().then(async () => {
+  setInterval(async () => {
+    let groupsWithUnits: any[] = [];
+    await Promise.all(
+      (await getGroups(1)).map(async group =>
+        groupsWithUnits.push({
+          ...group,
+          units: await getUnits(group.name)
+        })
+      )
+    );
+    console.log("groups", groupsWithUnits);
+
+    let groupsWithUnits2: any[] = [];
+    await Promise.all(
+      (await getGroups(2)).map(async group =>
+        groupsWithUnits.push({
+          ...group,
+          units: await getUnits(group.name)
+        })
+      )
+    );
+    console.log("groups2", groupsWithUnits2);
+  }, 2500);
+
+  addEventHandler(EVENTS.EventKill, (payload: EventKill) =>
+    console.log("Player was killed", payload)
   );
 });

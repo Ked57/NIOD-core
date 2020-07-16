@@ -5,7 +5,7 @@ import { EventHandler } from "../dcs/event";
 export const store: Store = {
   sentMessages: [],
   receivedMessages: [],
-  callbacks: new Map<string, Callback>(),
+  callbacks: new Map<string, Callback<any>>(),
   server: undefined,
   networkSend: undefined,
   eventHandlers: []

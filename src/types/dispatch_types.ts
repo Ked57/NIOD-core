@@ -1,1 +1,1 @@
-export type Callback = (args: { [key: string]: any }) => void;
+export type Callback<R> = (args: R) => void;

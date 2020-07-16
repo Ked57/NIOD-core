@@ -41,7 +41,7 @@ export const handleQueue = (
   messageHandler: (message: Message) => void
 ) => {
   queue.forEach(message => {
-    if (Date.now() - message.sent <= 2000) {
+    if (Date.now() - message.sent <= 5000) {
       return;
     }
     const dequeuedMessage = removeFromQueue(message, queue, setter);
