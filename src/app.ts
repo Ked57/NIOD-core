@@ -4,6 +4,12 @@ import { NetworkOnError, NetworkOnMessage } from "./types/network_types";
 import { mutate, mutationNames } from "./store/mutation";
 import { sendMessage, createMessage, handleMessage } from "./message";
 import { isMesssage } from "./types/message_types";
+import {
+  addEventHandler,
+  EventPlayerEnterUnit,
+  removeEventHandler,
+  EVENTS
+} from "./dcs/event";
 
 const config = {
   ownPort: 15487,
@@ -46,19 +52,11 @@ export const initNiod = async () => {
   console.log("NIOD server successfuly loaded");
 };
 
-initNiod().then(() =>
-  setInterval(
-    () =>
-      sendMessage(
-        createMessage(
-          "function",
-          {
-            functionName: "log",
-            args: { message: "Hello" }
-          },
-          payload => console.log("LOGGED: ", payload.args.message)
-        )
-      ),
-    500
-  )
-);
+initNiod().then(() => {
+  addEventHandler(
+    EVENTS.EventPlayerEnterUnit,
+    (payload: EventPlayerEnterUnit) => {
+      console.log("Welcome, new player !", payload);
+    }
+  );
+});

@@ -4,6 +4,7 @@ import { NetworkSend } from "../types/network_types";
 import { Mutate } from "../types/store_types";
 import { Message } from "../types/message_types";
 import { Callback } from "../types/dispatch_types";
+import { EventHandler } from "../dcs/event";
 
 export const mutate: Mutate = (mutationName, args) =>
   mutations[mutationName](args);
@@ -13,7 +14,8 @@ export const mutationNames = {
   SET_NETWORK_SEND: "setNetworkSend",
   SET_SENT_MESSAGES: "setSentMessages",
   SET_RECEIVED_MESSAGES: "setReceivedMessage",
-  SET_CALLBACKS: "setCallbacks"
+  SET_CALLBACKS: "setCallbacks",
+  SET_EVENT_HANDLERS: "setEventHandlers"
 };
 
 const mutations = {
@@ -44,5 +46,14 @@ const mutations = {
     callbacks: Map<string, Callback>;
   }) => {
     store.callbacks = callbacks;
+  },
+  [mutationNames.SET_EVENT_HANDLERS]: ({
+    eventHandlers
+  }: {
+    eventHandlers: {
+      [key: number]: Map<string, EventHandler<any>>;
+    };
+  }) => {
+    store.eventHandlers = eventHandlers;
   }
 };

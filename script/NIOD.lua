@@ -12,6 +12,7 @@ niod.serverPort = 15488
 niod.dataTimeoutSec = 0.2
 
 niod.functions = {}
+niod.eventHandler = {}
 
 niod.udpClient = socket.udp()
 assert(niod.udpClient:setpeername(niod.host, niod.clientPort))
@@ -26,6 +27,7 @@ function niod.log(msg, indent)
         env.info("NIOD => " .. msg)
         return
     end
+    env.info("NIOD Table => ")
     if not indent then indent = 0 end
     for k, v in pairs(msg) do
         formatting = string.rep("  ", indent) .. k .. ": "
@@ -99,5 +101,12 @@ end
 
 timer.scheduleFunction(niod.receive, {}, timer.getTime() + niod.dataTimeoutSec)
 
+function niod.eventHandler.onEvent(handler, event)    
+    niod.log("event")
+    niod.log({event = event})
+    niod.send({id = "", type = "event", sent = os.time(), payload = event})
+end
+
+world.addEventHandler(niod.eventHandler)
 niod.setDevEnv(niod.isDev)
 niod.log("Started NIOD")

@@ -1,14 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 import {
   Message,
-  MessageType,
-  isMessageTypeReceived
+  isMessageTypeReceived,
+  MessageType
 } from "./types/message_types";
 import { getStore } from "./store/store";
 import { enqueue, removeFromQueue, handleQueue } from "./queue";
 import { mutate, mutationNames } from "./store/mutation";
 import { Callback } from "./types/dispatch_types";
 import { storeCallback, executeCallback } from "./dispatch";
+import { isEventBaseCaptured, handleEvent } from "./dcs/event";
 
 export const sendMessage = (message: Message) => {
   const networkSend = getStore().networkSend;
@@ -37,20 +38,30 @@ export const createMessage = (
   };
 };
 
-export const handleMessage = (message: Message) => {
-  // console.log("Received", message);
-  if (isMessageTypeReceived(message.type)) {
-    const queuedMessage = removeFromQueue(
-      message,
-      getStore().sentMessages,
-      (sentMessages: Message[]) =>
-        mutate(mutationNames.SET_SENT_MESSAGES, { sentMessages })
-    );
-    if (!queuedMessage) {
-      return;
-    }
-    executeCallback(queuedMessage.callbackId, queuedMessage.payload);
+const handleFunction = (message: Message) => {};
+
+const handleReceived = (message: Message) => {
+  const queuedMessage = removeFromQueue(
+    message,
+    getStore().sentMessages,
+    (sentMessages: Message[]) =>
+      mutate(mutationNames.SET_SENT_MESSAGES, { sentMessages })
+  );
+  if (!queuedMessage) {
+    return;
   }
+  executeCallback(queuedMessage.callbackId, message.payload);
+};
+
+const messageHandlers = {
+  function: handleFunction,
+  event: (message: Message) => handleEvent(typeof message.payload.id === "number" ? message.payload.id : -1, message.payload),
+  received: handleReceived
+};
+
+export const handleMessage = (message: Message) => {
+  //console.log("Received", message);
+  messageHandlers[message.type](message);
 };
 
 setInterval(() => {
