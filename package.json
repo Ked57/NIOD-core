@@ -9,7 +9,7 @@
     "build": "tsc --declaration",
     "format:check": "prettier src/**/*.ts --list-different",
     "format:fix": "prettier src/**/*.ts --write",
-    "docs:generate": "rm -rf docs && typedoc"
+    "docs:generate": "typedoc --plugin typedoc-plugin-markdown"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "prettier": "^1.19.1",
     "ts-node": "^7.0.1",
     "typedoc": "^0.17.8",
+    "typedoc-plugin-markdown": "^2.3.1",
     "typescript": "^3.9.6"
   }
 }
