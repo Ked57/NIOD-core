@@ -3,5 +3,6 @@
     "inputFiles": "src/**/*.ts",
     "excludeNotExported": true,
     "stripInternal": true,
+    "disableOutputCheck": true,
     "includes": "./docs_static"
 }

@@ -23,7 +23,7 @@
 
 Ƭ **GetGroupsPayload**: *object*
 
-*Defined in [dcs/functions.ts:3](https://github.com/Ked57/NIOD/blob/6c81e41/src/dcs/functions.ts#L3)*
+*Defined in [dcs/functions.ts:3](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/functions.ts#L3)*
 
 #### Type declaration:
 
@@ -37,7 +37,7 @@ ___
 
 Ƭ **GetGroupsReturn**: *object[]*
 
-*Defined in [dcs/functions.ts:7](https://github.com/Ked57/NIOD/blob/6c81e41/src/dcs/functions.ts#L7)*
+*Defined in [dcs/functions.ts:7](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/functions.ts#L7)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 Ƭ **GetUnitsPayload**: *object*
 
-*Defined in [dcs/functions.ts:27](https://github.com/Ked57/NIOD/blob/6c81e41/src/dcs/functions.ts#L27)*
+*Defined in [dcs/functions.ts:27](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/functions.ts#L27)*
 
 #### Type declaration:
 
@@ -57,7 +57,7 @@ ___
 
 Ƭ **GetUnitsReturn**: *object*
 
-*Defined in [dcs/functions.ts:30](https://github.com/Ked57/NIOD/blob/6c81e41/src/dcs/functions.ts#L30)*
+*Defined in [dcs/functions.ts:30](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/functions.ts#L30)*
 
 #### Type declaration:
 
@@ -67,7 +67,7 @@ ___
 
 ▸ **executeFunction**‹**T**, **R**›(`functionName`: string, `args`: T): *Promise‹R›*
 
-*Defined in [dcs/functions.ts:46](https://github.com/Ked57/NIOD/blob/6c81e41/src/dcs/functions.ts#L46)*
+*Defined in [dcs/functions.ts:46](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/functions.ts#L46)*
 
 Allows to execute any function in the lua `niod.function` table
 
@@ -96,7 +96,7 @@ ___
 
 ▸ **getGroups**(`coalitionId`: number, `groupCategory?`: undefined | number): *Promise‹object[]›*
 
-*Defined in [dcs/functions.ts:21](https://github.com/Ked57/NIOD/blob/6c81e41/src/dcs/functions.ts#L21)*
+*Defined in [dcs/functions.ts:21](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/functions.ts#L21)*
 
 Allows to retrieve informations about groups from a coalition
 
@@ -115,7 +115,7 @@ ___
 
 ▸ **getUnits**(`groupName`: string): *Promise‹object›*
 
-*Defined in [dcs/functions.ts:36](https://github.com/Ked57/NIOD/blob/6c81e41/src/dcs/functions.ts#L36)*
+*Defined in [dcs/functions.ts:36](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/functions.ts#L36)*
 
 Allows to retrieve informations about units from a group
 

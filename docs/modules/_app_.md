@@ -14,7 +14,7 @@
 
 ▸ **initNiod**(`ownPort?`: undefined | number, `distantPort?`: undefined | number): *Promise‹void›*
 
-*Defined in [app.ts:37](https://github.com/Ked57/NIOD/blob/6c81e41/src/app.ts#L37)*
+*Defined in [app.ts:37](https://github.com/Ked57/NIOD/blob/1fd2777/src/app.ts#L37)*
 
 **Parameters:**
 

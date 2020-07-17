@@ -14,7 +14,7 @@
 
 Ƭ **Vector3**: *object*
 
-*Defined in [utils.ts:1](https://github.com/Ked57/NIOD/blob/6c81e41/src/utils.ts#L1)*
+*Defined in [utils.ts:1](https://github.com/Ked57/NIOD/blob/1fd2777/src/utils.ts#L1)*
 
 #### Type declaration:
 

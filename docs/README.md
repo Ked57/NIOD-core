@@ -84,12 +84,12 @@ Niod is written in typescript, so the npm package is shipped with all the type d
 
 ## API
 
-You can find the complete docs at [docs link](https://github.com/ked57/NIOD)
+You can find the complete docs at [docs link](https://ked57.github.io/NIOD/globals)
 
 Since there is a lot of documented functions you probably won't need, here are links to:
 
-- Events documentation
-- Functions documentation
+- [Events documentation](https://ked57.github.io/NIOD/modules/_dcs_event_.html)
+- [Functions documentation](https://ked57.github.io/NIOD/modules/_dcs_functions_.html)
 
 ## Guides
 
