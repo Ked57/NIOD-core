@@ -43,6 +43,9 @@ jobs:
           name: Build package
           command: npm run build
       - run:
+          name: Copy declaration file
+          command: cp ./src/niod.d.ts ./lib
+      - run:
           name: Publish package
           command: npm publish
 
