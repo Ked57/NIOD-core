@@ -1,1 +1,12 @@
 theme: jekyll-theme-cayman
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - README.md
+  - globals.md
+  - _app_.md
+  - _dcs_event_.md
+  - _dcs_functions_.md
