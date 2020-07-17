@@ -1,5 +1,6 @@
 /src/
 /script/
+/docs/
 /.circleci/
 ./tsconfig.json
 ./tslint.json

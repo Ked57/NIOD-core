@@ -5,12 +5,17 @@ Latest build tests and linting
 
 ## Introduction
 
-NIOD is a npm package that let's you connect to DCS World using a socket. Then you can use some of the functions at your disposal to spawn groups. We're still in the early phase of this package so there aren't many functions implemented yet but it will grow !
+NIOD is a npm package that lets you connect to DCS World using a socket. Once connected, it offers a variety of functionalities :
+
+- Events: You can listen to events from DCS World
+- Functions: You can call functions from the DCS Mission Scripting API
 
 ## How does this work ?
 
+A socket is created in the mission scripting environment, NIOD connects to it and sends / receives commands discribing events and functions. 
+
 The nodejs server stores callbacks linked to a callback id, this id is passed to the lua server which pass it
-back with the returned data. The dispatcher will then execute the right stored callback
+back with the returned data. The dispatcher will then execute the right stored callback.
 
 Here's a basic example
 
@@ -27,21 +32,34 @@ initNiod().then(() => {
 
 ### Unsanitize the require function
 
-Niod requires DCS to import some functionalities from LUA so it can create a socket, you'll need to "unsanitize" it. To do so go into your DCS installation folder DCS World\Scripts\MissionScripting.lua and edit this line
+Niod requires DCS to import some functionalities from LUA so it can create a socket and access the OS time API, you'll need to "unsanitize" it. To do so go into your DCS installation folder `DCS World\Scripts\MissionScripting.lua` and edit these line.
 
 ```lua
-require = nil
+do
+	sanitizeModule('os')
+	sanitizeModule('io')
+	sanitizeModule('lfs')
+	require = nil
+	loadlib = nil
+end
 ```
 
 to
 
 ```lua
---require = nil
+
+do
+	--sanitizeModule('os')
+	sanitizeModule('io')
+	sanitizeModule('lfs')
+	--require = nil
+	loadlib = nil
+end
 ```
 
 ### Mission Editor
 
-Then you need to create a mission that loads the MOOSE lua file (found here: https://github.com/FlightControl-Master/MOOSE/releases) and then loads the NIOD lua file found in the "script" folder.
+Then you need to create a mission that loads the NIOD lua file found in the "script" folder.
 
 And there you go ! You're all set, you can import niod in your project and start the server using
 
@@ -60,37 +78,16 @@ Niod is written in typescript, so the npm package is shipped with all the type d
 
 ## API
 
-```typescript
-initNiod = (): Promise<any>
-```
+You can find the complete docs at [docs link](https://github.com/ked57/NIOD)
 
-This function will init Niod and resolve once done
+Since there is a lot of documented functions you probably won't need, here are links to:
 
-```typescript
-execute = (groupName: string, callback: Callback)
-```
+- Events documentation
+- Functions documentation
 
-This function wil execute a function stored in your mission file `niod.functions`. Object, for example:
+## Guides
 
-```js
-const { initNiod, execute } = require("niod");
-initNiod().then(() => {
-  console.log(
-        execute("sayHello", {}, message => console.log("got message", message))
-      )
-});
-```
-```lua
-niod.functions.sayHello = function(payload)
-  return "Hello"
-end
-```
-
-```typescript
-getGroupInfo = ()
-```
-
-This function will return information about the groups present in the game
+I'll be writing guides with examples, links will be down below
 
 ## Special thanks
 

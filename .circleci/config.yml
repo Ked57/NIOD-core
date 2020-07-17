@@ -3,22 +3,18 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:8.9.1
+    - image: circleci/node:13
 
 jobs:
   init-dependencies:
     <<: *defaults
-    docker:
-      - image: circleci/node:8
     steps:
       - checkout
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
       - run: npm install
       - save_cache:
           paths:
@@ -28,33 +24,13 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
-  lint:
-    <<: *defaults
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - run: npm run lint
   check-formatting:
     <<: *defaults
-    docker:
-      - image: circleci/node:8
     steps:
       - checkout
       - attach_workspace:
           at: .
       - run: npm run format:check
-  test:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - run:
-          name: Run tests
-          command: npm test
   deploy:
     <<: *defaults
     steps:
@@ -78,28 +54,17 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - lint:
-          requires:
-            - init-dependencies
-          filters:
-            tags:
-              only: /.*/
       - check-formatting:
           requires:
             - init-dependencies
           filters:
             tags:
               only: /.*/
-      - test:
+      - deploy:
           requires:
-            - lint
             - check-formatting
           filters:
             tags:
-              only: /.*/
-      - deploy:
-          requires:
-            - test
-          filters:
+              only: /^v.*/
             branches:
-              only: master
+              ignore: /.*/

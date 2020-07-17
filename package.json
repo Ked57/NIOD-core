@@ -1,16 +1,14 @@
 {
   "name": "niod",
-  "version": "2.0.1",
+  "version": "3.0.0-beta.1",
   "description": "NIOD JS API for DCS World AND MOOSE, using a NodeJS server to communicate with a LUA library",
   "main": "lib/app.js",
   "scripts": {
     "start": "ts-node src/app.ts",
     "build": "tsc",
-    "test": "tsc && ava",
-    "lint": "tslint --project tsconfig.json",
     "format:check": "prettier src/**/*.ts --list-different",
     "format:fix": "prettier src/**/*.ts --write",
-    "test:mission": "ts-node src/test-mission.ts"
+    "docs:generate": "rm -rf docs && typedoc"
   },
   "repository": {
     "type": "git",
@@ -29,20 +27,13 @@
   },
   "homepage": "https://github.com/Ked57/NIOD#readme",
   "dependencies": {
-    "rxjs": "^6.4.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/uuid": "^3.4.4",
-    "ava": "^0.25.0",
-    "prettier": "^1.15.3",
+    "prettier": "^1.19.1",
     "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "typescript": "^3.2.2"
-  },
-  "ava": {
-    "files": [
-      "lib/tests/*.js"
-    ]
+    "typedoc": "^0.17.8",
+    "typescript": "^3.9.6"
   }
 }

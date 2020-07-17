@@ -1,0 +1,7 @@
+{
+    "out": "docs",
+    "inputFiles": "src/**/*.ts",
+    "excludeNotExported": true,
+    "stripInternal": true,
+    "includes": "./docs_static"
+}
