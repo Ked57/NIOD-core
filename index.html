@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Niod by Ked57</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Niod</h1>
+      <h2 class="project-tagline">NIOD is an API for DCS World mission editing, using a NodeJS server to communicate with a LUA library </h2>
+      <a href="https://github.com/Ked57/NIOD" class="btn">View on GitHub</a>
+      <a href="https://github.com/Ked57/NIOD/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Ked57/NIOD/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>Latest build tests and linting
+<a href="https://discord.gg/WUW24w8"><img src="https://circleci.com/gh/Ked57/NIOD.svg?style=svg" alt="CircleCI"></a></p>
+<h1>
+<a id="niod" class="anchor" href="#niod" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NIOD</h1>
+<p><a href="https://discord.gg/WUW24w8"><img src="https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-64.png" alt="Discord logo" title="Join us on discord !"> Join us on discord !</a></p>
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+<p>NIOD is a npm package that lets you connect to DCS World using a socket. Once connected, it offers a variety of functionalities :</p>
+<ul>
+<li>Events: You can listen to events from DCS World</li>
+<li>Functions: You can call functions from the DCS Mission Scripting API</li>
+</ul>
+<h2>
+<a id="how-does-this-work-" class="anchor" href="#how-does-this-work-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How does this work ?</h2>
+<p>A socket is created in the mission scripting environment, NIOD connects to it and sends / receives commands discribing events and functions.</p>
+<p>The nodejs server stores callbacks linked to a callback id, this id is passed to the lua server which pass it
+back with the returned data. The dispatcher will then execute the right stored callback.</p>
+<p>Here's a basic example</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-kos">{</span> initNiod<span class="pl-kos">,</span> execute <span class="pl-kos">}</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">"niod"</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-en">initNiod</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">then</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span>
+        <span class="pl-en">execute</span><span class="pl-kos">(</span><span class="pl-s">"sayHello"</span><span class="pl-kos">,</span> <span class="pl-kos">{</span><span class="pl-kos">}</span><span class="pl-kos">,</span> <span class="pl-s1">message</span> <span class="pl-c1">=&gt;</span> <span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span class="pl-kos">(</span><span class="pl-s">"got message"</span><span class="pl-kos">,</span> <span class="pl-s1">message</span><span class="pl-kos">)</span><span class="pl-kos">)</span>
+      <span class="pl-kos">)</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<h2>
+<a id="instalation" class="anchor" href="#instalation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalation</h2>
+<h3>
+<a id="unsanitize-the-require-function" class="anchor" href="#unsanitize-the-require-function" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unsanitize the require function</h3>
+<p>Niod requires DCS to import some functionalities from LUA so it can create a socket and access the OS time API, you'll need to "unsanitize" it. To do so go into your DCS installation folder <code>DCS World\Scripts\MissionScripting.lua</code> and edit these line.</p>
+<div class="highlight highlight-source-lua"><pre><span class="pl-k">do</span>
+	<span class="pl-c1">sanitizeModule</span>(<span class="pl-s"><span class="pl-pds">'</span>os<span class="pl-pds">'</span></span>)
+	<span class="pl-c1">sanitizeModule</span>(<span class="pl-s"><span class="pl-pds">'</span>io<span class="pl-pds">'</span></span>)
+	<span class="pl-c1">sanitizeModule</span>(<span class="pl-s"><span class="pl-pds">'</span>lfs<span class="pl-pds">'</span></span>)
+	require <span class="pl-k">=</span> <span class="pl-c1">nil</span>
+	loadlib <span class="pl-k">=</span> <span class="pl-c1">nil</span>
+<span class="pl-k">end</span></pre></div>
+<p>to</p>
+<div class="highlight highlight-source-lua"><pre>
+<span class="pl-k">do</span>
+	<span class="pl-c"><span class="pl-c">--</span>sanitizeModule('os')</span>
+	<span class="pl-c1">sanitizeModule</span>(<span class="pl-s"><span class="pl-pds">'</span>io<span class="pl-pds">'</span></span>)
+	<span class="pl-c1">sanitizeModule</span>(<span class="pl-s"><span class="pl-pds">'</span>lfs<span class="pl-pds">'</span></span>)
+	<span class="pl-c"><span class="pl-c">--</span>require = nil</span>
+	loadlib <span class="pl-k">=</span> <span class="pl-c1">nil</span>
+<span class="pl-k">end</span></pre></div>
+<h3>
+<a id="mission-editor" class="anchor" href="#mission-editor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mission Editor</h3>
+<p>Then you need to create a mission that loads the NIOD lua file found in the "script" folder.</p>
+<p>And there you go ! You're all set, you can import niod in your project and start the server using</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-kos">{</span> initNiod <span class="pl-kos">}</span> <span class="pl-c1">=</span> <span class="pl-en">require</span><span class="pl-kos">(</span><span class="pl-s">"niod"</span><span class="pl-kos">)</span><span class="pl-kos">;</span>
+<span class="pl-en">initNiod</span><span class="pl-kos">(</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span class="pl-en">then</span><span class="pl-kos">(</span><span class="pl-kos">(</span><span class="pl-kos">)</span> <span class="pl-c1">=&gt;</span> <span class="pl-kos">{</span>
+  <span class="pl-c">// your mission code goes here</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre></div>
+<p>and start coding !</p>
+<h2>
+<a id="typescript-support" class="anchor" href="#typescript-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Typescript support</h2>
+<p>Niod is written in typescript, so the npm package is shipped with all the type declarations. Which means auto-completion depending on your code editor</p>
+<h2>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API</h2>
+<p>You can find the complete docs at <a href="https://github.com/ked57/NIOD">docs link</a></p>
+<p>Since there is a lot of documented functions you probably won't need, here are links to:</p>
+<ul>
+<li>Events documentation</li>
+<li>Functions documentation</li>
+</ul>
+<h2>
+<a id="guides" class="anchor" href="#guides" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Guides</h2>
+<p>I'll be writing guides with examples, links will be down below</p>
+<h2>
+<a id="special-thanks" class="anchor" href="#special-thanks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Special thanks</h2>
+<p>Thanks to Drex from Dynamic DCS for all the help on sockets, go check his server out</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Ked57/NIOD">Niod</a> is maintained by <a href="https://github.com/Ked57">Ked57</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
