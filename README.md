@@ -1,5 +1,7 @@
-Latest build tests and linting
-[![CircleCI](https://circleci.com/gh/Ked57/NIOD.svg?style=svg)](https://discord.gg/WUW24w8)
+Latest build
+[![CircleCI](https://circleci.com/gh/Ked57/NIOD.svg?style=svg)](https://circleci.com/gh/Ked57/NIOD)
+
+![NIOD Logo](/docs/static/assets/niod.png)
 
 # NIOD
 
@@ -14,6 +16,8 @@ NIOD is a npm package that lets you connect to DCS World using a socket. Once co
 - Events: You can listen to events from DCS World
 - Functions: You can call functions from the DCS Mission Scripting API
 
+This is a pretty low level package, mission makers should probably not use NIOD directly but a package that uses NIOD to get higher level functionalities. My plan is to make one in the near future.
+
 ## How does this work ?
 
 A socket is created in the mission scripting environment, NIOD connects to it and sends / receives commands discribing events and functions. 
@@ -24,11 +28,14 @@ back with the returned data. The dispatcher will then execute the right stored c
 Here's a basic example
 
 ```javascript
-const { initNiod, execute } = require("niod");
-initNiod().then(() => {
-  console.log(
-        execute("sayHello", {}, message => console.log("got message", message))
-      )
+const { initNiod, getGroups, addEventHandler, COALITIONS, EVENTS } = require("niod");
+initNiod().then(async () => {
+  // Log information on all the groups in the blue coalition
+  console.log(await getGroups(COALITIONS.BLUE));
+  // Log position of new added marks
+  addEventHandler(EVENTS.EventMarkAdded, (event) => {
+	  console.log("A mark was added at position", event.pos);
+  })
 });
 ```
 
@@ -82,7 +89,7 @@ Niod is written in typescript, so the npm package is shipped with all the type d
 
 ## API
 
-You can find the complete docs at [docs link](https://ked57.github.io/NIOD/globals)
+You can find the complete docs [here](https://ked57.github.io/NIOD/globals)
 
 Since there is a lot of documented functions you probably won't need, here are links to:
 
