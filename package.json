@@ -6,7 +6,7 @@
   "types": "./lib/niod.d.ts",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "build": "tsc",
+    "build": "tsc --declaration",
     "format:check": "prettier src/**/*.ts --list-different",
     "format:fix": "prettier src/**/*.ts --write",
     "docs:generate": "rm -rf docs && typedoc"

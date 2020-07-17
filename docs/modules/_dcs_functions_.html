@@ -80,6 +80,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_dcs_functions_.html#executefunction" class="tsd-kind-icon">execute<wbr>Function</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_dcs_functions_.html#getgroups" class="tsd-kind-icon">get<wbr>Groups</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_dcs_functions_.html#getunits" class="tsd-kind-icon">get<wbr>Units</a></li>
 							</ul>
@@ -95,7 +96,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Groups<wbr>Payload<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>coalitionId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>groupCategory<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/d5fc216/src/dcs/functions.ts#L3">dcs/functions.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/8e532de/src/dcs/functions.ts#L3">dcs/functions.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -116,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Groups<wbr>Return<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>category<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>coalition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>initialSize<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/d5fc216/src/dcs/functions.ts#L7">dcs/functions.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/8e532de/src/dcs/functions.ts#L7">dcs/functions.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -126,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Units<wbr>Payload<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>groupName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/d5fc216/src/dcs/functions.ts#L21">dcs/functions.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/8e532de/src/dcs/functions.ts#L27">dcs/functions.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -144,7 +145,7 @@
 					<div class="tsd-signature tsd-kind-icon">Get<wbr>Units<wbr>Return<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/d5fc216/src/dcs/functions.ts#L24">dcs/functions.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/8e532de/src/dcs/functions.ts#L30">dcs/functions.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -156,6 +157,62 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="executefunction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> execute<wbr>Function</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">execute<wbr>Function&lt;T, R&gt;<span class="tsd-signature-symbol">(</span>functionName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/8e532de/src/dcs/functions.ts#L46">dcs/functions.ts:46</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Allows to execute any function in the lua <code>niod.function</code> table</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of the arguments you want to pass to the function.</p>
+									</div>
+								</li>
+								<li>
+									<h4>R</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>The type of the result you expect.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>functionName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The name of the function you want to execute</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>args: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The arguments you want to pass to the function</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="getgroups" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Groups</h3>
@@ -166,16 +223,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/d5fc216/src/dcs/functions.ts#L15">dcs/functions.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/8e532de/src/dcs/functions.ts#L21">dcs/functions.ts:21</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Allows to retrieve informations about groups from a coalition</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>coalitionId: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The id of the coalition you want to retrieve the groups from. Note: you should use the constants in the COALITIONS object</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> groupCategory: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The category of the group, I&#39;m not sure what it corresponds to</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>category<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>coalition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>initialSize<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -192,13 +264,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/d5fc216/src/dcs/functions.ts#L26">dcs/functions.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/Ked57/NIOD/blob/8e532de/src/dcs/functions.ts#L36">dcs/functions.ts:36</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Allows to retrieve informations about units from a group</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>groupName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The name of the group you want to retrieve the units from</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -270,6 +352,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="_dcs_functions_.html#getunitsreturn" class="tsd-kind-icon">Get<wbr>Units<wbr>Return</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_dcs_functions_.html#executefunction" class="tsd-kind-icon">execute<wbr>Function</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_dcs_functions_.html#getgroups" class="tsd-kind-icon">get<wbr>Groups</a>
