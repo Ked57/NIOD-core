@@ -1,7 +1,11 @@
 Latest build tests and linting
-[![CircleCI](https://circleci.com/gh/Ked57/NIOD.svg?style=svg)](https://circleci.com/gh/Ked57/NIOD)
+[![CircleCI](https://circleci.com/gh/Ked57/NIOD.svg?style=svg)](https://discord.gg/WUW24w8)
 
 # NIOD
+
+[![Discord logo](https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-64.png "Join us on discord !") Join us on discord !](https://discord.gg/WUW24w8)
+
+
 
 ## Introduction
 
