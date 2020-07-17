@@ -3,4 +3,5 @@
 /docs/
 /.circleci/
 ./tsconfig.json
-./tslint.json
+./typedoc.json
+./prettierrc.json

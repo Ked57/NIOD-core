@@ -3,6 +3,7 @@
   "version": "3.0.0-beta.2",
   "description": "NIOD JS API for DCS World AND MOOSE, using a NodeJS server to communicate with a LUA library",
   "main": "lib/app.js",
+  "types": "./lib/niod.d.ts",
   "scripts": {
     "start": "ts-node src/app.ts",
     "build": "tsc",
