@@ -1,26 +1,16 @@
 import { initNetwork } from "./network";
 import { NetworkOnError, NetworkOnMessage } from "./types/network_types";
 import { mutate, mutationNames } from "./store/mutation";
-import { sendMessage, createMessage, handleMessage } from "./message";
+import { handleMessage } from "./message";
 import { isMesssage } from "./types/message_types";
-import {
-  addEventHandler,
-  EventPlayerEnterUnit,
-  removeEventHandler,
-  EVENTS,
-  EventKill
-} from "./dcs/event";
 import { getGroups, getUnits } from "./dcs/functions";
-
-const config = {
-  ownPort: 15487,
-  distantPort: 15488
-};
+import { getStore } from "./store/store";
 
 const networkOnError: NetworkOnError = async err => {
+  const store = getStore();
   const [server, networkSend] = await initNetwork(
-    config.ownPort,
-    config.distantPort,
+    store.config.ownPort,
+    store.config.distantPort,
     networkOnError,
     networkOnMessage
   );
@@ -40,44 +30,26 @@ const networkOnMessage: NetworkOnMessage = (msg, rinfo) => {
   handleMessage(payload);
 };
 
-export const initNiod = async () => {
+/**
+ * @param ownPort  To specify a custom port for the nodejs server, default is 15487
+ * @param distantPort  To specify a custom port for the lua server, default is 15488
+ */
+export const initNiod = async (ownPort?: number, distantPort?: number) => {
+  const initialStateStore = getStore();
+  mutate(mutationNames.SET_CONFIG, {
+    ownPort: ownPort || initialStateStore.config.ownPort,
+    distantPort: distantPort || initialStateStore.config.distantPort
+  });
+  const store = getStore();
   const [server, networkSend] = await initNetwork(
-    config.ownPort,
-    config.distantPort,
+    store.config.ownPort,
+    store.config.distantPort,
     networkOnError,
     networkOnMessage
   );
   mutate(mutationNames.SET_SERVER, { server });
   mutate(mutationNames.SET_NETWORK_SEND, { networkSend });
-  console.log("NIOD server successfuly loaded");
+  console.log(`NIOD server successfuly loaded on port ${store.config.ownPort}`);
 };
 
-initNiod().then(async () => {
-  setInterval(async () => {
-    let groupsWithUnits: any[] = [];
-    await Promise.all(
-      (await getGroups(1)).map(async group =>
-        groupsWithUnits.push({
-          ...group,
-          units: await getUnits(group.name)
-        })
-      )
-    );
-    console.log("groups", groupsWithUnits);
-
-    let groupsWithUnits2: any[] = [];
-    await Promise.all(
-      (await getGroups(2)).map(async group =>
-        groupsWithUnits.push({
-          ...group,
-          units: await getUnits(group.name)
-        })
-      )
-    );
-    console.log("groups2", groupsWithUnits2);
-  }, 2500);
-
-  addEventHandler(EVENTS.EventKill, (payload: EventKill) =>
-    console.log("Player was killed", payload)
-  );
-});
+export { getGroups, getUnits };

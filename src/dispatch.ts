@@ -3,6 +3,7 @@ import { getStore } from "./store/store";
 import { mutate, mutationNames } from "./store/mutation";
 import { Callback } from "./types/dispatch_types";
 
+/** @internal */
 export const executeCallback = (
   callbackId?: string,
   args?: { [key: string]: any }
@@ -21,7 +22,8 @@ export const executeCallback = (
   mutate(mutationNames.SET_CALLBACKS, { callbacks });
 };
 
-export const storeCallback = (callback?: Callback) => {
+/** @internal */
+export const storeCallback = <R>(callback?: Callback<R>) => {
   if (!callback) {
     return;
   }

@@ -1,8 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import {
-  Message,
-  MessageType
-} from "./types/message_types";
+import { Message, MessageType } from "./types/message_types";
 import { getStore } from "./store/store";
 import { enqueue, removeFromQueue, handleQueue } from "./queue";
 import { mutate, mutationNames } from "./store/mutation";
@@ -10,6 +7,7 @@ import { Callback } from "./types/dispatch_types";
 import { storeCallback, executeCallback } from "./dispatch";
 import { handleEvent } from "./dcs/event";
 
+/** @internal */
 export const sendMessage = (message: Message) => {
   const networkSend = getStore().networkSend;
   if (!networkSend) {
@@ -20,9 +18,10 @@ export const sendMessage = (message: Message) => {
   enqueue(message, getStore().sentMessages, (sentMessages: Message[]) =>
     mutate(mutationNames.SET_SENT_MESSAGES, { sentMessages })
   );
- //console.log("Sent", message);
+  //console.log("Sent", message);
 };
 
+/** @internal */
 export const createMessage = <R>(
   type: MessageType,
   payload: { [key: string]: any },
@@ -31,7 +30,7 @@ export const createMessage = <R>(
   return {
     id: uuidv4().toString(),
     type,
-    callbackId: storeCallback(callback),
+    callbackId: storeCallback<R>(callback),
     payload,
     sent: Date.now()
   };
@@ -54,10 +53,15 @@ const handleReceived = (message: Message) => {
 
 const messageHandlers = {
   function: handleFunction,
-  event: (message: Message) => handleEvent(typeof message.payload.id === "number" ? message.payload.id : -1, message.payload),
+  event: (message: Message) =>
+    handleEvent(
+      typeof message.payload.id === "number" ? message.payload.id : -1,
+      message.payload
+    ),
   received: handleReceived
 };
 
+/** @internal */
 export const handleMessage = (message: Message) => {
   //console.log("Received", message);
   messageHandlers[message.type](message);

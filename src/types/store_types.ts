@@ -5,9 +5,13 @@ import { Callback } from "./dispatch_types";
 import { EventHandler } from "../dcs/event";
 
 export type Store = {
+  config: {
+    ownPort: number;
+    distantPort: number;
+  };
   sentMessages: Message[];
   receivedMessages: Message[];
-  callbacks: Map<string, Callback>;
+  callbacks: Map<string, Callback<any>>;
   server: Socket | undefined;
   networkSend: NetworkSend | undefined;
   eventHandlers: {

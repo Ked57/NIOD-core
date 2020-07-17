@@ -4,7 +4,7 @@ import {
   NetworkOnMessage,
   NetworkSend
 } from "./types/network_types";
-
+/** @internal */
 export const initNetwork = (
   ownPort: number,
   distantPort: number,
