@@ -48,7 +48,7 @@ jobs:
 
 workflows:
   version: 2
-  test-deploy:
+  format-check-and-deploy:
     jobs:
       - init-dependencies:
           filters:
