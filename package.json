@@ -7,6 +7,7 @@
   "scripts": {
     "start": "ts-node src/app.ts",
     "build": "tsc --declaration",
+    "test:mission": "ts-node test_mission.ts",
     "format:check": "prettier src/**/*.ts --list-different",
     "format:fix": "prettier src/**/*.ts --write",
     "docs:generate": "typedoc --plugin typedoc-plugin-markdown"

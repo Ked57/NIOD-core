@@ -14,7 +14,7 @@
 
 Ƭ **Callback**: *function*
 
-*Defined in [types/dispatch_types.ts:1](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/dispatch_types.ts#L1)*
+*Defined in [types/dispatch_types.ts:1](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/dispatch_types.ts#L1)*
 
 #### Type declaration:
 

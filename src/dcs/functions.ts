@@ -1,4 +1,5 @@
 import { sendMessage, createMessage } from "../message";
+import { Vector3 } from "../utils";
 
 export type GetGroupsPayload = {
   coalitionId: number;
@@ -11,7 +12,7 @@ export type GetGroupsReturn = {
   id: number;
   initialSize: number;
   size: number;
-}[];
+};
 
 /**
  * Allows to retrieve informations about groups from a coalition
@@ -19,7 +20,7 @@ export type GetGroupsReturn = {
  * @param groupCategory The category of the group, I'm not sure what it corresponds to
  */
 export const getGroups = (coalitionId: number, groupCategory?: number) =>
-  executeFunction<GetGroupsPayload, GetGroupsReturn>("getGroups", {
+  executeFunction<GetGroupsPayload, GetGroupsReturn[]>("getGroups", {
     coalitionId,
     groupCategory
   });
@@ -27,14 +28,36 @@ export const getGroups = (coalitionId: number, groupCategory?: number) =>
 export type GetUnitsPayload = {
   groupName: string;
 };
-export type GetUnitsReturn = {};
+
+export type GetUnitsReturn = {
+  ammo: {
+    count: number;
+    desc: {
+      [key: string]: any;
+    };
+  }[];
+  callsign: string;
+  desc: { [key: string]: any };
+  fuel: number;
+  hasRadar: boolean;
+  id: number;
+  inAir: boolean;
+  isActive: boolean;
+  life: number;
+  life0: number;
+  name: string;
+  position: Vector3;
+  sensors: { [key: string]: any }[];
+  type: string;
+  velocity: Vector3;
+};
 
 /**
  * Allows to retrieve informations about units from a group
  * @param groupName The name of the group you want to retrieve the units from
  */
 export const getUnits = (groupName: string) =>
-  executeFunction<GetUnitsPayload, GetUnitsReturn>("getUnits", { groupName });
+  executeFunction<GetUnitsPayload, GetUnitsReturn[]>("getUnits", { groupName });
 
 /**
  * Allows to execute any function in the lua `niod.function` table

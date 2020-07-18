@@ -62,7 +62,7 @@
 
 Ƭ **Event**: *[EventBaseCaptured](_dcs_event_.md#eventbasecaptured) | [EventBirth](_dcs_event_.md#eventbirth) | [EventCrash](_dcs_event_.md#eventcrash) | [EventDead](_dcs_event_.md#eventdead) | [EventDetailedFailure](_dcs_event_.md#eventdetailedfailure) | [EventEjection](_dcs_event_.md#eventejection) | [EventEngineShutdown](_dcs_event_.md#eventengineshutdown) | [EventEngineStartup](_dcs_event_.md#eventenginestartup) | [EventHit](_dcs_event_.md#eventhit) | [EventKill](_dcs_event_.md#eventkill) | [EventLand](_dcs_event_.md#eventland) | [EventLandingAfterEjection](_dcs_event_.md#eventlandingafterejection) | [EventMarkAdded](_dcs_event_.md#eventmarkadded) | [EventMarkChange](_dcs_event_.md#eventmarkchange) | [EventMarkRemove](_dcs_event_.md#eventmarkremove) | [EventMissionEnd](_dcs_event_.md#eventmissionend) | [EventMissionStart](_dcs_event_.md#eventmissionstart) | [EventPilotDead](_dcs_event_.md#eventpilotdead) | [EventPlayerComment](_dcs_event_.md#eventplayercomment) | [EventPlayerEnterUnit](_dcs_event_.md#eventplayerenterunit) | [EventLeaveUnit](_dcs_event_.md#eventleaveunit) | [EventRefueling](_dcs_event_.md#eventrefueling) | [EventRefuelingStop](_dcs_event_.md#eventrefuelingstop) | [EventScore](_dcs_event_.md#eventscore) | [EventShootingEnd](_dcs_event_.md#eventshootingend) | [EventShootingStart](_dcs_event_.md#eventshootingstart) | [EventShot](_dcs_event_.md#eventshot) | [EventTakeoff](_dcs_event_.md#eventtakeoff) | [EventUnitLost](_dcs_event_.md#eventunitlost)*
 
-*Defined in [dcs/event.ts:346](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L346)*
+*Defined in [dcs/event.ts:346](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L346)*
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 Ƭ **EventAirbase**: *object*
 
-*Defined in [dcs/event.ts:16](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L16)*
+*Defined in [dcs/event.ts:16](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L16)*
 
 Represents an airbase returned by a DCS event
 
@@ -84,7 +84,7 @@ ___
 
 Ƭ **EventBaseCaptured**: *object*
 
-*Defined in [dcs/event.ts:52](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L52)*
+*Defined in [dcs/event.ts:52](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L52)*
 
 Occurs when a ground unit captures either an airbase or a farp. Source: [https://wiki.hoggitworld.com/view/DCS_event_base_captured](https://wiki.hoggitworld.com/view/DCS_event_base_captured)
 
@@ -106,7 +106,7 @@ ___
 
 Ƭ **EventBirth**: *object*
 
-*Defined in [dcs/event.ts:63](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L63)*
+*Defined in [dcs/event.ts:63](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L63)*
 
 Occurs when any object is spawned into the mission. Source: [https://wiki.hoggitworld.com/view/DCS_event_birth](https://wiki.hoggitworld.com/view/DCS_event_birth)
 
@@ -124,7 +124,7 @@ ___
 
 Ƭ **EventBlueCoalition**: *2*
 
-*Defined in [dcs/event.ts:47](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L47)*
+*Defined in [dcs/event.ts:47](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L47)*
 
 Represents the blue returned by a DCS event
 
@@ -134,7 +134,7 @@ ___
 
 Ƭ **EventCrash**: *object*
 
-*Defined in [dcs/event.ts:72](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L72)*
+*Defined in [dcs/event.ts:72](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L72)*
 
 Occurs when any aircraft crashes into the ground and is completely destroyed. Source: [https://wiki.hoggitworld.com/view/DCS_event_crash](https://wiki.hoggitworld.com/view/DCS_event_crash)
 
@@ -152,7 +152,7 @@ ___
 
 Ƭ **EventDead**: *object*
 
-*Defined in [dcs/event.ts:81](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L81)*
+*Defined in [dcs/event.ts:81](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L81)*
 
 Occurs when an object is completely destroyed. Source: [https://wiki.hoggitworld.com/view/DCS_event_dead](https://wiki.hoggitworld.com/view/DCS_event_dead)
 
@@ -170,7 +170,7 @@ ___
 
 Ƭ **EventDetailedFailure**: *object*
 
-*Defined in [dcs/event.ts:90](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L90)*
+*Defined in [dcs/event.ts:90](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L90)*
 
 Unknown precisely what creates this event, likely tied into newer damage model. Will update this page when new information become available. Source: [https://wiki.hoggitworld.com/view/DCS_event_detailed_failure](https://wiki.hoggitworld.com/view/DCS_event_detailed_failure)
 
@@ -188,7 +188,7 @@ ___
 
 Ƭ **EventEjection**: *object*
 
-*Defined in [dcs/event.ts:99](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L99)*
+*Defined in [dcs/event.ts:99](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L99)*
 
 Occurs when a pilot ejects from an aircraft. Source: [https://wiki.hoggitworld.com/view/DCS_event_ejection](https://wiki.hoggitworld.com/view/DCS_event_ejection)
 
@@ -206,7 +206,7 @@ ___
 
 Ƭ **EventEngineShutdown**: *object*
 
-*Defined in [dcs/event.ts:108](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L108)*
+*Defined in [dcs/event.ts:108](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L108)*
 
 Occurs when any aircraft shuts down its engines. Source: [https://wiki.hoggitworld.com/view/DCS_event_engine_shutdown](https://wiki.hoggitworld.com/view/DCS_event_engine_shutdown)
 
@@ -224,7 +224,7 @@ ___
 
 Ƭ **EventEngineStartup**: *object*
 
-*Defined in [dcs/event.ts:117](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L117)*
+*Defined in [dcs/event.ts:117](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L117)*
 
 Occurs when any aircraft starts its engines. Source: [https://wiki.hoggitworld.com/view/DCS_event_engine_startup](https://wiki.hoggitworld.com/view/DCS_event_engine_startup)
 
@@ -242,7 +242,7 @@ ___
 
 Ƭ **EventHandler**: *function*
 
-*Defined in [dcs/event.ts:408](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L408)*
+*Defined in [dcs/event.ts:408](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L408)*
 
 #### Type declaration:
 
@@ -260,7 +260,7 @@ ___
 
 Ƭ **EventHit**: *object*
 
-*Defined in [dcs/event.ts:126](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L126)*
+*Defined in [dcs/event.ts:126](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L126)*
 
 Occurs whenever an object is hit by a weapon. Source: [https://wiki.hoggitworld.com/view/DCS_event_hit](https://wiki.hoggitworld.com/view/DCS_event_hit)
 
@@ -282,7 +282,7 @@ ___
 
 Ƭ **EventHumanFailure**: *object*
 
-*Defined in [dcs/event.ts:137](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L137)*
+*Defined in [dcs/event.ts:137](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L137)*
 
 Occurs when any system fails on a human controlled aircraft. Source: [https://wiki.hoggitworld.com/view/DCS_event_human_failure](https://wiki.hoggitworld.com/view/DCS_event_human_failure)
 
@@ -300,7 +300,7 @@ ___
 
 Ƭ **EventKill**: *object*
 
-*Defined in [dcs/event.ts:146](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L146)*
+*Defined in [dcs/event.ts:146](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L146)*
 
 Occurs on the death of a unit. Contains more and different information. Similar to unit_lost it will occur for aircraft before the aircraft crash event occurs. Source: [https://wiki.hoggitworld.com/view/DCS_event_kill](https://wiki.hoggitworld.com/view/DCS_event_kill)
 
@@ -324,7 +324,7 @@ ___
 
 Ƭ **EventLand**: *object*
 
-*Defined in [dcs/event.ts:158](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L158)*
+*Defined in [dcs/event.ts:158](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L158)*
 
 Occurs when an aircraft lands at an airbase, farp or ship. Source: [https://wiki.hoggitworld.com/view/DCS_event_land](https://wiki.hoggitworld.com/view/DCS_event_land)
 
@@ -346,7 +346,7 @@ ___
 
 Ƭ **EventLandingAfterEjection**: *object*
 
-*Defined in [dcs/event.ts:169](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L169)*
+*Defined in [dcs/event.ts:169](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L169)*
 
 Occurs shortly after the landing animation of an ejected pilot touching the ground and standing up. Source: [https://wiki.hoggitworld.com/view/DCS_event_landing_after_ejection](https://wiki.hoggitworld.com/view/DCS_event_landing_after_ejection)
 
@@ -368,7 +368,7 @@ ___
 
 Ƭ **EventLeaveUnit**: *object*
 
-*Defined in [dcs/event.ts:265](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L265)*
+*Defined in [dcs/event.ts:265](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L265)*
 
 Occurs when any player relieves control of a unit to the AI. Source: [https://wiki.hoggitworld.com/view/DCS_event_player_leave_unit](https://wiki.hoggitworld.com/view/DCS_event_player_leave_unit)
 
@@ -386,7 +386,7 @@ ___
 
 Ƭ **EventMarkAdded**: *object*
 
-*Defined in [dcs/event.ts:180](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L180)*
+*Defined in [dcs/event.ts:180](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L180)*
 
 Occurs when mark panels get added to the mission by players or scripting functions. Source: [https://wiki.hoggitworld.com/view/DCS_event_mark_added](https://wiki.hoggitworld.com/view/DCS_event_mark_added)
 
@@ -414,7 +414,7 @@ ___
 
 Ƭ **EventMarkChange**: *object*
 
-*Defined in [dcs/event.ts:194](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L194)*
+*Defined in [dcs/event.ts:194](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L194)*
 
 Occurs when a mark panel is modified by a player. Source: [https://wiki.hoggitworld.com/view/DCS_event_mark_change](https://wiki.hoggitworld.com/view/DCS_event_mark_change)
 
@@ -442,7 +442,7 @@ ___
 
 Ƭ **EventMarkRemove**: *object*
 
-*Defined in [dcs/event.ts:208](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L208)*
+*Defined in [dcs/event.ts:208](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L208)*
 
 Occurs when mark panels get removed from the mission by players or scripting functions. Source: [https://wiki.hoggitworld.com/view/DCS_event_mark_remove](https://wiki.hoggitworld.com/view/DCS_event_mark_remove)
 
@@ -470,7 +470,7 @@ ___
 
 Ƭ **EventMissionEnd**: *object*
 
-*Defined in [dcs/event.ts:222](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L222)*
+*Defined in [dcs/event.ts:222](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L222)*
 
 Occurs when a mission ends. Source: [https://wiki.hoggitworld.com/view/DCS_event_mission_end](https://wiki.hoggitworld.com/view/DCS_event_mission_end)
 
@@ -486,7 +486,7 @@ ___
 
 Ƭ **EventMissionStart**: *object*
 
-*Defined in [dcs/event.ts:230](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L230)*
+*Defined in [dcs/event.ts:230](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L230)*
 
 Occurs when a mission starts. Source: [https://wiki.hoggitworld.com/view/DCS_event_mission_start](https://wiki.hoggitworld.com/view/DCS_event_mission_start)
 
@@ -502,7 +502,7 @@ ___
 
 Ƭ **EventNeutralCoalition**: *-1*
 
-*Defined in [dcs/event.ts:37](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L37)*
+*Defined in [dcs/event.ts:37](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L37)*
 
 Represents the neutral coalition returned by a DCS event
 
@@ -512,7 +512,7 @@ ___
 
 Ƭ **EventObject**: *object*
 
-*Defined in [dcs/event.ts:30](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L30)*
+*Defined in [dcs/event.ts:30](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L30)*
 
 Represents an object returned by a DCS event
 
@@ -526,7 +526,7 @@ ___
 
 Ƭ **EventPilotDead**: *object*
 
-*Defined in [dcs/event.ts:238](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L238)*
+*Defined in [dcs/event.ts:238](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L238)*
 
 Occurs when the pilot of an aircraft is killed. Can occur either if the player is alive and crashes or if a weapon kills the pilot without completely destroying the plane. Source: [https://wiki.hoggitworld.com/view/DCS_event_pilot_dead](https://wiki.hoggitworld.com/view/DCS_event_pilot_dead)
 
@@ -544,7 +544,7 @@ ___
 
 Ƭ **EventPlayerComment**: *object*
 
-*Defined in [dcs/event.ts:247](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L247)*
+*Defined in [dcs/event.ts:247](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L247)*
 
 Typically corresponds to generalized events that create a triggered message called directly from the game itself. Currently the only known cause appears to display a landing score when AI and occasionally when players land on an aircraft carrier. Source: [https://wiki.hoggitworld.com/view/DCS_event_player_comment](https://wiki.hoggitworld.com/view/DCS_event_player_comment)
 
@@ -562,7 +562,7 @@ ___
 
 Ƭ **EventPlayerEnterUnit**: *object*
 
-*Defined in [dcs/event.ts:256](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L256)*
+*Defined in [dcs/event.ts:256](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L256)*
 
 Occurs when any player assumes direct control of a unit. Source: [https://wiki.hoggitworld.com/view/DCS_event_player_enter_unit](https://wiki.hoggitworld.com/view/DCS_event_player_enter_unit)
 
@@ -580,7 +580,7 @@ ___
 
 Ƭ **EventRedCoalition**: *1*
 
-*Defined in [dcs/event.ts:42](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L42)*
+*Defined in [dcs/event.ts:42](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L42)*
 
 Represents the red coalition returned by a DCS event
 
@@ -590,7 +590,7 @@ ___
 
 Ƭ **EventRefueling**: *object*
 
-*Defined in [dcs/event.ts:274](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L274)*
+*Defined in [dcs/event.ts:274](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L274)*
 
 Occurs when an aircraft connects with a tanker and begins taking on fuel. Source: [https://wiki.hoggitworld.com/view/DCS_event_refueling](https://wiki.hoggitworld.com/view/DCS_event_refueling)
 
@@ -608,7 +608,7 @@ ___
 
 Ƭ **EventRefuelingStop**: *object*
 
-*Defined in [dcs/event.ts:283](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L283)*
+*Defined in [dcs/event.ts:283](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L283)*
 
 Occurs when an aircraft is finished taking fuel. Source: [https://wiki.hoggitworld.com/view/DCS_event_refueling_stop](https://wiki.hoggitworld.com/view/DCS_event_refueling_stop)
 
@@ -626,7 +626,7 @@ ___
 
 Ƭ **EventScore**: *object*
 
-*Defined in [dcs/event.ts:292](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L292)*
+*Defined in [dcs/event.ts:292](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L292)*
 
 Occurs when any modification to the "Score" as seen on the debrief menu would occur. There is no information on what values the score was changed to. Event is likely similar to player_comment in this regard. Source: [https://wiki.hoggitworld.com/view/DCS_event_score](https://wiki.hoggitworld.com/view/DCS_event_score)
 
@@ -642,7 +642,7 @@ ___
 
 Ƭ **EventShootingEnd**: *object*
 
-*Defined in [dcs/event.ts:300](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L300)*
+*Defined in [dcs/event.ts:300](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L300)*
 
 Occurs when any unit stops firing its weapon. Event will always correspond with a shooting start event. Source: [https://wiki.hoggitworld.com/view/DCS_event_shooting_end](https://wiki.hoggitworld.com/view/DCS_event_shooting_end)
 
@@ -660,7 +660,7 @@ ___
 
 Ƭ **EventShootingStart**: *object*
 
-*Defined in [dcs/event.ts:309](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L309)*
+*Defined in [dcs/event.ts:309](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L309)*
 
 Occurs when any unit begins firing a weapon that has a high rate of fire. Most common with aircraft cannons (GAU-8), autocannons, and machine guns. Source: [https://wiki.hoggitworld.com/view/DCS_event_shooting_start](https://wiki.hoggitworld.com/view/DCS_event_shooting_start)
 
@@ -680,7 +680,7 @@ ___
 
 Ƭ **EventShot**: *object*
 
-*Defined in [dcs/event.ts:319](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L319)*
+*Defined in [dcs/event.ts:319](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L319)*
 
 Occurs whenever any unit in a mission fires a weapon. But not any machine gun or autocannon based weapon, those are handled by shooting_start. Source: [https://wiki.hoggitworld.com/view/DCS_event_shot](https://wiki.hoggitworld.com/view/DCS_event_shot)
 
@@ -700,7 +700,7 @@ ___
 
 Ƭ **EventTakeoff**: *object*
 
-*Defined in [dcs/event.ts:329](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L329)*
+*Defined in [dcs/event.ts:329](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L329)*
 
 Occurs when an aircraft takes off from an airbase, farp, or ship. Source: [https://wiki.hoggitworld.com/view/DCS_event_takeoff](https://wiki.hoggitworld.com/view/DCS_event_takeoff)
 
@@ -722,7 +722,7 @@ ___
 
 Ƭ **EventUnit**: *object*
 
-*Defined in [dcs/event.ts:9](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L9)*
+*Defined in [dcs/event.ts:9](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L9)*
 
 Represents an unit returned by a DCS event
 
@@ -736,7 +736,7 @@ ___
 
 Ƭ **EventUnitLost**: *object*
 
-*Defined in [dcs/event.ts:340](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L340)*
+*Defined in [dcs/event.ts:340](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L340)*
 
 Occurs when the game thinks an object is destroyed. Source: [https://wiki.hoggitworld.com/view/DCS_event_unit_lost](https://wiki.hoggitworld.com/view/DCS_event_unit_lost)
 
@@ -754,7 +754,7 @@ ___
 
 Ƭ **EventWeapon**: *object*
 
-*Defined in [dcs/event.ts:23](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L23)*
+*Defined in [dcs/event.ts:23](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L23)*
 
 Represents a weapon returned by a DCS event
 
@@ -768,7 +768,7 @@ Represents a weapon returned by a DCS event
 
 ▸ **addEventHandler**‹**T**›(`id`: number, `handler`: [EventHandler](_dcs_event_.md#eventhandler)‹T›): *string*
 
-*Defined in [dcs/event.ts:433](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L433)*
+*Defined in [dcs/event.ts:433](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L433)*
 
 **Type parameters:**
 
@@ -793,7 +793,7 @@ ___
 
 ▸ **handleEvent**‹**T**›(`id`: number, `payload`: T): *void*
 
-*Defined in [dcs/event.ts:415](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L415)*
+*Defined in [dcs/event.ts:415](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L415)*
 
 **Type parameters:**
 
@@ -816,7 +816,7 @@ ___
 
 ▸ **removeEventHandler**(`id`: number, `handlerId`: string): *void*
 
-*Defined in [dcs/event.ts:448](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L448)*
+*Defined in [dcs/event.ts:448](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L448)*
 
 **Parameters:**
 
@@ -833,178 +833,178 @@ Name | Type | Description |
 
 ### ▪ **EVENTS**: *object*
 
-*Defined in [dcs/event.ts:377](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L377)*
+*Defined in [dcs/event.ts:377](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L377)*
 
 ###  EventBaseCaptured
 
 • **EventBaseCaptured**: *number* = 10
 
-*Defined in [dcs/event.ts:378](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L378)*
+*Defined in [dcs/event.ts:378](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L378)*
 
 ###  EventBirth
 
 • **EventBirth**: *number* = 15
 
-*Defined in [dcs/event.ts:379](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L379)*
+*Defined in [dcs/event.ts:379](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L379)*
 
 ###  EventCrash
 
 • **EventCrash**: *number* = 5
 
-*Defined in [dcs/event.ts:380](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L380)*
+*Defined in [dcs/event.ts:380](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L380)*
 
 ###  EventDead
 
 • **EventDead**: *number* = 8
 
-*Defined in [dcs/event.ts:381](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L381)*
+*Defined in [dcs/event.ts:381](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L381)*
 
 ###  EventDetailedFailure
 
 • **EventDetailedFailure**: *number* = 17
 
-*Defined in [dcs/event.ts:382](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L382)*
+*Defined in [dcs/event.ts:382](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L382)*
 
 ###  EventEjection
 
 • **EventEjection**: *number* = 6
 
-*Defined in [dcs/event.ts:383](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L383)*
+*Defined in [dcs/event.ts:383](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L383)*
 
 ###  EventEngineShutdown
 
 • **EventEngineShutdown**: *number* = 19
 
-*Defined in [dcs/event.ts:384](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L384)*
+*Defined in [dcs/event.ts:384](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L384)*
 
 ###  EventEngineStartup
 
 • **EventEngineStartup**: *number* = 18
 
-*Defined in [dcs/event.ts:385](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L385)*
+*Defined in [dcs/event.ts:385](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L385)*
 
 ###  EventHit
 
 • **EventHit**: *number* = 2
 
-*Defined in [dcs/event.ts:386](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L386)*
+*Defined in [dcs/event.ts:386](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L386)*
 
 ###  EventKill
 
 • **EventKill**: *number* = 28
 
-*Defined in [dcs/event.ts:387](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L387)*
+*Defined in [dcs/event.ts:387](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L387)*
 
 ###  EventLand
 
 • **EventLand**: *number* = 4
 
-*Defined in [dcs/event.ts:388](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L388)*
+*Defined in [dcs/event.ts:388](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L388)*
 
 ###  EventLandingAfterEjection
 
 • **EventLandingAfterEjection**: *number* = 31
 
-*Defined in [dcs/event.ts:389](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L389)*
+*Defined in [dcs/event.ts:389](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L389)*
 
 ###  EventLeaveUnit
 
 • **EventLeaveUnit**: *number* = 21
 
-*Defined in [dcs/event.ts:398](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L398)*
+*Defined in [dcs/event.ts:398](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L398)*
 
 ###  EventMarkAdded
 
 • **EventMarkAdded**: *number* = 25
 
-*Defined in [dcs/event.ts:390](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L390)*
+*Defined in [dcs/event.ts:390](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L390)*
 
 ###  EventMarkChange
 
 • **EventMarkChange**: *number* = 26
 
-*Defined in [dcs/event.ts:391](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L391)*
+*Defined in [dcs/event.ts:391](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L391)*
 
 ###  EventMarkRemove
 
 • **EventMarkRemove**: *number* = 27
 
-*Defined in [dcs/event.ts:392](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L392)*
+*Defined in [dcs/event.ts:392](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L392)*
 
 ###  EventMissionEnd
 
 • **EventMissionEnd**: *number* = 12
 
-*Defined in [dcs/event.ts:393](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L393)*
+*Defined in [dcs/event.ts:393](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L393)*
 
 ###  EventMissionStart
 
 • **EventMissionStart**: *number* = 1
 
-*Defined in [dcs/event.ts:394](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L394)*
+*Defined in [dcs/event.ts:394](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L394)*
 
 ###  EventPilotDead
 
 • **EventPilotDead**: *number* = 9
 
-*Defined in [dcs/event.ts:395](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L395)*
+*Defined in [dcs/event.ts:395](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L395)*
 
 ###  EventPlayerComment
 
 • **EventPlayerComment**: *number* = 22
 
-*Defined in [dcs/event.ts:396](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L396)*
+*Defined in [dcs/event.ts:396](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L396)*
 
 ###  EventPlayerEnterUnit
 
 • **EventPlayerEnterUnit**: *number* = 20
 
-*Defined in [dcs/event.ts:397](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L397)*
+*Defined in [dcs/event.ts:397](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L397)*
 
 ###  EventRefueling
 
 • **EventRefueling**: *number* = 7
 
-*Defined in [dcs/event.ts:399](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L399)*
+*Defined in [dcs/event.ts:399](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L399)*
 
 ###  EventRefuelingStop
 
 • **EventRefuelingStop**: *number* = 14
 
-*Defined in [dcs/event.ts:400](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L400)*
+*Defined in [dcs/event.ts:400](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L400)*
 
 ###  EventScore
 
 • **EventScore**: *number* = 29
 
-*Defined in [dcs/event.ts:401](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L401)*
+*Defined in [dcs/event.ts:401](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L401)*
 
 ###  EventShootingEnd
 
 • **EventShootingEnd**: *number* = 24
 
-*Defined in [dcs/event.ts:402](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L402)*
+*Defined in [dcs/event.ts:402](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L402)*
 
 ###  EventShootingStart
 
 • **EventShootingStart**: *number* = 23
 
-*Defined in [dcs/event.ts:403](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L403)*
+*Defined in [dcs/event.ts:403](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L403)*
 
 ###  EventShot
 
 • **EventShot**: *number* = 1
 
-*Defined in [dcs/event.ts:404](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L404)*
+*Defined in [dcs/event.ts:404](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L404)*
 
 ###  EventTakeoff
 
 • **EventTakeoff**: *number* = 3
 
-*Defined in [dcs/event.ts:405](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L405)*
+*Defined in [dcs/event.ts:405](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L405)*
 
 ###  EventUnitLost
 
 • **EventUnitLost**: *number* = 30
 
-*Defined in [dcs/event.ts:406](https://github.com/Ked57/NIOD/blob/1fd2777/src/dcs/event.ts#L406)*
+*Defined in [dcs/event.ts:406](https://github.com/Ked57/NIOD/blob/3d4f24b/src/dcs/event.ts#L406)*

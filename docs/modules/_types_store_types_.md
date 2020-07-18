@@ -15,7 +15,7 @@
 
 Ƭ **Mutate**: *function*
 
-*Defined in [types/store_types.ts:22](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/store_types.ts#L22)*
+*Defined in [types/store_types.ts:22](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/store_types.ts#L22)*
 
 #### Type declaration:
 
@@ -34,7 +34,7 @@ ___
 
 Ƭ **Store**: *object*
 
-*Defined in [types/store_types.ts:7](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/store_types.ts#L7)*
+*Defined in [types/store_types.ts:7](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/store_types.ts#L7)*
 
 #### Type declaration:
 

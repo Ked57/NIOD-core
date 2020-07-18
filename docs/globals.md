@@ -7,6 +7,7 @@
 ### Modules
 
 * ["app"](modules/_app_.md)
+* ["dcs/constants"](modules/_dcs_constants_.md)
 * ["dcs/event"](modules/_dcs_event_.md)
 * ["dcs/functions"](modules/_dcs_functions_.md)
 * ["dispatch"](modules/_dispatch_.md)

@@ -1,6 +1,4 @@
 /node_modules/
 /.vscode/
 /lib/
-/script/Moose.lua
-config.json
-save.json
+test_mission.ts

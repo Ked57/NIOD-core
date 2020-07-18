@@ -5,6 +5,8 @@ import { handleMessage } from "./message";
 import { isMesssage } from "./types/message_types";
 import { getGroups, getUnits } from "./dcs/functions";
 import { getStore } from "./store/store";
+import { EVENTS, addEventHandler, removeEventHandler } from "./dcs/event";
+import { COALITIONS } from "./dcs/constants";
 
 const networkOnError: NetworkOnError = async err => {
   const store = getStore();
@@ -52,4 +54,4 @@ export const initNiod = async (ownPort?: number, distantPort?: number) => {
   console.log(`NIOD server successfuly loaded on port ${store.config.ownPort}`);
 };
 
-export { getGroups, getUnits };
+export { COALITIONS, getGroups, getUnits, EVENTS, addEventHandler, removeEventHandler };

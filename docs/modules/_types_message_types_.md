@@ -26,7 +26,7 @@
 
 Ƭ **Message**: *object*
 
-*Defined in [types/message_types.ts:12](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L12)*
+*Defined in [types/message_types.ts:12](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L12)*
 
 #### Type declaration:
 
@@ -46,7 +46,7 @@ ___
 
 Ƭ **MessageType**: *[MessageTypeFunction](_types_message_types_.md#messagetypefunction) | [MessageTypeEvent](_types_message_types_.md#messagetypeevent) | [MessageTypeReceived](_types_message_types_.md#messagetypereceived)*
 
-*Defined in [types/message_types.ts:7](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L7)*
+*Defined in [types/message_types.ts:7](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L7)*
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 Ƭ **MessageTypeEvent**: *"event"*
 
-*Defined in [types/message_types.ts:3](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L3)*
+*Defined in [types/message_types.ts:3](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L3)*
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 Ƭ **MessageTypeFunction**: *"function"*
 
-*Defined in [types/message_types.ts:1](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L1)*
+*Defined in [types/message_types.ts:1](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L1)*
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 Ƭ **MessageTypeReceived**: *"received"*
 
-*Defined in [types/message_types.ts:5](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L5)*
+*Defined in [types/message_types.ts:5](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L5)*
 
 ## Functions
 
@@ -78,7 +78,7 @@ ___
 
 ▸ **isMessageType**(`input`: any): *input is MessageType*
 
-*Defined in [types/message_types.ts:29](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L29)*
+*Defined in [types/message_types.ts:29](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L29)*
 
 **Parameters:**
 
@@ -94,7 +94,7 @@ ___
 
 ▸ **isMessageTypeEvent**(`input`: any): *input is MessageTypeEvent*
 
-*Defined in [types/message_types.ts:23](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L23)*
+*Defined in [types/message_types.ts:23](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L23)*
 
 **Parameters:**
 
@@ -110,7 +110,7 @@ ___
 
 ▸ **isMessageTypeFunction**(`input`: any): *input is MessageTypeFunction*
 
-*Defined in [types/message_types.ts:20](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L20)*
+*Defined in [types/message_types.ts:20](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L20)*
 
 **Parameters:**
 
@@ -126,7 +126,7 @@ ___
 
 ▸ **isMessageTypeReceived**(`input`: any): *input is MessageTypeReceived*
 
-*Defined in [types/message_types.ts:25](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L25)*
+*Defined in [types/message_types.ts:25](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L25)*
 
 **Parameters:**
 
@@ -142,7 +142,7 @@ ___
 
 ▸ **isMesssage**(`data`: object): *data is Message*
 
-*Defined in [types/message_types.ts:34](https://github.com/Ked57/NIOD/blob/1fd2777/src/types/message_types.ts#L34)*
+*Defined in [types/message_types.ts:34](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/message_types.ts#L34)*
 
 **Parameters:**
 
