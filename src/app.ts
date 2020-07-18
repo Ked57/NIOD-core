@@ -54,4 +54,11 @@ export const initNiod = async (ownPort?: number, distantPort?: number) => {
   console.log(`NIOD server successfuly loaded on port ${store.config.ownPort}`);
 };
 
-export { COALITIONS, getGroups, getUnits, EVENTS, addEventHandler, removeEventHandler };
+export {
+  COALITIONS,
+  getGroups,
+  getUnits,
+  EVENTS,
+  addEventHandler,
+  removeEventHandler
+};
