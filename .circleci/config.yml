@@ -47,7 +47,7 @@ jobs:
           command: cp package.json LICENSE README.md ./lib
       - run:
           name: Publish package
-          command: npm publish
+          command: cd lib && npm publish
 
 workflows:
   version: 2
