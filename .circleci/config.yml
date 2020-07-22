@@ -44,7 +44,7 @@ jobs:
           command: npm run build
       - run:
           name: Copy files for release
-          command: cp package.json LICENSE README.md ./lib
+          command: cp package.json LICENSE README.md .npmrc ./lib
       - run:
           name: Publish package
           command: cd lib && npm publish
