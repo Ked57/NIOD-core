@@ -2,3 +2,4 @@
 /.vscode/
 /lib/
 test_mission.ts
+.npmrc

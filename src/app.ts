@@ -3,7 +3,7 @@ import { NetworkOnError, NetworkOnMessage } from "./types/network_types";
 import { mutate, mutationNames } from "./store/mutation";
 import { handleMessage } from "./message";
 import { isMesssage } from "./types/message_types";
-import { getGroups, getUnits } from "./dcs/functions";
+import { executeFunction, getGroups, getUnits } from "./dcs/functions";
 import { getStore } from "./store/store";
 import { EVENTS, addEventHandler, removeEventHandler } from "./dcs/event";
 import { COALITIONS } from "./dcs/constants";
@@ -55,6 +55,7 @@ export const initNiod = async (ownPort?: number, distantPort?: number) => {
 };
 
 export {
+  executeFunction,
   COALITIONS,
   getGroups,
   getUnits,
