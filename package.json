@@ -1,9 +1,9 @@
 {
-  "name": "niod",
-  "version": "3.0.0-beta.5",
-  "description": "NIOD JS API for DCS World AND MOOSE, using a NodeJS server to communicate with a LUA library",
+  "name": "niod-core",
+  "version": "0.1.0",
+  "description": "NIOD is a JS API for DCS World, NIOD-core is the core lib of the NIOD ecosystem. It uses a socket to communicate with a LUA library",
   "main": "lib/app.js",
-  "types": "./lib/niod.d.ts",
+  "types": "./lib/niod-core.d.ts",
   "scripts": {
     "start": "ts-node src/app.ts",
     "build": "tsc --declaration",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ked57/NIOD.git"
+    "url": "git+https://github.com/Ked57/NIOD-core.git"
   },
   "keywords": [
     "NIOD",
@@ -25,9 +25,9 @@
   "author": "Ked",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ked57/NIOD/issues"
+    "url": "https://github.com/Ked57/NIOD-core/issues"
   },
-  "homepage": "https://github.com/Ked57/NIOD#readme",
+  "homepage": "https://github.com/Ked57/NIOD-core#readme",
   "dependencies": {
     "uuid": "^3.3.2"
   },
