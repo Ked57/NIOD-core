@@ -1,4 +1,4 @@
-[niod](../README.md) › [Globals](../globals.md) › ["types/network_types"](_types_network_types_.md)
+[niod-core](../README.md) › [Globals](../globals.md) › ["types/network_types"](_types_network_types_.md)
 
 # Module: "types/network_types"
 
@@ -17,7 +17,7 @@
 
 Ƭ **NetWorkOnListen**: *function*
 
-*Defined in [types/network_types.ts:5](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/network_types.ts#L5)*
+*Defined in [types/network_types.ts:5](https://github.com/Ked57/NIOD/blob/87bd7cb/src/types/network_types.ts#L5)*
 
 #### Type declaration:
 
@@ -29,7 +29,7 @@ ___
 
 Ƭ **NetworkOnError**: *function*
 
-*Defined in [types/network_types.ts:3](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/network_types.ts#L3)*
+*Defined in [types/network_types.ts:3](https://github.com/Ked57/NIOD/blob/87bd7cb/src/types/network_types.ts#L3)*
 
 #### Type declaration:
 
@@ -47,7 +47,7 @@ ___
 
 Ƭ **NetworkOnMessage**: *function*
 
-*Defined in [types/network_types.ts:4](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/network_types.ts#L4)*
+*Defined in [types/network_types.ts:4](https://github.com/Ked57/NIOD/blob/87bd7cb/src/types/network_types.ts#L4)*
 
 #### Type declaration:
 
@@ -66,7 +66,7 @@ ___
 
 Ƭ **NetworkSend**: *function*
 
-*Defined in [types/network_types.ts:7](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/network_types.ts#L7)*
+*Defined in [types/network_types.ts:7](https://github.com/Ked57/NIOD/blob/87bd7cb/src/types/network_types.ts#L7)*
 
 #### Type declaration:
 

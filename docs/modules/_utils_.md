@@ -1,4 +1,4 @@
-[niod](../README.md) › [Globals](../globals.md) › ["utils"](_utils_.md)
+[niod-core](../README.md) › [Globals](../globals.md) › ["utils"](_utils_.md)
 
 # Module: "utils"
 
@@ -14,7 +14,7 @@
 
 Ƭ **Vector3**: *object*
 
-*Defined in [utils.ts:1](https://github.com/Ked57/NIOD/blob/3d4f24b/src/utils.ts#L1)*
+*Defined in [utils.ts:1](https://github.com/Ked57/NIOD/blob/87bd7cb/src/utils.ts#L1)*
 
 #### Type declaration:
 

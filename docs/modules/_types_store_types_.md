@@ -1,4 +1,4 @@
-[niod](../README.md) › [Globals](../globals.md) › ["types/store_types"](_types_store_types_.md)
+[niod-core](../README.md) › [Globals](../globals.md) › ["types/store_types"](_types_store_types_.md)
 
 # Module: "types/store_types"
 
@@ -15,7 +15,7 @@
 
 Ƭ **Mutate**: *function*
 
-*Defined in [types/store_types.ts:22](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/store_types.ts#L22)*
+*Defined in [types/store_types.ts:22](https://github.com/Ked57/NIOD/blob/87bd7cb/src/types/store_types.ts#L22)*
 
 #### Type declaration:
 
@@ -34,7 +34,7 @@ ___
 
 Ƭ **Store**: *object*
 
-*Defined in [types/store_types.ts:7](https://github.com/Ked57/NIOD/blob/3d4f24b/src/types/store_types.ts#L7)*
+*Defined in [types/store_types.ts:7](https://github.com/Ked57/NIOD/blob/87bd7cb/src/types/store_types.ts#L7)*
 
 #### Type declaration:
 

@@ -1,16 +1,16 @@
-[niod](README.md) › [Globals](globals.md)
+[niod-core](README.md) › [Globals](globals.md)
 
-# niod
+# niod-core
 
 ## Index
 
 ### Modules
 
-* ["app"](modules/_app_.md)
 * ["dcs/constants"](modules/_dcs_constants_.md)
 * ["dcs/event"](modules/_dcs_event_.md)
 * ["dcs/functions"](modules/_dcs_functions_.md)
 * ["dispatch"](modules/_dispatch_.md)
+* ["index"](modules/_index_.md)
 * ["message"](modules/_message_.md)
 * ["network"](modules/_network_.md)
 * ["queue"](modules/_queue_.md)

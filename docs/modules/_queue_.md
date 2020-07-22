@@ -1,4 +1,4 @@
-[niod](../README.md) › [Globals](../globals.md) › ["queue"](_queue_.md)
+[niod-core](../README.md) › [Globals](../globals.md) › ["queue"](_queue_.md)
 
 # Module: "queue"
 
@@ -17,7 +17,7 @@
 
 ▸ **dequeue**(`queue`: [Message](_types_message_types_.md#message)[], `setter`: function): *[Message](_types_message_types_.md#message) | undefined*
 
-*Defined in [queue.ts:12](https://github.com/Ked57/NIOD/blob/3d4f24b/src/queue.ts#L12)*
+*Defined in [queue.ts:12](https://github.com/Ked57/NIOD/blob/87bd7cb/src/queue.ts#L12)*
 
 **Parameters:**
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **enqueue**(`message`: [Message](_types_message_types_.md#message), `queue`: [Message](_types_message_types_.md#message)[], `setter`: function): *void*
 
-*Defined in [queue.ts:3](https://github.com/Ked57/NIOD/blob/3d4f24b/src/queue.ts#L3)*
+*Defined in [queue.ts:3](https://github.com/Ked57/NIOD/blob/87bd7cb/src/queue.ts#L3)*
 
 **Parameters:**
 
@@ -67,7 +67,7 @@ ___
 
 ▸ **handleQueue**(`queue`: [Message](_types_message_types_.md#message)[], `setter`: function, `messageHandler`: function): *void*
 
-*Defined in [queue.ts:38](https://github.com/Ked57/NIOD/blob/3d4f24b/src/queue.ts#L38)*
+*Defined in [queue.ts:38](https://github.com/Ked57/NIOD/blob/87bd7cb/src/queue.ts#L38)*
 
 **Parameters:**
 
@@ -101,7 +101,7 @@ ___
 
 ▸ **removeFromQueue**(`message`: [Message](_types_message_types_.md#message), `queue`: [Message](_types_message_types_.md#message)[], `setter`: function): *[Message](_types_message_types_.md#message) | undefined*
 
-*Defined in [queue.ts:21](https://github.com/Ked57/NIOD/blob/3d4f24b/src/queue.ts#L21)*
+*Defined in [queue.ts:21](https://github.com/Ked57/NIOD/blob/87bd7cb/src/queue.ts#L21)*
 
 **Parameters:**
 
