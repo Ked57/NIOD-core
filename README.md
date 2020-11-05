@@ -1,7 +1,7 @@
 Latest build
 [![CircleCI](https://circleci.com/gh/Ked57/NIOD-core.svg?style=svg)](https://circleci.com/gh/Ked57/NIOD-core)
 
-![NIOD Logo](https://ked57.github.io/NIOD-core/static/assets/niod.png)
+![NIOD Logo](https://socialify.git.ci/Ked57/NIOD-core/image?font=KoHo&forks=1&issues=1&logo=https%3A%2F%2Fcamo.githubusercontent.com%2F9a8dbcedbaf848678567d49e857d984b86b4398de81ec983df0963b50cfb7f23%2F68747470733a2f2f6b656435372e6769746875622e696f2f4e494f442d636f72652f7374617469632f6173736574732f6e696f642e706e67&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Light)
 
 # NIOD-core
 
